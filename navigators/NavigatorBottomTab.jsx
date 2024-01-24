@@ -10,34 +10,36 @@ const NavigatorBottomTab = () => (
     screenOptions={{
       tabBarActiveTintColor: '#000',
       tabBarInactiveTintColor: '#999',
-      tabBarLabelStyle: {
-        fontSize: 12,
-        fontWeight: 'bold'
-      },
       tabBarStyle: {
         display: 'flex'
-      }
+      },
+      labeled: false
     }}
   >
     <Tab.Screen
       name={NAVIGATION_TAB.course}
       component={NavigatorCourses}
+      options={{ title: 'Courses' }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.forum}
       component={NavigatorCourses}
+      options={{ title: 'Forum' }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.jobs}
       component={NavigatorCourses}
+      options={{ title: 'Jobs' }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.chats}
       component={NavigatorCourses}
+      options={{ title: 'Chat' }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.user}
       component={NavigatorUser}
+      options={{ title: 'User' }}
     />
   </Tab.Navigator>
 
