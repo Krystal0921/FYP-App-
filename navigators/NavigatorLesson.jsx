@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { NAVIGATION_COURSE } from '../const/navigations';
-import ScreenLesson from '../screens/lesson/ScreenLesson';
+import ScreenLessons from '../screens/lesson/ScreenLessons';
 
 const Stack = createStackNavigator();
 const NavigatorLesson = () => (
@@ -10,7 +10,7 @@ const NavigatorLesson = () => (
   >
     <Stack.Screen
       name={NAVIGATION_COURSE.lessons}
-      component={ScreenLesson}
+      component={ScreenLessons}
     />
   </Stack.Navigator>
 

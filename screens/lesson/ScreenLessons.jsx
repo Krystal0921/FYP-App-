@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, ImageBackground, FlatList, SafeAreaView, Image, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const ScreenLesson = ({ route: { params: { data } } }) => {
+const ScreenLessons = ({ route: { params: { data } } }) => {
   const LessonContentList = ({ content, index }) => (
     <View style={styles.AllLessonBackgroundView}>
       <Text style={styles.AllLessonNumber}>{`0${index + 1}`}</Text>
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ScreenLesson;
+export default ScreenLessons;
