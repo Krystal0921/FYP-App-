@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NAVIGATION_TAB } from '../const/navigations';
 import NavigatorCourses from './NavigatorCourses';
-import NavigatorUser from "./NavigatorUser";
+import NavigatorUser from './NavigatorUser';
 
 const Tab = createBottomTabNavigator();
 const NavigatorBottomTab = () => (
