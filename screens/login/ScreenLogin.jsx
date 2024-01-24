@@ -1,16 +1,14 @@
 import React from 'react';
 import {
-  Button,
   SafeAreaView,
   StyleSheet,
   View,
   Text,
   Image,
-  TouchableOpacity,
-  Pressable
+  TouchableOpacity
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { NAVIGATION_COURSE, NAVIGATION_USER, NAVIGATION_MAIN } from '../../const/navigations';
+import { NAVIGATION_USER } from '../../const/navigations';
 
 const ScreenLogin = ({ navigation }) => (
   <SafeAreaView style={styles.LoginBackgound}>
@@ -31,7 +29,7 @@ const ScreenLogin = ({ navigation }) => (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => navigation.navigate(NAVIGATION_USER.signup, {
-        screen: NAVIGATION_USER.signup,
+        screen: NAVIGATION_USER.signup
       })}
     >
       <View style={styles.LoginSignUpView}>
