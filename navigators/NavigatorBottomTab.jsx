@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NAVIGATION_TAB } from '../const/navigations';
 import NavigatorCourses from './NavigatorCourses';
+import NavigatorUser from "./NavigatorUser";
 
 const Tab = createBottomTabNavigator();
 const NavigatorBottomTab = () => (
@@ -36,7 +37,7 @@ const NavigatorBottomTab = () => (
     />
     <Tab.Screen
       name={NAVIGATION_TAB.user}
-      component={NavigatorCourses}
+      component={NavigatorUser}
     />
   </Tab.Navigator>
 

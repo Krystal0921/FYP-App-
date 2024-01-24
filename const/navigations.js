@@ -2,7 +2,8 @@ export const NAVIGATION_MAIN = {
   home: 'Home',
   lesson: 'LessonDetail',
   post: 'Post',
-  chat: 'Chat'
+  chat: 'Chat',
+  login: 'Login'
 };
 export const NAVIGATION_TAB = {
   course: 'CourseTab',
@@ -17,3 +18,7 @@ export const NAVIGATION_COURSE = {
   courses: 'Courses'
 };
 
+export const NAVIGATION_USER = {
+  login: 'Login',
+  signup: 'SignUp'
+};
