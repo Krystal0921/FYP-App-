@@ -1,7 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { NAVIGATION_CHAT } from '../const/navigations';
 import ScreenChats from '../screens/chat/ScreenChats';
-import ScreenChat from '../screens/chat/ScreenChat';
 
 const Stack = createStackNavigator();
 const NavigatorChats = () => (
