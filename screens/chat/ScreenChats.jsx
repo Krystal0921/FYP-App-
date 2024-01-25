@@ -7,7 +7,7 @@ import {
   FlatList,
   TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { NAVIGATION_CHAT, NAVIGATION_MAIN } from '../../const/navigations';
+import { NAVIGATION_MAIN } from '../../const/navigations';
 
 const chatData = [
   {
