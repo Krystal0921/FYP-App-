@@ -8,6 +8,7 @@ const NavigatorChats = () => (
     intialRouteName={NAVIGATION_CHAT.chats}
     screenOptions={{ headerShown: false }}
   >
+    
     <Stack.Screen
       name={NAVIGATION_CHAT.chats}
       component={ScreenChats}
