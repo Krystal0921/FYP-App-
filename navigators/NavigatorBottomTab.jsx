@@ -1,7 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_TAB } from '../const/navigations';
 import NavigatorCourses from './NavigatorCourses';
 import NavigatorUser from './NavigatorUser';
+import NavigatorForum from './NavigatorForum';
+import NavigatorJob from './NavigatorJob';
+import NavigatorChats from './NavigatorChats';
 
 const Tab = createBottomTabNavigator();
 const NavigatorBottomTab = () => (
@@ -19,27 +23,52 @@ const NavigatorBottomTab = () => (
     <Tab.Screen
       name={NAVIGATION_TAB.course}
       component={NavigatorCourses}
-      options={{ title: 'Courses' }}
+      options={{
+        title: 'Courses',
+        tabBarIcon: ({ focused, color, size }) => (
+          <MaterialIcons name="book" size={24} color={focused ? 'purple' : 'black'} />
+        )
+      }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.forum}
-      component={NavigatorCourses}
-      options={{ title: 'Forum' }}
+      component={NavigatorForum}
+      options={{
+        title: 'Forum',
+        tabBarIcon: ({ focused }) => (
+          <MaterialIcons name="people-alt" size={24} color={focused ? 'purple' : 'black'} />
+        )
+      }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.jobs}
-      component={NavigatorCourses}
-      options={{ title: 'Jobs' }}
+      component={NavigatorJob}
+      options={{
+        title: 'Jobs',
+        tabBarIcon: ({ focused }) => (
+          <MaterialIcons name="work" size={24} color={focused ? 'purple' : 'black'} />
+        )
+      }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.chats}
-      component={NavigatorCourses}
-      options={{ title: 'Chat' }}
+      component={NavigatorChats}
+      options={{
+        title: 'Chat',
+        tabBarIcon: ({ focused }) => (
+          <MaterialIcons name="chat" size={24} color={focused ? 'purple' : 'black'} />
+        )
+      }}
     />
     <Tab.Screen
       name={NAVIGATION_TAB.user}
       component={NavigatorUser}
-      options={{ title: 'User' }}
+      options={{
+        title: 'User',
+        tabBarIcon: ({ focused }) => (
+          <MaterialIcons name="person" size={24} color={focused ? 'purple' : 'black'} />
+        )
+      }}
     />
   </Tab.Navigator>
 
