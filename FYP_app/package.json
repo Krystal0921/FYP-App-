@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "expo": "^50.0.3",
-    "metro-config": "^0.80.4"
-  }
-}
