@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, Tou
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Switch } from 'react-native-gesture-handler';
 
-const ForumScreen = ({navigation}) => {
+const ScreenInsideForum = ({navigation}) => {
     return (
         <>
             <SafeAreaView style={styles.ForumBackgound}>
@@ -181,4 +181,4 @@ const styles = StyleSheet.create({
     },
 }); 
 
-export default ForumScreen;
+export default ScreenInsideForum;

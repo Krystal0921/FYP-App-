@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Alert, View, Text, ImageBackground, FlatList, SafeAreaView, Image, Button, TouchableOpacity} from "react-native";
 import { RadioButton } from 'react-native-paper';
-import Icon from "react-native-vector-icons/MaterialIcons";
 
-const QuizScreen = ({navigation}) => {
+const ScreenQuiz = ({navigation}) => {
     const [checked, setChecked] = useState('first');
 
     const handleRadioPress = (value) => {
@@ -113,4 +112,4 @@ const styles = StyleSheet.create({
     },
 }); 
 
-export default QuizScreen;
+export default ScreenQuiz;

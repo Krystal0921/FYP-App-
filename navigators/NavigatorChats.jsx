@@ -3,15 +3,17 @@ import { NAVIGATION_CHAT } from '../const/navigations';
 import ScreenChats from '../screens/chat/ScreenChats';
 
 const Stack = createStackNavigator();
+
 const NavigatorChats = () => (
-  <Stack.Navigator
-    intialRouteName={NAVIGATION_CHAT.chats}
-    screenOptions={{ headerShown: false }}
-  >
-    <Stack.Screen
-      name={NAVIGATION_CHAT.chats}
-      component={ScreenChats}
-    />
-  </Stack.Navigator>
+    <Stack.Navigator
+        intialRouteName={NAVIGATION_CHAT.chats}
+        screenOptions={{ headerShown: false }}
+    >
+        <Stack.Screen
+            name={NAVIGATION_CHAT.chats}
+            component={ScreenChats}
+        />
+    </Stack.Navigator>
 );
+
 export default NavigatorChats;

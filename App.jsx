@@ -3,9 +3,7 @@ import 'react-native-gesture-handler';
 import NavigatorApp from './navigators/NavigatorApp';
 
 const App = () => (
-  <NavigatorApp />
+    <NavigatorApp/>
 );
-
-
 
 export default App;

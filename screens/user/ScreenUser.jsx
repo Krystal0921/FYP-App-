@@ -23,7 +23,7 @@ const user = [
   },
 ];
 
-const UserScreen = () => {
+const ScreenUser = () => {
   const navigation = useNavigation();
   const [isAnimated, setIsAnimated] = useState(false);
 
@@ -213,4 +213,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserScreen;
+export default ScreenUser;

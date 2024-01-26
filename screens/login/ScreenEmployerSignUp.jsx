@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView} from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { NAVIGATION_USER } from '../../const/navigations';
 import { Switch } from 'react-native-gesture-handler';
 
-const EmploymentSignUpScreen = ({navigation}) => {
+const ScreenEmployerSignUp = ({navigation}) => {
     const [checked, setChecked] = useState('first');
 
     const handleCheckBoxToggle = () => {
@@ -26,7 +27,9 @@ const EmploymentSignUpScreen = ({navigation}) => {
                     <TextInput style={styles.EmploymentSignUpInputText} placeholder="Company Address"/>
                     <TextInput style={styles.EmploymentSignUpInputText} placeholder="Company Register Number"/>
                     <Text style={styles.EmploymentSignUpUploadImagesText}>Please upload your company logo:</Text>
-                    <TouchableOpacity style={styles.EmploymentSignUpButton}>
+                    <TouchableOpacity 
+                        style={styles.EmploymentSignUpButton}
+                    >
                         <Text style={styles.EmploymentSignUpButtonText}>Upload Images</Text>
                     </TouchableOpacity>
                     <CheckBox
@@ -34,63 +37,18 @@ const EmploymentSignUpScreen = ({navigation}) => {
                         checked={checked}
                         onPress={handleCheckBoxToggle}
                     />
-                    <TouchableOpacity style={styles.EmploymentSignUpButton}>
-                        <Text style={styles.EmploymentSignUpButtonText}>Register</Text>
-                    </TouchableOpacity>
+                    <View style={{ paddingTop: 10, paddingBottom: 10,}}>
+                        <TouchableOpacity style={styles.EmploymentSignUpButton}>
+                            <Text style={styles.EmploymentSignUpButtonText}>Register</Text>
+                        </TouchableOpacity>
+                    </View>
                 </SafeAreaView>
             </ScrollView>
-            <View style={styles.MainFooter}>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    onPress={() => navigation.navigate('SettingScreen', {})}
-                    source={require("../assets/forum-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/chat-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/home-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/employment-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/user-icon.png")}
-                    style={styles.MainIcon}
-                />
-            </Pressable>
-        </View>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    MainFooter: {
-        flexDirection: "row",
-        height: 40,
-        paddingTop: 10,
-        backgroundColor: "#55098b",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-    MainIcon: {
-        width: 30,
-        height: 30,
-        resizeMode: 'contain',
-        marginBottom: 5,
-    },
     EmploymentSignUpUploadImagesText: {
         paddingTop: 5,
         paddingBottom: 5,
@@ -120,7 +78,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         alignItems: "center",
-        paddingTop: 50,
     },
     EmploymentSignUpTitle: {
         fontSize: 25, 
@@ -149,4 +106,4 @@ const styles = StyleSheet.create({
     },
 }); 
 
-export default EmploymentSignUpScreen;
+export default ScreenEmployerSignUp;

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { CheckBox } from 'react-native-elements';
-import { Switch } from 'react-native-gesture-handler';
+import { NAVIGATION_USER } from '../../const/navigations';
+import { Font } from 'expo-font';
 
-const MemberSignUpScreen = ({navigation}) => {
+const ScreenMemberSignUp = ({navigation}) => {
     const [checked, setChecked] = useState('first');
 
     const handleRadioPress = (value) => {
@@ -54,63 +55,18 @@ const MemberSignUpScreen = ({navigation}) => {
                         checked={checked}
                         onPress={handleCheckBoxToggle}
                     />
-                    <TouchableOpacity style={styles.MemberSignUpButton}>
-                        <Text style={styles.MemberSignUpButtonText}>Register</Text>
-                    </TouchableOpacity>
+                    <View style={{ paddingTop: 10, paddingBottom: 10,}}>
+                        <TouchableOpacity style={styles.MemberSignUpButton}>
+                            <Text style={styles.MemberSignUpButtonText}>Register</Text>
+                        </TouchableOpacity>
+                    </View>
                 </SafeAreaView>
             </ScrollView>
-            <View style={styles.MainFooter}>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    onPress={() => navigation.navigate('SettingScreen', {})}
-                    source={require("../assets/forum-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/chat-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/home-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/employment-icon.png")}
-                    style={styles.MainIcon} 
-                />
-            </Pressable>
-            <Pressable style={({ pressed }) => { return { opacity: pressed ? 0.5 : 1 }; } }>
-                <Image
-                    source={require("../assets/user-icon.png")}
-                    style={styles.MainIcon}
-                />
-            </Pressable>
-        </View>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    MainFooter: {
-        flexDirection: "row",
-        height: 40,
-        paddingTop: 10,
-        backgroundColor: "#55098b",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-    MainIcon: {
-        width: 30,
-        height: 30,
-        resizeMode: 'contain',
-        marginBottom: 5,
-    },
     MemberSignUpButton: {
         paddingTop: 10,
         paddingBottom: 10,
@@ -127,7 +83,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
-        
     },
     MemberSignUpScrollView: {
         flexGrow: 1,
@@ -142,7 +97,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         alignItems: "center",
-        paddingTop: 50,
     },
     MemberSignUpTitle: {
         fontSize: 25, 
@@ -171,4 +125,4 @@ const styles = StyleSheet.create({
     },
 }); 
 
-export default MemberSignUpScreen;
+export default ScreenMemberSignUp;

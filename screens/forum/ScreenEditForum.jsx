@@ -1,26 +1,25 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput,} from 'react-native';
-import { Switch } from 'react-native-gesture-handler';
 
-const CreateForumScreen = ({navigation}) => {
+const ScreenEditForum = ({navigation}) => {
     return (
         <>
-            <SafeAreaView style={styles.CreateForumBackgound}>
-                <Text style={styles.CreateForumTitle}>Create A Post</Text>
-                <View style={styles.CreateForumView}>
-                    <TextInput style={styles.CreateForumInputText} placeholder="Post Title"/>
+            <SafeAreaView style={styles.EditForumBackgound}>
+                <Text style={styles.EditForumTitle}>Edit Post</Text>
+                <View style={styles.EditForumView}>
+                    <Text style={styles.EditForumInputText}>Post Title</Text>
                 </View>
-                <View style={styles.CreateForumView}>
-                    <TouchableOpacity style={styles.CreateForumButton}>
-                        <Text style={styles.CreateForumButtonText}>Post Image (Option)</Text>
+                <View style={styles.EditForumView}>
+                    <TouchableOpacity style={styles.EditForumButton}>
+                        <Text style={styles.EditForumButtonText}>Post Image (Option)</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{paddingTop: 50,}}>
-                    <TextInput multiline={true} numberOfLines={6} style={styles.CreateForumDetailsInputText} placeholder="Post Details"/>
+                <View>
+                    <TextInput multiline={true} numberOfLines={10} style={styles.EditForumDetailsInputText} placeholder="Post Details"/>
                 </View>
-                <View style={styles.CreateForumView}>
-                    <TouchableOpacity style={styles.CreateForumButton}>
-                        <Text style={styles.CreateForumButtonText}>Create</Text>
+                <View style={styles.EditForumView}>
+                    <TouchableOpacity style={styles.EditForumButton}>
+                        <Text style={styles.EditForumButtonText}>Create</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>
@@ -29,32 +28,33 @@ const CreateForumScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-    CreateForumTitle: {
+    EditForumTitle: {
         flex: 1,
         fontSize: 25,
         fontWeight: 'bold',
     },
-    CreateForumInputText: {
+    EditForumInputText: {
         backgroundColor: '#F5F5F7',
         padding: 15,
         borderRadius: 5,
-        fontSize: 16,
-        height: 60,
+        fontSize: 20,
+        height: 50,
         width: 300,
         marginVertical: 3,
         marginBottom: 10,
         paddingBottom: 10,
         paddingTop: 10,
+        alignItems: 'center',
     },
-    CreateForumView: {
+    EditForumView: {
+        paddingTop: 20,
+        flex: 1,
+    },
+    EditForumDetailsView: {
         paddingTop: 50,
         flex: 1,
     },
-    CreateForumDetailsView: {
-        paddingTop: 50,
-        flex: 1,
-    },
-    CreateForumButton: {
+    EditForumButton: {
         borderRadius: 5,
         fontSize: 16,
         width: 300,
@@ -63,17 +63,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
     },
-    CreateForumButtonText: {
+    EditForumButtonText: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },
-    CreateForumDetailsInputText: {
+    EditForumDetailsInputText: {
         backgroundColor: '#F5F5F7',
         padding: 15,
         borderRadius: 5,
         fontSize: 16,
-        height: 200,
+        height: 300,
         width: 300,
         marginVertical: 3,
         marginBottom: 10,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         textAlignVertical: 'top', 
     },
-    CreateForumBackgound: {
+    EditForumBackgound: {
         justifyContent: 'center',
         backgroundColor: '#fff',
         flex: 1,
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CreateForumScreen;
+export default ScreenEditForum;
