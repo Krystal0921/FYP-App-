@@ -1,28 +1,34 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Switch } from 'react-native-gesture-handler';
+import { MaterialIcons } from '@expo/vector-icons';
+import { NAVIGATION_FORUM } from '../../const/navigations';
 
-const ScreenInsideForum = ({navigation}) => {
+const ScreenPost = ({ navigation }) => {
     return (
         <>
             <SafeAreaView style={styles.ForumBackgound}>
+                <ScrollView contentContainerStyle={styles.ForumScrollView}>
                 <Text style={styles.ForumTitle}>Title Name</Text>
-                <TouchableOpacity style={styles.SignUpTypeButton}>
+                <TouchableOpacity 
+                    style={styles.SignUpTypeButton}
+                    onPress={() => navigation.navigate(NAVIGATION_FORUM.editforum, {
+                        screen: NAVIGATION_FORUM.forum
+                    })}
+                >
                     <Text style={styles.SignUpTypeButtonText}>Edit</Text>
                 </TouchableOpacity>
                 <View style={styles.ForumTitleImageView}>
                     <Image
                         style={styles.ForumTitleImage}
-                        source={require('../assets/backgroundd.png')}
+                        source={require('../../assets/backgroundd.png')}
                     />
                 </View>
                 <Text style={styles.ForumDesciptionText}>This is a Desciption.This is a Desciption.This is a Desciption.This is a Desciption.This is a Desciption.</Text>
-                <ScrollView contentContainerStyle={styles.ForumScrollView}>
+                
                     <View style={styles.ForumCommentView}>
                         <Image
                             style={styles.ForumCommentImage}
-                            source={require('../assets/setting-icon.png')}
+                            source={require('../../assets/setting-icon.png')}
                         />
                         <View>
                             <Text style={styles.ForumCommentText}>First Comment</Text>
@@ -33,7 +39,7 @@ const ScreenInsideForum = ({navigation}) => {
                     <View style={styles.ForumCommentView}>
                         <Image
                             style={styles.ForumCommentImage}
-                            source={require('../assets/setting-icon.png')}
+                            source={require('../../assets/setting-icon.png')}
                         />
                         <View>
                             <Text style={styles.ForumCommentText}>Second Comment</Text>
@@ -44,7 +50,7 @@ const ScreenInsideForum = ({navigation}) => {
                     <View style={styles.ForumCommentView}>
                         <Image
                             style={styles.ForumCommentImage}
-                            source={require('../assets/setting-icon.png')}
+                            source={require('../../assets/setting-icon.png')}
                         />
                         <View>
                             <Text style={styles.ForumCommentText}>Third Comment</Text>
@@ -55,7 +61,7 @@ const ScreenInsideForum = ({navigation}) => {
                     <View style={styles.ForumCommentView}>
                         <Image
                             style={styles.ForumCommentImage}
-                            source={require('../assets/setting-icon.png')}
+                            source={require('../../assets/setting-icon.png')}
                         />
                         <View>
                             <Text style={styles.ForumCommentText}>Forth Comment</Text>
@@ -66,7 +72,7 @@ const ScreenInsideForum = ({navigation}) => {
                     <View style={styles.ForumCommentView}>
                         <Image
                             style={styles.ForumCommentImage}
-                            source={require('../assets/setting-icon.png')}
+                            source={require('../../assets/setting-icon.png')}
                         />
                         <View>
                             <Text style={styles.ForumCommentText}>Fifth Comment</Text>
@@ -78,10 +84,13 @@ const ScreenInsideForum = ({navigation}) => {
                 <View style={styles.MainSearchView}>
                     <TextInput
                         style={styles.MainSearchText}
-                        placeholder="Type Some Comment"/>
-                    <Icon style={{marginLeft: 120,}} size={30} name="play-arrow"/>
+                        placeholder="Type Some Comment"
+                    />
+                    <TouchableOpacity>
+                        <MaterialIcons style={{marginLeft: 100,}} size={50} name="arrow-right"/>
+                    </TouchableOpacity>
                 </View>
-            </SafeAreaView>
+    </SafeAreaView>
         </>
     );
 };
@@ -97,9 +106,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderRadius: 5,
-        alignItems: "center",
+        alignSelf: "center",
     },
     SignUpTypeButtonText: {
+        alignSelf: "center",
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
@@ -145,7 +155,8 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         borderRadius: 10,
         width:330,
-        backgroundColor: "#D0B3A0",
+        alignSelf: 'center',
+        backgroundColor: "#D8BFD8",
         flexDirection: "row",
     },
     ForumDesciptionText: {
@@ -158,6 +169,7 @@ const styles = StyleSheet.create({
     },
     ForumScrollView: {
         flexGrow: 1,
+        paddingBottom: 10,
     },
     ForumTitleImage: {
         height: 150, 
@@ -173,12 +185,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         alignItems: "center",
-        paddingTop: 50,
     },
     ForumTitle: {
         fontSize: 25, 
         fontWeight: 'bold',
+        alignSelf: 'center'
     },
 }); 
 
-export default ScreenInsideForum;
+export default ScreenPost;

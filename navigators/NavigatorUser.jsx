@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { NAVIGATION_USER } from '../const/navigations';
 import ScreenLogin from '../screens/login/ScreenLogin';
+import ScreenUser from '../screens/user/ScreenUser';
 import ScreenSignup from '../screens/login/ScreenSignup';
 import ScreenMemberSignUp from '../screens/login/ScreenMemberSignUp';
 import ScreenEmployerSignUp from '../screens/login/ScreenEmployerSignUp';
@@ -14,6 +15,10 @@ const NavigatorLogin = () => (
         <Stack.Screen
             name={NAVIGATION_USER.login}
             component={ScreenLogin}
+        />
+        <Stack.Screen
+            name={NAVIGATION_USER.user}
+            component={ScreenUser}
         />
         <Stack.Screen
             name={NAVIGATION_USER.signup}

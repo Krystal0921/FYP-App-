@@ -14,9 +14,10 @@ const ScreenCreateForum = ({navigation}) => {
                         <Text style={styles.CreateForumButtonText}>Post Image (Option)</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{paddingTop: 50,}}>
+                <View>
                     <TextInput multiline={true} numberOfLines={6} style={styles.CreateForumDetailsInputText} placeholder="Post Details"/>
                 </View>
+                <Text></Text>
                 <View style={styles.CreateForumView}>
                     <TouchableOpacity style={styles.CreateForumButton}>
                         <Text style={styles.CreateForumButtonText}>Create</Text>
@@ -29,7 +30,6 @@ const ScreenCreateForum = ({navigation}) => {
 
 const styles = StyleSheet.create({
     CreateForumTitle: {
-        flex: 1,
         fontSize: 25,
         fontWeight: 'bold',
     },
@@ -42,15 +42,11 @@ const styles = StyleSheet.create({
         width: 300,
         marginVertical: 3,
         marginBottom: 10,
-        paddingBottom: 10,
-        paddingTop: 10,
     },
     CreateForumView: {
-        paddingTop: 50,
         flex: 1,
     },
     CreateForumDetailsView: {
-        paddingTop: 50,
         flex: 1,
     },
     CreateForumButton: {
@@ -75,9 +71,6 @@ const styles = StyleSheet.create({
         height: 200,
         width: 300,
         marginVertical: 3,
-        marginBottom: 10,
-        paddingBottom: 10,
-        paddingTop: 10,
         textAlignVertical: 'top', 
     },
     CreateForumBackgound: {
@@ -85,9 +78,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         alignItems: 'center',
-        paddingTop: 50,
         paddingBottom: 50,
     },
 });
 
-export default ScreenForumCreate;
+export default ScreenCreateForum;

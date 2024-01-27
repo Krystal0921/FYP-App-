@@ -22,7 +22,7 @@ const ScreenLogin = ({ navigation }) => {
         .then(responseData => {
             if (responseData.success) {
                 alert('Welcome.');
-                navigation.navigate(NAVIGATION_USER.signup);
+                navigation.navigate(NAVIGATION_USER.user);
             } else {
                 alert('Login failed. Please try again.');
             }

@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     MainFooter: {
         flexDirection: 'row',
         height: 40,
-        paddingTop: 10,
         backgroundColor: '#55098b',
         justifyContent: 'space-around',
         alignItems: 'center'

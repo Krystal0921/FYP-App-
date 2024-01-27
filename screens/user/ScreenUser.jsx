@@ -1,67 +1,58 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Pressable } from "react-native";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { useNavigation } from "@react-navigation/native";
 
 const user = [
-  {
-    sid: "m0000001",
-    name: "John",
-    email: "aaa@gmail.com",
-    icon: require("../assets/icon.png"),
-    lesson1Progress: 60,
-    lesson2Progress: 10,
-    lesson3Progress: 90,
-  },
+    {
+        sid: "m0000001",
+        name: "John",
+        email: "aaa@gmail.com",
+        icon: require("../../assets/icon.png"),
+        lesson1Progress: 60,
+        lesson2Progress: 10,
+        lesson3Progress: 90,
+    },
 ];
 
 const ScreenUser = () => {
-  const navigation = useNavigation();
-  const [isAnimated, setIsAnimated] = useState(false);
+    const navigation = useNavigation();
+    const [isAnimated, setIsAnimated] = useState(false);
 
-  const handleAnimate = () => {
-    setIsAnimated(true);
-  };
+    const handleAnimate = () => {
+        setIsAnimated(true);
+    };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.vertical}>
-        <Image style={styles.logo} source={user[0].icon} />
-        <View style={styles.vertical}>
-          <Text style={styles.text}>Name : {user[0].name}</Text>
-          <Text style={styles.text}>E-mail : {user[0].email}</Text>
-        </View>
-      </View>
-      <Text style={styles.progressTitle}>Progress</Text>
-      <View style={styles.horizontally}>
-        <TouchableOpacity onPress={handleAnimate}>
-          <View style={styles.progressContainer}>
-            <CircularProgress
-              value={user[0].lesson1Progress}
-              radius={50}
-              strokeWidth={5}
-              backgroundColor="#e0e0e0"
-              strokeColorConfig={[
-                { color: "red", value: 0 },
-                { color: "skyblue", value: 50 },
-                { color: "yellowgreen", value: 100 },
-              ]}
-              animate={isAnimated}
-              duration={800}
-            />
-            <Text style={styles.text}>Lesson 1</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleAnimate}>
+    return (
+        <View style={styles.container}>
+            <View style={styles.vertical}>
+                <Image style={styles.logo} source={user[0].icon} />
+                <View style={styles.vertical}>
+                    <Text style={styles.text}>Name : {user[0].name}</Text>
+                    <Text style={styles.text}>E-mail : {user[0].email}</Text>
+                </View>
+            </View>
+            <Text style={styles.progressTitle}>Progress</Text>
+            <View style={styles.horizontally}>
+                <TouchableOpacity onPress={handleAnimate}>
+                    <View style={styles.progressContainer}>
+                        <CircularProgress
+                            value={user[0].lesson1Progress}
+                            radius={50}
+                            strokeWidth={5}
+                            backgroundColor="#e0e0e0"
+                            strokeColorConfig={[
+                                { color: "red", value: 0 },
+                                { color: "skyblue", value: 50 },
+                                { color: "yellowgreen", value: 100 },
+                            ]}
+                            animate={isAnimated}
+                            duration={800}
+                        />
+                        <Text style={styles.text}>Lesson 1</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleAnimate}>
           <View style={styles.progressContainer}>
             <CircularProgress
               value={user[0].lesson2Progress}
@@ -78,9 +69,8 @@ const ScreenUser = () => {
             />
             <Text style={styles.text}>Lesson 2</Text>
           </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleAnimate}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleAnimate}>
           <View style={styles.progressContainer}>
             <CircularProgress
               value={user[0].lesson3Progress}
@@ -97,9 +87,9 @@ const ScreenUser = () => {
             />
             <Text style={styles.text}>Lesson 3</Text>
           </View>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.MainFooter}>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.MainFooter}>
         <Pressable
           style={({ pressed }) => {
             return { opacity: pressed ? 0.5 : 1 };
@@ -107,7 +97,7 @@ const ScreenUser = () => {
           onPress={() => navigation.navigate("AllForumScreen", {})}
         >
           <Image
-            source={require("../assets/forum-icon.png")}
+            source={require("../../assets/forum-icon.png")}
             style={styles.MainIcon}
           />
         </Pressable>
@@ -118,7 +108,7 @@ const ScreenUser = () => {
           onPress={() => navigation.navigate("ChooseChatScreen", {})}
         >
           <Image
-            source={require("../assets/chat-icon.png")}
+            source={require("../../assets/chat-icon.png")}
             style={styles.MainIcon}
           />
         </Pressable>
@@ -129,7 +119,7 @@ const ScreenUser = () => {
           onPress={() => navigation.navigate("MainScreen", {})}
         >
           <Image
-            source={require("../assets/home-icon.png")}
+            source={require("../../assets/home-icon.png")}
             style={styles.MainIcon}
           />
         </Pressable>
@@ -140,7 +130,7 @@ const ScreenUser = () => {
           onPress={() => navigation.navigate("JobList", {})}
         >
           <Image
-            source={require("../assets/employment-icon.png")}
+            source={require("../../assets/employment-icon.png")}
             style={styles.MainIcon}
           />
         </Pressable>
@@ -151,13 +141,13 @@ const ScreenUser = () => {
           onPress={() => navigation.navigate("UserScreen", {})}
         >
           <Image
-            source={require("../assets/user-icon.png")}
+            source={require("../../assets/user-icon.png")}
             style={styles.MainIcon}
           />
         </Pressable>
-      </View>
-    </View>
-  );
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({

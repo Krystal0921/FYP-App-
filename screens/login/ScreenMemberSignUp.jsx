@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import { CheckBox } from 'react-native-elements';
+// import { CheckBox } from '@rneui/themed';
+import { FontAwesome } from '@expo/vector-icons';
 import { NAVIGATION_USER } from '../../const/navigations';
-import { Font } from 'expo-font';
 
 const ScreenMemberSignUp = ({navigation}) => {
     const [checked, setChecked] = useState('first');
@@ -52,7 +52,7 @@ const ScreenMemberSignUp = ({navigation}) => {
                     </View>
                     <CheckBox
                         title="Please tick to agree Terms and Conditions"
-                        checked={checked}
+                        checked
                         onPress={handleCheckBoxToggle}
                     />
                     <View style={{ paddingTop: 10, paddingBottom: 10,}}>

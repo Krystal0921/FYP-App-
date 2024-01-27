@@ -1,12 +1,14 @@
 const courseContent = [
-    {title: 'Number and Letter',},
-    {title: 'Time Related'},
-    {title: 'Weather'},
-    {title: 'Animal'},
+    {id: 'S001', title: 'Number and Letter',},
+    {id: 'S002', title: 'Time Related'},
+    {id: 'S003', title: 'Weather'},
+    {id: 'S004', title: 'Animal'},
+    {id: 'S005', title: 'Greeting'},
 ];
   
 const courses = [
     {
+        id:'L001',
         name: 'Daily Communication',
         totalCourse: '25',
         image: require('../assets/daily-communication.jpg'),
@@ -16,6 +18,7 @@ const courses = [
         courseContent,
     },
     {
+        id:'L002',
         name: 'Travel Communication',
         totalCourse: '20',
         image: require('../assets/travel-communication.png'),
@@ -25,6 +28,7 @@ const courses = [
         courseContent,
     },
     {
+        id:'L003',
         name: 'Workplace Communication',
         totalCourse: '10',
         image: require('../assets/workplace-communication.jpg'),

@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Pressable, Image } from 'react-native';
 import { NAVIGATION_USER } from '../../const/navigations';
+import { FontAwesome } from '@expo/vector-icons';
 
 const ScreenSignup = ({ navigation }) => (
     <SafeAreaView style={styles.SignUpTypeBackgound}>

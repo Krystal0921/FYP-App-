@@ -3,7 +3,9 @@ import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet, Toucha
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_COURSE } from '../../const/navigations';
 
-const ScreenLessons = ({ route: { params: { data } }, navigation:navigation }) => {
+const ScreenLessons = ({ route, navigation:navigation }) => {
+    const {data} = route.params;
+
     const LessonContentList = ({ content, index }) => (
         <View style={styles.AllLessonBackgroundView}>
             <Text style={styles.AllLessonNumber}>{`0${index + 1}`}</Text>
@@ -16,7 +18,7 @@ const ScreenLessons = ({ route: { params: { data } }, navigation:navigation }) =
                         screen: NAVIGATION_COURSE.quiz
                     })}
                 >
-                    <MaterialIcons size={30} name="add"/>
+                    <MaterialIcons size={40} name="arrow-right"/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -28,6 +30,7 @@ const ScreenLessons = ({ route: { params: { data } }, navigation:navigation }) =
                 source={data.image}
                 style={styles.LessonImageBackground}
             >
+                {/* <MaterialIcons size={30} name="arrow-left"/> */}
                 <Text style={styles.LessonTitle}>{data.name}</Text>
             </ImageBackground>
             <View style={styles.LessonContentView}>

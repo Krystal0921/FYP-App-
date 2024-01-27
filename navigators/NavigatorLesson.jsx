@@ -1,7 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { NAVIGATION_COURSE } from '../const/navigations';
 import ScreenLessons from '../screens/lesson/ScreenLessons';
-import ScreenCourses from '../screens/lesson/ScreenCourses';
 import ScreenQuiz from '../screens/lesson/ScreenQuiz';
 
 const Stack = createStackNavigator();

@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { NAVIGATION_TAB } from '../const/navigations';
+import { NAVIGATION_TAB, NAVIGATION_COURSE } from '../const/navigations';
+import {Image, Pressable, TouchableOpacity, Icon, Text} from 'react-native';
 import NavigatorCourses from './NavigatorCourses';
 import NavigatorUser from './NavigatorUser';
 import NavigatorForum from './NavigatorForum';
@@ -9,15 +10,16 @@ import NavigatorChats from './NavigatorChats';
 
 const Tab = createBottomTabNavigator();
 
-const NavigatorBottomTab = () => (
+const NavigatorBottomTab = ({ navigation }) => (
     <Tab.Navigator
         initialRouteName={NAVIGATION_TAB.course}
         screenOptions={{
-            tabBarActiveTintColor: 'black',
-            tabBarInactiveTintColor: 'black',
+            headerShown: false,
+            tabBarActiveTintColor: 'white',
+            tabBarInactiveTintColor: 'white',
             tabBarStyle: {
                 display: 'flex',
-                backgroundColor: 'white',
+                backgroundColor: '#55098B',
             },
             labeled: false
         }}
@@ -28,7 +30,7 @@ const NavigatorBottomTab = () => (
             options={{
                 title: 'Forum',
                 tabBarIcon: ({ focused }) => (
-                    <MaterialIcons name="people-alt" size={24} color={focused ? 'purple' : 'black'} />
+                    <MaterialIcons name="people-alt" size={24} color={focused ? 'grey' : 'white'} />
                 )
             }}
         />
@@ -38,7 +40,7 @@ const NavigatorBottomTab = () => (
             options={{
                 title: 'Jobs',
                 tabBarIcon: ({ focused }) => (
-                    <MaterialIcons name="work" size={24} color={focused ? 'purple' : 'black'} />
+                    <MaterialIcons name="work" size={24} color={focused ? 'grey' : 'white'} />
                 )
             }}
         />
@@ -46,9 +48,9 @@ const NavigatorBottomTab = () => (
             name={NAVIGATION_TAB.course}
             component={NavigatorCourses}
             options={{
-                title: 'Courses',
+                title: 'Home',
                 tabBarIcon: ({ focused, color, size }) => (
-                    <MaterialIcons name="book" size={24} color={focused ? 'purple' : 'black'} />
+                    <MaterialIcons name="home" size={24} color={focused ? 'grey' : 'white'} />
                 )
             }}
         />
@@ -58,7 +60,7 @@ const NavigatorBottomTab = () => (
             options={{
                 title: 'Chat',
                 tabBarIcon: ({ focused }) => (
-                    <MaterialIcons name="chat" size={24} color={focused ? 'purple' : 'black'} />
+                    <MaterialIcons name="chat" size={24} color={focused ? 'grey' : 'white'} />
                 )
             }}
         />
@@ -68,9 +70,10 @@ const NavigatorBottomTab = () => (
             options={{
                 title: 'User',
                 tabBarIcon: ({ focused }) => (
-                    <MaterialIcons name="person" size={24} color={focused ? 'purple' : 'black'} />
+                    <MaterialIcons name="person" size={24} color={focused ? 'grey' : 'white'} />
                 )
             }}
+            screenOptions={{ headerShown: false }}
         />
     </Tab.Navigator>
 );

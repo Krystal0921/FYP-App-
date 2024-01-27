@@ -19,7 +19,7 @@ const ScreenEditForum = ({navigation}) => {
                 </View>
                 <View style={styles.EditForumView}>
                     <TouchableOpacity style={styles.EditForumButton}>
-                        <Text style={styles.EditForumButtonText}>Create</Text>
+                        <Text style={styles.EditForumButtonText}>Edit</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>
@@ -29,7 +29,6 @@ const ScreenEditForum = ({navigation}) => {
 
 const styles = StyleSheet.create({
     EditForumTitle: {
-        flex: 1,
         fontSize: 25,
         fontWeight: 'bold',
     },
@@ -44,14 +43,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingBottom: 10,
         paddingTop: 10,
-        alignItems: 'center',
     },
     EditForumView: {
         paddingTop: 20,
+        paddingBottom: 20,
         flex: 1,
     },
     EditForumDetailsView: {
-        paddingTop: 50,
         flex: 1,
     },
     EditForumButton: {
@@ -76,9 +74,6 @@ const styles = StyleSheet.create({
         height: 300,
         width: 300,
         marginVertical: 3,
-        marginBottom: 10,
-        paddingBottom: 10,
-        paddingTop: 10,
         textAlignVertical: 'top', 
     },
     EditForumBackgound: {
@@ -86,8 +81,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         alignItems: 'center',
-        paddingTop: 50,
-        paddingBottom: 50,
     },
 });
 
