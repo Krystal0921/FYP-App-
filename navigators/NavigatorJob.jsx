@@ -8,9 +8,9 @@ const Stack = createStackNavigator();
 const NavigatorJob = () => (
     <Stack.Navigator
         intialRouteName={NAVIGATION_JOB.jobs}
-    
     >
         <Stack.Screen
+            options={{ headerShown: false }}
             name={NAVIGATION_JOB.jobs}
             component={ScreenJobs}
         />

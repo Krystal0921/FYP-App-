@@ -8,6 +8,7 @@ const ScreenForum = ({ navigation }) => {
     return (
         <ScrollView contentContainerStyle={styles.AllForumScrollView}>
             <SafeAreaView style={styles.AllForumBackgound}>
+
                 <View style={styles.AllForumSearch}>
                     <View style={styles.AllForumScreenView}>
                         <TouchableOpacity>
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     AllForumScrollView: {
-        flexGrow: 1
+        flexGrow: 1,
     },
     AllForumSearchText: {
         fontSize: 18,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     AllForumSearch: {
-        marginTop: 10,
+        marginTop: 50,
         paddingVertical: 10,
         alignItems: 'center',
         flexDirection: 'row'

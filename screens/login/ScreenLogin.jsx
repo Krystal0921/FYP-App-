@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     LoginBackgound: {
         backgroundColor: '#fff',
         flex: 1,
+        paddingTop: 50,
         alignItems: 'center',
     },
     LoginTitle: {

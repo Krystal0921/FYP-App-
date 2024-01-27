@@ -10,11 +10,11 @@ const Stack = createStackNavigator();
 const NavigatorForum = () => (
     <Stack.Navigator
         intialRouteName={NAVIGATION_FORUM.forum}
-        screenOptions={{ headerShown: false }}
     >
         <Stack.Screen
             name={NAVIGATION_FORUM.forum}
             component={ScreenForum}
+            options={{ headerShown: false }}
         />
         <Stack.Screen
             name={NAVIGATION_FORUM.createforum}

@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     EmploymentSignUpBackgound: {
         backgroundColor: '#fff',
         flex: 1,
+        paddingTop: 50,
         alignItems: "center",
     },
     EmploymentSignUpTitle: {

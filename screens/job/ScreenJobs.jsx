@@ -106,12 +106,13 @@ const ScreenJobs = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f7f7f7'
+        backgroundColor: '#f7f7f7',
     },
     header: {
         backgroundColor: '#fff',
         paddingVertical: 16,
-        paddingHorizontal: 24
+        paddingHorizontal: 24,
+        paddingTop: 50,
     },
     MainFooter: {
         flexDirection: 'row',

@@ -9,12 +9,11 @@ import ScreenEmployerSignUp from '../screens/login/ScreenEmployerSignUp';
 const Stack = createStackNavigator();
 
 const NavigatorLogin = () => (
-    <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-    >
+    <Stack.Navigator>
         <Stack.Screen
             name={NAVIGATION_USER.login}
             component={ScreenLogin}
+            options={{ headerShown: false }}
         />
         <Stack.Screen
             name={NAVIGATION_USER.user}

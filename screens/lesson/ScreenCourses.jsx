@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     MainBackground: {
         backgroundColor: '#fff',
         flex: 1,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        paddingTop: 50,
     },
     MainAllLessonNumber: {
         color: '#8F95B2',

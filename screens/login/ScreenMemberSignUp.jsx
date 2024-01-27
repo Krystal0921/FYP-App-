@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-// import { CheckBox } from '@rneui/themed';
+import { CheckBox } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 import { NAVIGATION_USER } from '../../const/navigations';
 
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flex: 1,
         alignItems: "center",
+        paddingTop: 50,
     },
     MemberSignUpTitle: {
         fontSize: 25, 
