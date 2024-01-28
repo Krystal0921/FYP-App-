@@ -10,8 +10,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const ScreenCourses = ({ navigation }) => {
-  const { data: courses, isLoading, mutate } = useCourses();
-
+  const { data: courses, isLoading } = useCourses();
   const CourseCard = ({ course }) => (
     <TouchableOpacity
       activeOpacity={0.8}
