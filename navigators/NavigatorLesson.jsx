@@ -6,18 +6,18 @@ import ScreenQuiz from '../screens/lesson/ScreenQuiz';
 const Stack = createStackNavigator();
 
 const NavigatorLesson = () => (
-    <Stack.Navigator
-        intialRouteName={NAVIGATION_COURSE.lessons}
-    >
-        <Stack.Screen
-            name={NAVIGATION_COURSE.lessons}
-            component={ScreenLessons}
-        />
-        <Stack.Screen
-            name={NAVIGATION_COURSE.quiz}
-            component={ScreenQuiz}
-        />
-    </Stack.Navigator>
+  <Stack.Navigator
+    intialRouteName={NAVIGATION_COURSE.lessons}
+  >
+    <Stack.Screen
+      name={NAVIGATION_COURSE.lessons}
+      component={ScreenLessons}
+    />
+    <Stack.Screen
+      name={NAVIGATION_COURSE.quiz}
+      component={ScreenQuiz}
+    />
+  </Stack.Navigator>
 );
 
 export default NavigatorLesson;

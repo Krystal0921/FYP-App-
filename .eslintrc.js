@@ -42,6 +42,6 @@ module.exports = {
     'template-curly-spacing': ['error', 'never'],
     'import/prefer-default-export': 'off',
     'react/prop-types': 'off',
-    'no-use-before-define': 'off',
+    'no-use-before-define': 'off'
   }
 };

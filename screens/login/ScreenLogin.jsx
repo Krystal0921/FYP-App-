@@ -16,7 +16,7 @@ const ScreenLogin = ({ navigation }) => {
       };
       // this is the mock server only, update it back to the real server (http://44.221.91.193:3000) when it is ready
       const response = await axios.post('https://765782e1-a7af-49ac-ab95-6eb848d0d5e9.mock.pstmn.io/login', data);
-      const user = response.data
+      const user = response.data;
       // TODO: save user data to local storage, so that we can check auth state in the future
 
       navigation.navigate(NAVIGATION_TAB.course);
