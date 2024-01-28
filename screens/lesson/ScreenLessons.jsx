@@ -13,8 +13,8 @@ const ScreenLessons = ({ route, navigation:navigation }) => {
                 <Text style={styles.AllLessonTitle}>{content.title}</Text>
             </View>
             <View style={styles.LessonButtonCircle}>
-                <TouchableOpacity 
-                    onPress={() => navigation.navigate(NAVIGATION_COURSE.lessons, {
+                <TouchableOpacity
+                    onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
                         screen: NAVIGATION_COURSE.quiz
                     })}
                 >
