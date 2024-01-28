@@ -2,15 +2,14 @@ import React from 'react';
 import { View, Text, ImageBackground, Image, Dimensions, FlatList, TextInput, SafeAreaView, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
+import courses from '../../const/courses';
 import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
 import background from '../../assets/backgroundd.png';
-import { useCourses } from '../../util/useDataHelper';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const ScreenCourses = ({ navigation }) => {
-  const { data: courses, isLoading } = useCourses();
   const CourseCard = ({ course }) => (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -54,23 +53,15 @@ const ScreenCourses = ({ navigation }) => {
           <Text style={styles.MainAllLessonText}>All Lesson</Text>
         </View>
       </View>
-      { isLoading
-        ? (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Loading...</Text>
-          </View>
-        )
-        : (
-          <View style={styles.MainAllLessonList}>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              numColumns={2}
-              data={courses}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => <CourseCard course={item} />}
-            />
-          </View>
-        )}
+      <View style={styles.MainAllLessonList}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={courses}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => <CourseCard course={item} />}
+        />
+      </View>
     </SafeAreaView>
   );
 };
