@@ -9,7 +9,7 @@ const ScreenPost = ({ navigation }) => (
       <Text style={styles.ForumTitle}>Title Name</Text>
       <TouchableOpacity
         style={styles.SignUpTypeButton}
-        onPress={() => navigation.navigate(NAVIGATION_FORUM.editforum, {
+        onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
           screen: NAVIGATION_FORUM.post
         })}
       >

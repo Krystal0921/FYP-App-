@@ -5,7 +5,7 @@ import NavigatorLesson from './NavigatorLesson';
 import NavigatorChat from './NavigatorChat';
 import NavigatorJobsDetails from './NavigatorJobsDetails';
 import NavigatorForumDetails from './NavigatorForumDetails';
-import NavigatorLoginDetails from './NavigatorLoginDetails';
+import NavigatorSignup from './NavigatorSignup';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ const NavigatorMain = () => (
     <Stack.Screen name={NAVIGATION_MAIN.chat} component={NavigatorChat} />
     <Stack.Screen name={NAVIGATION_MAIN.job} component={NavigatorJobsDetails} />
     <Stack.Screen name={NAVIGATION_MAIN.post} component={NavigatorForumDetails} />
-    <Stack.Screen name={NAVIGATION_MAIN.signup} component={NavigatorLoginDetails} />
+    <Stack.Screen name={NAVIGATION_MAIN.signup} component={NavigatorSignup} />
   </Stack.Navigator>
 );
 

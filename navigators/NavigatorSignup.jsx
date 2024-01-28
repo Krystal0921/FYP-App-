@@ -1,31 +1,31 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { NAVIGATION_MAIN, NAVIGATION_USER } from '../const/navigations';
+import { NAVIGATION_SIGNUP } from '../const/navigations';
 import ScreenSignup from '../screens/login/ScreenSignup';
 import ScreenMemberSignUp from '../screens/login/ScreenMemberSignUp';
 import ScreenEmployerSignUp from '../screens/login/ScreenEmployerSignUp';
 
 const Stack = createStackNavigator();
 
-const NavigatorLoginDetails = () => (
+const NavigatorSignup = () => (
   <Stack.Navigator
-    intialRouteName={NAVIGATION_USER.signup}
+    intialRouteName={NAVIGATION_SIGNUP.signup}
   >
     <Stack.Screen
-      name={NAVIGATION_MAIN.signup}
+      name={NAVIGATION_SIGNUP.signup}
       component={ScreenSignup}
       // options={({ route }) => ({
       //   title: route.params.name
       // })}
     />
     <Stack.Screen
-      name={NAVIGATION_USER.membersignup}
+      name={NAVIGATION_SIGNUP.memberSignup}
       component={ScreenMemberSignUp}
     />
     <Stack.Screen
-      name={NAVIGATION_USER.employersignup}
+      name={NAVIGATION_SIGNUP.employerSignup}
       component={ScreenEmployerSignUp}
     />
   </Stack.Navigator>
 );
 
-export default NavigatorLoginDetails;
+export default NavigatorSignup;

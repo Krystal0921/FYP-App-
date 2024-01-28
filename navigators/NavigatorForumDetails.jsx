@@ -15,11 +15,11 @@ const NavigatorForumDetails = () => (
       component={ScreenPost}
     />
     <Stack.Screen
-      name={NAVIGATION_FORUM.createforum}
+      name={NAVIGATION_FORUM.createForum}
       component={ScreenCreateForum}
     />
     <Stack.Screen
-      name={NAVIGATION_FORUM.editforum}
+      name={NAVIGATION_FORUM.editForum}
       component={ScreenEditForum}
     />
   </Stack.Navigator>

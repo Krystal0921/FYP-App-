@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { debounce } from 'lodash';
+import React from 'react';
 import { SafeAreaView, StyleSheet, TextInput, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_FORUM, NAVIGATION_MAIN } from '../../const/navigations';
@@ -23,7 +22,7 @@ const ScreenForum = ({ navigation }) => (
         <View style={styles.AllForumButtonCircle}>
           <TouchableOpacity
             onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
-              screen: NAVIGATION_FORUM.createforum
+              screen: NAVIGATION_FORUM.createForum
             })}
           >
             <MaterialIcons size={30} name="add" color="white" />
