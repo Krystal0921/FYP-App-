@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import { CheckBox } from '@rneui/themed';
-import { FontAwesome } from '@expo/vector-icons';
+// import { CheckBox } from '@rneui/themed';
 import { NAVIGATION_USER } from '../../const/navigations';
 
 const ScreenMemberSignUp = ({ navigation }) => {
@@ -49,11 +48,11 @@ const ScreenMemberSignUp = ({ navigation }) => {
             onPress={() => handleRadioPress('None of the above')}
           />
         </View>
-        <CheckBox
+        {/* <CheckBox
           title="Please tick to agree Terms and Conditions"
           checked
           onPress={handleCheckBoxToggle}
-        />
+        /> */}
         <View style={{ paddingTop: 10, paddingBottom: 10 }}>
           <TouchableOpacity style={styles.MemberSignUpButton}>
             <Text style={styles.MemberSignUpButtonText}>Register</Text>

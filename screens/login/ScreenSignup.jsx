@@ -1,6 +1,5 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Pressable, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { NAVIGATION_USER } from '../../const/navigations';
 
 const ScreenSignup = ({ navigation }) => (
