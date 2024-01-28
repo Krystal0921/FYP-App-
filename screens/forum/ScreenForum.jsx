@@ -1,150 +1,97 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-  Image,
-  Pressable,
-  ScrollView,
-  TouchableOpacity
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useState, useEffect } from 'react';
+import { debounce } from 'lodash';
+import { SafeAreaView, StyleSheet, TextInput, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { NAVIGATION_FORUM } from '../../const/navigations';
 
 const ScreenForum = ({ navigation }) => (
   <ScrollView contentContainerStyle={styles.AllForumScrollView}>
     <SafeAreaView style={styles.AllForumBackgound}>
-      <Text style={styles.AllForumTitle}>All Forum</Text>
+
       <View style={styles.AllForumSearch}>
         <View style={styles.AllForumScreenView}>
-          <Icon style={styles.AllForumIcon} size={30} name="search" />
+          <TouchableOpacity>
+            <MaterialIcons size={30} name="search" />
+          </TouchableOpacity>
           <TextInput
-            style={styles.AllForumSearchText}
-            placeholder="Search for anything"
+            style={styles.AllForumSearchInput}
+            placeholder="Search The Post"
+            placeholderTextColor="#888"
           />
         </View>
+        <Text>   </Text>
         <View style={styles.AllForumButtonCircle}>
-          <TouchableOpacity>
-            <Icon style={styles.AllForumButtonPlayArrow} name="add" />
+          <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_FORUM.createforum)}>
+            <MaterialIcons size={30} name="add" color="white" />
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.AllForum}>
-        <Pressable
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-          onPress={() => navigation.navigate('ForumScreen', {})}
-        >
-          <Text style={styles.AllForumText}>First Post</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/setting-icon.png')}
-          />
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </Pressable>
-      </View>
-      <View style={styles.AllForum}>
-        <View>
-          <Text style={styles.AllForumText}>Second Post</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/setting-icon.png')}
-          />
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </View>
-      </View>
-      <View style={styles.AllForum}>
-        <View>
-          <Text style={styles.AllForumText}>Third Post</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/setting-icon.png')}
-          />
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </View>
-      </View>
-      <View style={styles.AllForum}>
-        <View>
-          <Text style={styles.AllForumText}>Fourth Post</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/setting-icon.png')}
-          />
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </View>
-      </View>
-      <View style={styles.AllForum}>
-        <View>
-          <Text style={styles.AllForumText}>Fifth Post</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/setting-icon.png')}
-          />
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </View>
-      </View>
-      <View style={styles.AllForum}>
+
+      <TouchableOpacity
+        style={styles.AllForum}
+        onPress={() => navigation.navigate(NAVIGATION_FORUM.postforum)}
+      >
         <Image
           style={styles.AllForumImage}
           source={require('../../assets/setting-icon.png')}
         />
         <View>
-          <Text style={styles.AllForumText}>Sixth Post</Text>
+          <Text style={styles.AllForumText}>First Post</Text>
           <Text style={styles.AllForumParagraph}>paragraph</Text>
           <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
         </View>
-      </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.AllForum}
+        onPress={() => navigation.navigate(NAVIGATION_FORUM.postforum)}
+      >
+        <Image
+          style={styles.AllForumImage}
+          source={require('../../assets/setting-icon.png')}
+        />
+        <View>
+          <Text style={styles.AllForumText}>Second Post</Text>
+          <Text style={styles.AllForumParagraph}>paragraph</Text>
+          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.AllForum}
+        onPress={() => navigation.navigate(NAVIGATION_FORUM.postforum)}
+      >
+        <Image
+          style={styles.AllForumImage}
+          source={require('../../assets/setting-icon.png')}
+        />
+        <View>
+          <Text style={styles.AllForumText}>Third Post</Text>
+          <Text style={styles.AllForumParagraph}>paragraph</Text>
+          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   </ScrollView>
 );
 
 const styles = StyleSheet.create({
-  MainFooter: {
-    flexDirection: 'row',
-    height: 40,
-    paddingTop: 10,
-    backgroundColor: '#55098b',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  MainIcon: {
-    width: 30,
-    height: 30,
-    resizeMode: 'contain',
-    marginBottom: 5
-  },
-  AllForumTitleView: {
-    flexDirection: 'row',
-    alignItems: 'center'
+  AllForumSearchInput: {
+    color: '#333',
+    fontSize: 16,
+    marginLeft: 8,
+    width: 200
   },
   AllForumButtonCircle: {
     width: 40,
     height: 40,
-    backgroundColor: '#264858',
+    backgroundColor: '#55098B',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  AllForumButtonPlayArrow: {
-    fontSize: 25,
-    color: '#fff'
-  },
-  AllForumTime: {
-    fontWeight: '600',
-    paddingTop: 100,
-    paddingLeft: 120
-  },
   AllForumScrollView: {
     flexGrow: 1
-  },
-  AllForumIcon: {
-    paddingTop: 13,
-    paddingLeft: 10
   },
   AllForumSearchText: {
     fontSize: 18,
@@ -152,28 +99,26 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20
   },
-  AllForumCreateButtonText: {
-    color: '#f194ff'
-  },
   AllForumBackgound: {
     backgroundColor: '#fff',
     flex: 1,
-    alignItems: 'center',
-    paddingTop: 50
+    alignItems: 'center'
   },
   AllForumSearch: {
-    marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
+    marginTop: 50,
+    paddingVertical: 10,
     alignItems: 'center',
     flexDirection: 'row'
   },
   AllForumScreenView: {
-    width: 300,
-    height: 50,
-    borderRadius: 30,
+    backgroundColor: '#f1f3f4',
+    height: 48,
+    paddingHorizontal: 16,
+    borderRadius: 24,
     flexDirection: 'row',
-    backgroundColor: '#F5F5F7'
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd'
   },
   AllForumTitle: {
     fontSize: 25,
@@ -181,10 +126,11 @@ const styles = StyleSheet.create({
   },
   AllForum: {
     marginTop: 10,
+    marginBottom: 10,
     paddingBottom: 10,
     borderRadius: 10,
     width: 330,
-    backgroundColor: '#D0B3A0',
+    backgroundColor: '#D8BFD8',
     flexDirection: 'row'
   },
   AllForumImage: {
@@ -202,6 +148,11 @@ const styles = StyleSheet.create({
   },
   AllForumParagraph: {
     marginLeft: 10
+  },
+  AllForumTime: {
+    fontWeight: '600',
+    paddingTop: 100,
+    paddingLeft: 120
   }
 });
 

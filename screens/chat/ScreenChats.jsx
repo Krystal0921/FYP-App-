@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  FlatList,
-  TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NAVIGATION_MAIN } from '../../const/navigations';
 
@@ -46,7 +40,6 @@ const ScreenChats = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.SettingTitle}>Chat</Text>
       <FlatList
         data={chatData}
         renderItem={renderItem}
@@ -60,7 +53,6 @@ const styles = StyleSheet.create({
   MainFooter: {
     flexDirection: 'row',
     height: 40,
-    paddingTop: 10,
     backgroundColor: '#55098b',
     justifyContent: 'space-around',
     alignItems: 'center'
@@ -78,8 +70,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   container: {
-    paddingTop: 50,
     flex: 1,
+    paddingTop: 50,
     backgroundColor: '#fafafa'
   },
   item: {

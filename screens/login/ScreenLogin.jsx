@@ -1,60 +1,73 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity
-} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { NAVIGATION_USER } from '../../const/navigations';
+import axios from 'axios';
+import { NAVIGATION_TAB, NAVIGATION_USER } from '../../const/navigations';
 
-const ScreenLogin = ({ navigation }) => (
-  <SafeAreaView style={styles.LoginBackgound}>
-    <Image
-      style={styles.LoginImage}
-      source={require('../../assets/backgroundd.png')}
-    />
-    <View className="flex items-center">
-      <Text style={styles.LoginTitle}>Login</Text>
-    </View>
-    <Text style={styles.LoginText}>Username</Text>
-    <TextInput style={styles.LoginInputText} placeholder="Username" />
-    <Text style={styles.LoginText}>Password</Text>
-    <TextInput style={styles.LoginInputText} placeholder="**********" />
-    <TouchableOpacity style={styles.LoginButton}>
-      <Text style={styles.LoginButtonText}>Login</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate(NAVIGATION_USER.signup, {
-        screen: NAVIGATION_USER.signup
-      })}
-    >
-      <View style={styles.LoginSignUpView}>
-        <Text>Don't have a account? </Text>
-        <Text style={styles.LoginSignUpText}>Sign Up</Text>
-      </View>
-    </TouchableOpacity>
-  </SafeAreaView>
-);
+const ScreenLogin = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const Login = async () => {
+    try {
+      const data = {
+        username,
+        password
+      };
+      // this is the mock server only, update it back to the real server (http://44.221.91.193:3000) when it is ready
+      const response = await axios.post('https://765782e1-a7af-49ac-ab95-6eb848d0d5e9.mock.pstmn.io/login', data);
+      const user = response.data;
+      // TODO: save user data to local storage, so that we can check auth state in the future
+
+      navigation.navigate(NAVIGATION_TAB.course);
+    } catch (e) {
+      // if login response status !== 200
+      switch (e.response.status) {
+        case 401:
+          alert('Wrong username or password');
+          break;
+        default:
+          alert('Login failed');
+      }
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.LoginBackgound}>
+      <Image style={styles.LoginImage} source={require('../../assets/backgroundd.png')} />
+      <View className="flex items-center"><Text style={styles.LoginTitle}>Login</Text></View>
+      <Text style={styles.LoginText}>Username</Text>
+      <TextInput
+        style={styles.LoginInputText}
+        placeholder="Username"
+        value={username}
+        onChangeText={(text) => setUsername(text)}
+      />
+      <Text style={styles.LoginText}>Password</Text>
+      <TextInput
+        style={styles.LoginInputText}
+        placeholder="****"
+        secureTextEntry
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+      />
+      <TouchableOpacity style={styles.LoginButton} onPress={Login}>
+        <Text style={styles.LoginButtonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate(NAVIGATION_USER.signup, { screen: NAVIGATION_USER.signup })}
+      >
+        <View style={styles.LoginSignUpView}>
+          <Text>Don't have an account? </Text>
+          <Text style={styles.LoginSignUpText}>Sign Up</Text>
+        </View>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-  MainFooter: {
-    flexDirection: 'row',
-    height: 40,
-    paddingTop: 10,
-    backgroundColor: '#55098b',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  MainIcon: {
-    width: 30,
-    height: 30,
-    resizeMode: 'contain',
-    marginBottom: 5
-  },
   LoginButton: {
     paddingTop: 10,
     paddingBottom: 10,
@@ -74,8 +87,8 @@ const styles = StyleSheet.create({
   LoginBackgound: {
     backgroundColor: '#fff',
     flex: 1,
-    alignItems: 'center',
-    paddingTop: 50
+    paddingTop: 50,
+    alignItems: 'center'
   },
   LoginTitle: {
     fontSize: 25,
@@ -83,8 +96,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   LoginImage: {
-    height: 300,
-    width: 300,
+    height: 250,
+    width: 250,
     resizeMode: 'contain'
   },
   LoginInputText: {

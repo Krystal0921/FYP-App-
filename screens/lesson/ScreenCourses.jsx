@@ -1,25 +1,16 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  Dimensions,
-  FlatList,
-  TextInput,
-  SafeAreaView,
-  StyleSheet
-} from 'react-native';
+import { View, Text, ImageBackground, Image, Dimensions, FlatList, TextInput, SafeAreaView, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import courses from '../../const/courses';
+import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
 import background from '../../assets/backgroundd.png';
+import { useCourses } from '../../util/useDataHelper';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const ScreenCourses = ({ navigation }) => {
+  const { data: courses, isLoading } = useCourses();
   const CourseCard = ({ course }) => (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -53,7 +44,7 @@ const ScreenCourses = ({ navigation }) => {
       </View>
       <View>
         <View style={styles.MainSearchView}>
-          <Icon size={30} name="search" />
+          <MaterialIcons size={30} name="search" />
           <TextInput
             style={styles.MainSearchText}
             placeholder="Search for anything"
@@ -63,15 +54,23 @@ const ScreenCourses = ({ navigation }) => {
           <Text style={styles.MainAllLessonText}>All Lesson</Text>
         </View>
       </View>
-      <View style={styles.MainAllLessonList}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={courses}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => <CourseCard course={item} />}
-        />
-      </View>
+      { isLoading
+        ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Loading...</Text>
+          </View>
+        )
+        : (
+          <View style={styles.MainAllLessonList}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              numColumns={2}
+              data={courses}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => <CourseCard course={item} />}
+            />
+          </View>
+        )}
     </SafeAreaView>
   );
 };
@@ -115,7 +114,8 @@ const styles = StyleSheet.create({
   MainBackground: {
     backgroundColor: '#fff',
     flex: 1,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    paddingTop: 50
   },
   MainAllLessonNumber: {
     color: '#8F95B2',
@@ -138,20 +138,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     borderRadius: 15,
     overflow: 'hidden'
-  },
-  MainFooter: {
-    flexDirection: 'row',
-    height: 80,
-    paddingTop: 10,
-    backgroundColor: '#55098b',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  MainIcon: {
-    width: 30,
-    height: 30,
-    resizeMode: 'contain',
-    marginBottom: 5
   }
 });
 

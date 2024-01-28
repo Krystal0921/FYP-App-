@@ -1,29 +1,21 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
-import CircularProgress from "react-native-circular-progress-indicator";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Pressable } from 'react-native';
+import CircularProgress from 'react-native-circular-progress-indicator';
+import { useNavigation } from '@react-navigation/native';
 
 const user = [
   {
-    sid: "m0000001",
-    name: "John",
-    email: "aaa@gmail.com",
-    icon: require("../assets/icon.png"),
+    sid: 'm0000001',
+    name: 'John',
+    email: 'aaa@gmail.com',
+    icon: require('../../assets/icon.png'),
     lesson1Progress: 60,
     lesson2Progress: 10,
-    lesson3Progress: 90,
-  },
+    lesson3Progress: 90
+  }
 ];
 
-const UserScreen = () => {
+const ScreenUser = () => {
   const navigation = useNavigation();
   const [isAnimated, setIsAnimated] = useState(false);
 
@@ -50,9 +42,9 @@ const UserScreen = () => {
               strokeWidth={5}
               backgroundColor="#e0e0e0"
               strokeColorConfig={[
-                { color: "red", value: 0 },
-                { color: "skyblue", value: 50 },
-                { color: "yellowgreen", value: 100 },
+                { color: 'red', value: 0 },
+                { color: 'skyblue', value: 50 },
+                { color: 'yellowgreen', value: 100 }
               ]}
               animate={isAnimated}
               duration={800}
@@ -60,7 +52,6 @@ const UserScreen = () => {
             <Text style={styles.text}>Lesson 1</Text>
           </View>
         </TouchableOpacity>
-
         <TouchableOpacity onPress={handleAnimate}>
           <View style={styles.progressContainer}>
             <CircularProgress
@@ -69,9 +60,9 @@ const UserScreen = () => {
               strokeWidth={5}
               backgroundColor="#e0e0e0"
               strokeColorConfig={[
-                { color: "red", value: 0 },
-                { color: "skyblue", value: 50 },
-                { color: "yellowgreen", value: 100 },
+                { color: 'red', value: 0 },
+                { color: 'skyblue', value: 50 },
+                { color: 'yellowgreen', value: 100 }
               ]}
               animate={isAnimated}
               duration={800}
@@ -79,7 +70,6 @@ const UserScreen = () => {
             <Text style={styles.text}>Lesson 2</Text>
           </View>
         </TouchableOpacity>
-
         <TouchableOpacity onPress={handleAnimate}>
           <View style={styles.progressContainer}>
             <CircularProgress
@@ -88,9 +78,9 @@ const UserScreen = () => {
               strokeWidth={5}
               backgroundColor="#e0e0e0"
               strokeColorConfig={[
-                { color: "red", value: 0 },
-                { color: "skyblue", value: 50 },
-                { color: "yellowgreen", value: 100 },
+                { color: 'red', value: 0 },
+                { color: 'skyblue', value: 50 },
+                { color: 'yellowgreen', value: 100 }
               ]}
               animate={isAnimated}
               duration={800}
@@ -101,57 +91,47 @@ const UserScreen = () => {
       </View>
       <View style={styles.MainFooter}>
         <Pressable
-          style={({ pressed }) => {
-            return { opacity: pressed ? 0.5 : 1 };
-          }}
-          onPress={() => navigation.navigate("AllForumScreen", {})}
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          onPress={() => navigation.navigate('AllForumScreen', {})}
         >
           <Image
-            source={require("../assets/forum-icon.png")}
+            source={require('../../assets/forum-icon.png')}
             style={styles.MainIcon}
           />
         </Pressable>
         <Pressable
-          style={({ pressed }) => {
-            return { opacity: pressed ? 0.5 : 1 };
-          }}
-          onPress={() => navigation.navigate("ChooseChatScreen", {})}
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          onPress={() => navigation.navigate('ChooseChatScreen', {})}
         >
           <Image
-            source={require("../assets/chat-icon.png")}
+            source={require('../../assets/chat-icon.png')}
             style={styles.MainIcon}
           />
         </Pressable>
         <Pressable
-          style={({ pressed }) => {
-            return { opacity: pressed ? 0.5 : 1 };
-          }}
-          onPress={() => navigation.navigate("MainScreen", {})}
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          onPress={() => navigation.navigate('MainScreen', {})}
         >
           <Image
-            source={require("../assets/home-icon.png")}
+            source={require('../../assets/home-icon.png')}
             style={styles.MainIcon}
           />
         </Pressable>
         <Pressable
-          style={({ pressed }) => {
-            return { opacity: pressed ? 0.5 : 1 };
-          }}
-          onPress={() => navigation.navigate("JobList", {})}
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          onPress={() => navigation.navigate('JobList', {})}
         >
           <Image
-            source={require("../assets/employment-icon.png")}
+            source={require('../../assets/employment-icon.png')}
             style={styles.MainIcon}
           />
         </Pressable>
         <Pressable
-          style={({ pressed }) => {
-            return { opacity: pressed ? 0.5 : 1 };
-          }}
-          onPress={() => navigation.navigate("UserScreen", {})}
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+          onPress={() => navigation.navigate('UserScreen', {})}
         >
           <Image
-            source={require("../assets/user-icon.png")}
+            source={require('../../assets/user-icon.png')}
             style={styles.MainIcon}
           />
         </Pressable>
@@ -162,55 +142,55 @@ const UserScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     flex: 1,
-    padding: 20,
+    padding: 20
   },
   MainFooter: {
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 80,
     paddingTop: 10,
-    backgroundColor: "#55098b",
-    justifyContent: "space-around",
-    alignItems: "center",
+    backgroundColor: '#55098b',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
   horizontally: {
-    flexDirection: "row",
+    flexDirection: 'row'
   },
   vertical: {
-    flexDirection: "column",
-    alignSelf: "center",
+    flexDirection: 'column',
+    alignSelf: 'center'
   },
   hrLine: {
-    borderBottomColor: "black",
+    borderBottomColor: 'black',
     borderBottomWidth: 1,
-    marginVertical: 16,
+    marginVertical: 16
   },
   logo: {
     width: 150,
     height: 150,
     borderRadius: 10,
     marginVertical: 16,
-    alignSelf: "center",
+    alignSelf: 'center'
   },
   progressContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 80,
     paddingHorizontal: 10,
-    marginVertical: 16,
+    marginVertical: 16
   },
   progressTitle: {
     fontSize: 30,
     marginBottom: 5,
-    textAlign: "center",
+    textAlign: 'center'
   },
   text: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     marginBottom: 20,
     fontSize: 20,
-    textAlign: "center",
-  },
+    textAlign: 'center'
+  }
 });
 
-export default UserScreen;
+export default ScreenUser;

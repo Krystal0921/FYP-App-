@@ -1,14 +1,26 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Pressable, Image } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { NAVIGATION_USER } from '../../const/navigations';
 
 const ScreenSignup = ({ navigation }) => (
   <SafeAreaView style={styles.SignUpTypeBackgound}>
     <Text style={styles.SignUpTypeTitle}>Choose Your Type</Text>
-    <TouchableOpacity style={styles.SignUpTypeButton}>
+    <TouchableOpacity
+      style={styles.SignUpTypeButton}
+      onPress={() => navigation.navigate(NAVIGATION_USER.membersignup, {
+        screen: NAVIGATION_USER.signup
+      })}
+    >
       <Text style={styles.SignUpTypeButtonText}>Member</Text>
     </TouchableOpacity>
     <Text />
-    <TouchableOpacity style={styles.SignUpTypeButton}>
+    <TouchableOpacity
+      style={styles.SignUpTypeButton}
+      onPress={() => navigation.navigate(NAVIGATION_USER.employersignup, {
+        screen: NAVIGATION_USER.signup
+      })}
+    >
       <Text style={styles.SignUpTypeButtonText}>Employer</Text>
     </TouchableOpacity>
   </SafeAreaView>

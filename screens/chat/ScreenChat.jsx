@@ -3,6 +3,7 @@ import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, Keyboard
 
 const ScreenChat = () => {
   const [inputText, setInputText] = useState('');
+
   const [messages, setMessages] = useState([
     { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:58:22' },
     { id: 2, sender: 'John', content: 'Hello!', timestamp: '2024-01-17 10:56:22' },

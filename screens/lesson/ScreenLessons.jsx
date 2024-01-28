@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { NAVIGATION_COURSE } from '../../const/navigations';
 
-const ScreenLessons = ({ route: { params: { data } } }) => {
+const ScreenLessons = ({ route, navigation }) => {
+  const { data } = route.params;
+
   const LessonContentList = ({ content, index }) => (
     <View style={styles.AllLessonBackgroundView}>
       <Text style={styles.AllLessonNumber}>{`0${index + 1}`}</Text>
@@ -10,7 +13,13 @@ const ScreenLessons = ({ route: { params: { data } } }) => {
         <Text style={styles.AllLessonTitle}>{content.title}</Text>
       </View>
       <View style={styles.LessonButtonCircle}>
-        <Icon style={styles.LessonButtonPlayArrow} name="play-arrow" />
+        <TouchableOpacity
+          onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
+            screen: NAVIGATION_COURSE.quiz
+          })}
+        >
+          <MaterialIcons size={40} name="arrow-right" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -21,15 +30,14 @@ const ScreenLessons = ({ route: { params: { data } } }) => {
         source={data.image}
         style={styles.LessonImageBackground}
       >
-        <Text style={styles.LessonTitle}>  {data.name}  </Text>
+        {/* <MaterialIcons size={30} name="arrow-left"/> */}
+        <Text style={styles.LessonTitle}>{data.name}</Text>
       </ImageBackground>
       <View style={styles.LessonContentView}>
         <View style={styles.LessonLinkView}>
           <Text style={styles.LessonLinkText}>Pleace click here for more information of this lesson</Text>
         </View>
-        <Text style={styles.LessonConrentText}>
-          Lesson Content
-        </Text>
+        <Text style={styles.LessonConrentText}>Lesson Content</Text>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={data.courseContent}
@@ -78,7 +86,7 @@ const styles = StyleSheet.create({
   LessonButtonCircle: {
     width: 40,
     height: 40,
-    backgroundColor: '#264858',
+    backgroundColor: '#E0E0E0',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center'

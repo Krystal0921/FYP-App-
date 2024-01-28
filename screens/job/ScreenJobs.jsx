@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { debounce } from 'lodash';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { NAVIGATION_JOB } from '../../const/navigations';
 
 const initialJobData = [
   {
@@ -58,20 +52,23 @@ const ScreenJobs = () => {
   }, [searchQuery]);
 
   const handleSearch = () => {
-    const filtered = initialJobData.filter(
-      (job) => job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase())
-        || job.companyName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filtered = initialJobData.filter((job) => job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) || job.companyName.toLowerCase().includes(searchQuery.toLowerCase()));
     setFilteredJobs(filtered);
   };
 
   const navigation = useNavigation();
+
   const handleButtonPress = () => {
     navigation.navigate('JobDetail');
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.jobItem} onPress={handleButtonPress}>
+    <TouchableOpacity
+      style={styles.jobItem}
+      onPress={() => navigation.navigate(NAVIGATION_JOB.jobsdetails, {
+        screen: NAVIGATION_JOB.jobs
+      })}
+    >
       <Image source={item.avatar} style={styles.avatar} />
       <View style={styles.jobDetails}>
         <Text style={styles.jobTitle}>{item.jobTitle}</Text>
@@ -84,6 +81,9 @@ const ScreenJobs = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.searchContainer}>
+          <TouchableOpacity>
+            <MaterialIcons size={30} name="search" />
+          </TouchableOpacity>
           <TextInput
             style={styles.searchInput}
             placeholder="Search jobs by job title, company"
@@ -111,7 +111,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#fff',
     paddingVertical: 16,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    paddingTop: 50
   },
   MainFooter: {
     flexDirection: 'row',

@@ -5,6 +5,7 @@ import NavigatorLesson from './NavigatorLesson';
 import NavigatorChat from './NavigatorChat';
 
 const Stack = createStackNavigator();
+
 const NavigatorMain = () => (
   <Stack.Navigator
     intialRouteName={NAVIGATION_MAIN.home}

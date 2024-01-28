@@ -9,7 +9,7 @@ const NavigatorApp = () => {
     <NavigationContainer ref={navigationRef}>
       <NavigatorMain />
     </NavigationContainer>
-
   );
 };
+
 export default NavigatorApp;
