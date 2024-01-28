@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { debounce } from 'lodash';
 import { SafeAreaView, StyleSheet, TextInput, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { NAVIGATION_FORUM } from '../../const/navigations';
+import { NAVIGATION_FORUM, NAVIGATION_MAIN } from '../../const/navigations';
 
 const ScreenForum = ({ navigation }) => (
   <ScrollView contentContainerStyle={styles.AllForumScrollView}>
@@ -21,7 +21,11 @@ const ScreenForum = ({ navigation }) => (
         </View>
         <Text>   </Text>
         <View style={styles.AllForumButtonCircle}>
-          <TouchableOpacity onPress={() => navigation.navigate(NAVIGATION_FORUM.createforum)}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
+              screen: NAVIGATION_FORUM.createforum
+            })}
+          >
             <MaterialIcons size={30} name="add" color="white" />
           </TouchableOpacity>
         </View>
@@ -29,7 +33,9 @@ const ScreenForum = ({ navigation }) => (
 
       <TouchableOpacity
         style={styles.AllForum}
-        onPress={() => navigation.navigate(NAVIGATION_FORUM.postforum)}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
+          screen: NAVIGATION_FORUM.post
+        })}
       >
         <Image
           style={styles.AllForumImage}
@@ -44,7 +50,9 @@ const ScreenForum = ({ navigation }) => (
 
       <TouchableOpacity
         style={styles.AllForum}
-        onPress={() => navigation.navigate(NAVIGATION_FORUM.postforum)}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
+          screen: NAVIGATION_FORUM.post
+        })}
       >
         <Image
           style={styles.AllForumImage}
@@ -59,7 +67,9 @@ const ScreenForum = ({ navigation }) => (
 
       <TouchableOpacity
         style={styles.AllForum}
-        onPress={() => navigation.navigate(NAVIGATION_FORUM.postforum)}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
+          screen: NAVIGATION_FORUM.post
+        })}
       >
         <Image
           style={styles.AllForumImage}

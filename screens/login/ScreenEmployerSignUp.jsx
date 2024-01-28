@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import { Switch } from 'react-native-gesture-handler';
-import { NAVIGATION_USER } from '../../const/navigations';
 
 const ScreenEmployerSignUp = ({ navigation }) => {
   const [checked, setChecked] = useState('first');
@@ -75,7 +73,6 @@ const styles = StyleSheet.create({
   EmploymentSignUpBackgound: {
     backgroundColor: '#fff',
     flex: 1,
-    paddingTop: 50,
     alignItems: 'center'
   },
   EmploymentSignUpTitle: {

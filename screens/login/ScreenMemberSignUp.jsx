@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { CheckBox } from '@rneui/themed';
-import { FontAwesome } from '@expo/vector-icons';
-import { NAVIGATION_USER } from '../../const/navigations';
 
 const ScreenMemberSignUp = ({ navigation }) => {
   const [checked, setChecked] = useState('first');
@@ -94,8 +92,7 @@ const styles = StyleSheet.create({
   MemberSignUpBackgound: {
     backgroundColor: '#fff',
     flex: 1,
-    alignItems: 'center',
-    paddingTop: 50
+    alignItems: 'center'
   },
   MemberSignUpTitle: {
     fontSize: 25,

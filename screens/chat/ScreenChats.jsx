@@ -6,7 +6,7 @@ import { NAVIGATION_CHAT, NAVIGATION_MAIN } from '../../const/navigations';
 const chatData = [
   {
     id: '1',
-    name: 'John Doe',
+    name: 'John',
     message: 'Hello, how are you?',
     time: '10:30 AM',
     avatar: require('../../assets/favicon.png')
@@ -24,9 +24,7 @@ const ScreenChats = () => {
   const navigation = useNavigation();
 
   const handleButtonPress = () => {
-    navigation.navigate(NAVIGATION_MAIN.chat, {
-      screen: NAVIGATION_CHAT.chat,
-      params: { name: 'John Doe' } });
+    navigation.navigate(NAVIGATION_MAIN.chat, { screen: NAVIGATION_CHAT.chat, params: { name: 'John' } });
   };
 
   const renderItem = ({ item }) => (

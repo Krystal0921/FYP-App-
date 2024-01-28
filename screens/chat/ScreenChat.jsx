@@ -43,7 +43,6 @@ const ScreenChat = () => {
   return (
     <View style={styles.container}>
       <View style={styles.messagesContainer}>
-        <Text style={styles.SettingTitle}>John</Text>
         <FlatList
           data={messages}
           keyExtractor={(item) => item.id.toString()}

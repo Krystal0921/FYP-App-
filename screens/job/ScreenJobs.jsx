@@ -3,7 +3,7 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image } 
 import { debounce } from 'lodash';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { NAVIGATION_JOB } from '../../const/navigations';
+import { NAVIGATION_JOB, NAVIGATION_MAIN } from '../../const/navigations';
 
 const initialJobData = [
   {
@@ -65,8 +65,8 @@ const ScreenJobs = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.jobItem}
-      onPress={() => navigation.navigate(NAVIGATION_JOB.jobsdetails, {
-        screen: NAVIGATION_JOB.jobs
+      onPress={() => navigation.navigate(NAVIGATION_MAIN.job, {
+        screen: NAVIGATION_JOB.job
       })}
     >
       <Image source={item.avatar} style={styles.avatar} />
