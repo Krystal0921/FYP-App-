@@ -11,6 +11,9 @@ const NavigatorChat = () => (
     <Stack.Screen
       name={NAVIGATION_CHAT.chat}
       component={ScreenChat}
+      options={({ route }) => ({
+        title: route.params.name
+      })}
     />
   </Stack.Navigator>
 );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { NAVIGATION_MAIN } from '../../const/navigations';
+import { NAVIGATION_CHAT, NAVIGATION_MAIN } from '../../const/navigations';
 
 const chatData = [
   {
@@ -24,7 +24,9 @@ const ScreenChats = () => {
   const navigation = useNavigation();
 
   const handleButtonPress = () => {
-    navigation.navigate(NAVIGATION_MAIN.chat);
+    navigation.navigate(NAVIGATION_MAIN.chat, {
+      screen: NAVIGATION_CHAT.chat,
+      params: { name: 'John Doe' } });
   };
 
   const renderItem = ({ item }) => (
