@@ -5,12 +5,11 @@ const ScreenChat = () => {
   const [inputText, setInputText] = useState('');
 
   const [messages, setMessages] = useState([
-    { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:58:22' },
+    { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:30:22' },
     { id: 2, sender: 'John', content: 'Hello!', timestamp: '2024-01-17 10:56:22' },
     { id: 3, sender: 'John', content: 'How are you?', timestamp: '2024-01-17 10:56:25' },
-    { id: 4, sender: 'You', content: 'Hi John!', timestamp: '2024-01-17 10:58:22' },
-    { id: 5, sender: 'You', content: 'H!', timestamp: '2024-01-17 10:58:22' },
-    { id: 6, sender: 'You', content: 'I"m fine!', timestamp: '2024-01-17 10:58:22' }
+    { id: 4, sender: 'You', content: 'Hi Cherrie!', timestamp: '2024-01-17 10:58:22' },
+    { id: 5, sender: 'You', content: 'I"m fine!', timestamp: '2024-01-17 10:58:22' }
     // Add more messages here
   ]);
 
@@ -43,7 +42,6 @@ const ScreenChat = () => {
   return (
     <View style={styles.container}>
       <View style={styles.messagesContainer}>
-        <Text style={styles.SettingTitle}>John</Text>
         <FlatList
           data={messages}
           keyExtractor={(item) => item.id.toString()}

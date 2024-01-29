@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } fro
 
 const ScreenCreateForum = ({ navigation }) => (
   <SafeAreaView style={styles.CreateForumBackgound}>
-    <Text style={styles.CreateForumTitle}>Create A Post</Text>
     <View style={styles.CreateForumView}>
       <TextInput style={styles.CreateForumInputText} placeholder="Post Title" />
     </View>
@@ -74,7 +73,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
     alignItems: 'center',
-    paddingBottom: 50
+    paddingBottom: 50,
+    paddingTop: 50
   }
 });
 

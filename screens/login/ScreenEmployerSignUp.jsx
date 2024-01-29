@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView } from 'react-native';
-import { CheckBox } from 'react-native-elements';
-import { Switch } from 'react-native-gesture-handler';
-import { NAVIGATION_USER } from '../../const/navigations';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const ScreenEmployerSignUp = ({ navigation }) => {
   const [checked, setChecked] = useState('first');
 
-  const handleCheckBoxToggle = () => {
-    setChecked(!checked);
-  };
+  <BouncyCheckbox onPress={(isChecked: boolean) => {}} />
 
   return (
     <ScrollView contentContainerStyle={styles.EmploymentSignUpScrollView}>
@@ -31,10 +27,14 @@ const ScreenEmployerSignUp = ({ navigation }) => {
         >
           <Text style={styles.EmploymentSignUpButtonText}>Upload Images</Text>
         </TouchableOpacity>
-        <CheckBox
-          title="Please tick to agree Terms and Conditions"
-          checked={checked}
-          onPress={handleCheckBoxToggle}
+        <BouncyCheckbox
+          size={25}
+          fillColor="black"
+          unfillColor="#FFFFFF"
+          text="Please tick to agree Terms and condition"
+          iconStyle={{ borderColor: "red" }}
+          innerIconStyle={{ borderWidth: 2 }}
+          onPress={(isChecked: boolean) => {}}
         />
         <View style={{ paddingTop: 10, paddingBottom: 10 }}>
           <TouchableOpacity style={styles.EmploymentSignUpButton}>
@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   EmploymentSignUpBackgound: {
     backgroundColor: '#fff',
     flex: 1,
-    paddingTop: 50,
     alignItems: 'center'
   },
   EmploymentSignUpTitle: {
