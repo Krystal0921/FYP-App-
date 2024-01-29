@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { NAVIGATION_USER } from '../../const/navigations';
 
 const ScreenMemberSignUp = ({ navigation }) => {
   const [checked, setChecked] = useState('first');
@@ -45,6 +46,7 @@ const ScreenMemberSignUp = ({ navigation }) => {
             onPress={() => handleRadioPress('None of the above')}
           />
         </View>
+
         <BouncyCheckbox
           size={25}
           fillColor="black"
@@ -54,6 +56,7 @@ const ScreenMemberSignUp = ({ navigation }) => {
           innerIconStyle={{ borderWidth: 2 }}
           onPress={(isChecked: boolean) => {}}
         />
+
         <View style={{ paddingTop: 10, paddingBottom: 10 }}>
           <TouchableOpacity style={styles.MemberSignUpButton}>
             <Text style={styles.MemberSignUpButtonText}>Register</Text>
