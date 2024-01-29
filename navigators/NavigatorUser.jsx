@@ -17,9 +17,7 @@ const NavigatorLogin = () => (
     <Stack.Screen
       name={NAVIGATION_USER.user}
       component={ScreenUser}
-      options={({ route }) => ({
-        title: ''
-      })}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );
