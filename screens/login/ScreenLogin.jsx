@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import axios from 'axios';
-import { NAVIGATION_TAB, NAVIGATION_USER } from '../../const/navigations';
+import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN } from '../../const/navigations';
 
 const ScreenLogin = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -14,8 +14,8 @@ const ScreenLogin = ({ navigation }) => {
         username,
         password
       };
-      // this is the mock server only, update it back to the real server (http://44.221.91.193:3000) when it is ready
-      // const response = await axios.post('http://44.221.91.193:3000/login', data);
+
+            // const response = await axios.post('http://44.221.91.193:3000/login', data);
       // const user = response.data;
       
       fetch('http://44.221.91.193:3000/login/', {
@@ -39,6 +39,14 @@ const ScreenLogin = ({ navigation }) => {
         }
       }
     })
+      
+      // this is the mock server only, update it back to the real server (http://44.221.91.193:3000) when it is ready
+      //const response = await axios.post('https://765782e1-a7af-49ac-ab95-6eb848d0d5e9.mock.pstmn.io/login', data);
+      //const user = response.data;
+      // TODO: save user data to local storage, so that we can check auth state in the future
+
+      //navigation.navigate(NAVIGATION_USER.user);
+
     } catch (e) {
       // if login response status !== 200
       switch (e.response.status) {
@@ -75,7 +83,7 @@ const ScreenLogin = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate(NAVIGATION_USER.signup, { screen: NAVIGATION_USER.signup })}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.signup)}
       >
         <View style={styles.LoginSignUpView}>
           <Text>Don't have an account? </Text>

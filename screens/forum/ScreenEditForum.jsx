@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } fro
 
 const ScreenEditForum = ({ navigation }) => (
   <SafeAreaView style={styles.EditForumBackgound}>
-    <Text style={styles.EditForumTitle}>Edit Post</Text>
     <View style={styles.EditForumView}>
       <Text style={styles.EditForumInputText}>Post Title</Text>
     </View>

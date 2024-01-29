@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Alert, View, Text, ImageBackground, FlatList, SafeAreaView, Image, Button, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
+import background from '../../assets/0.png';
 
 const ScreenQuiz = ({ navigation }) => {
   const [checked, setChecked] = useState('first');
@@ -11,22 +12,22 @@ const ScreenQuiz = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.SectionBackgound}>
-      <Text style={styles.SectionTitle}>Animal</Text>
-      <View>
-        <View style={styles.Section} />
-      </View>
+      <Image
+        style={styles.MainTitleImage}
+        source={background}
+      />
       <Text style={styles.SectionQuestionTitle}>Question</Text>
       <Text>1. What is this?</Text>
       <View style={styles.SectionRadioButtonView}>
         <View style={styles.SectionRadioButtonRow}>
           <RadioButton.Item
-            label="A. Hamster"
+            label="A. 1"
             value="A"
             status={checked === 'A' ? 'checked' : 'unchecked'}
             onPress={() => handleRadioPress('A')}
           />
           <RadioButton.Item
-            label="B. Hamster"
+            label="B. 0"
             value="B"
             status={checked === 'B' ? 'checked' : 'unchecked'}
             onPress={() => handleRadioPress('B')}
@@ -34,13 +35,13 @@ const ScreenQuiz = ({ navigation }) => {
         </View>
         <View style={styles.SectionRadioButtonRow}>
           <RadioButton.Item
-            label="C. Hamster"
+            label="C. 4"
             value="C"
             status={checked === 'C' ? 'checked' : 'unchecked'}
             onPress={() => handleRadioPress('C')}
           />
           <RadioButton.Item
-            label="D. Hamster"
+            label="D. 7"
             value="D"
             status={checked === 'D' ? 'checked' : 'unchecked'}
             onPress={() => handleRadioPress('D')}
@@ -84,8 +85,7 @@ const styles = StyleSheet.create({
   SectionBackgound: {
     backgroundColor: '#fff',
     flex: 1,
-    alignItems: 'center',
-    paddingTop: 50
+    alignItems: 'center'
   },
   SectionTitle: {
     fontSize: 25,

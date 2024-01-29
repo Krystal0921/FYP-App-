@@ -3,6 +3,9 @@ import { NAVIGATION_MAIN } from '../const/navigations';
 import NavigatorBottomTab from './NavigatorBottomTab';
 import NavigatorLesson from './NavigatorLesson';
 import NavigatorChat from './NavigatorChat';
+import NavigatorJobsDetails from './NavigatorJobsDetails';
+import NavigatorForumDetails from './NavigatorForumDetails';
+import NavigatorSignup from './NavigatorSignup';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +17,9 @@ const NavigatorMain = () => (
     <Stack.Screen name={NAVIGATION_MAIN.home} component={NavigatorBottomTab} />
     <Stack.Screen name={NAVIGATION_MAIN.lesson} component={NavigatorLesson} />
     <Stack.Screen name={NAVIGATION_MAIN.chat} component={NavigatorChat} />
+    <Stack.Screen name={NAVIGATION_MAIN.job} component={NavigatorJobsDetails} />
+    <Stack.Screen name={NAVIGATION_MAIN.post} component={NavigatorForumDetails} />
+    <Stack.Screen name={NAVIGATION_MAIN.signup} component={NavigatorSignup} />
   </Stack.Navigator>
 );
 

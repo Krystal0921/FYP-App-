@@ -12,10 +12,16 @@ const NavigatorLesson = () => (
     <Stack.Screen
       name={NAVIGATION_COURSE.lessons}
       component={ScreenLessons}
+      options={({ route }) => ({
+        title: route.params.name
+      })}
     />
     <Stack.Screen
       name={NAVIGATION_COURSE.quiz}
       component={ScreenQuiz}
+      options={({ route }) => ({
+        title: 'Number and Letter'
+      })}
     />
   </Stack.Navigator>
 );

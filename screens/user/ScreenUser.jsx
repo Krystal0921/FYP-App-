@@ -6,9 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 const user = [
   {
     sid: 'm0000001',
-    name: 'John',
-    email: 'aaa@gmail.com',
-    icon: require('../../assets/icon.png'),
+    name: 'cherrie0912',
+    email: 'cherrie@pg95.com',
+    icon: require('../../assets/Cherrie.jpeg'),
     lesson1Progress: 60,
     lesson2Progress: 10,
     lesson3Progress: 90
@@ -32,6 +32,7 @@ const ScreenUser = () => {
           <Text style={styles.text}>E-mail : {user[0].email}</Text>
         </View>
       </View>
+      <View style={styles.hrLine} />
       <Text style={styles.progressTitle}>Progress</Text>
       <View style={styles.horizontally}>
         <TouchableOpacity onPress={handleAnimate}>
@@ -89,73 +90,31 @@ const ScreenUser = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.MainFooter}>
-        <Pressable
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-          onPress={() => navigation.navigate('AllForumScreen', {})}
-        >
-          <Image
-            source={require('../../assets/forum-icon.png')}
-            style={styles.MainIcon}
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-          onPress={() => navigation.navigate('ChooseChatScreen', {})}
-        >
-          <Image
-            source={require('../../assets/chat-icon.png')}
-            style={styles.MainIcon}
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-          onPress={() => navigation.navigate('MainScreen', {})}
-        >
-          <Image
-            source={require('../../assets/home-icon.png')}
-            style={styles.MainIcon}
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-          onPress={() => navigation.navigate('JobList', {})}
-        >
-          <Image
-            source={require('../../assets/employment-icon.png')}
-            style={styles.MainIcon}
-          />
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-          onPress={() => navigation.navigate('UserScreen', {})}
-        >
-          <Image
-            source={require('../../assets/user-icon.png')}
-            style={styles.MainIcon}
-          />
-        </Pressable>
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  hrLine: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    marginVertical: 16
+  },
   container: {
     backgroundColor: 'white',
     flex: 1,
-    padding: 20
+    padding: 60
   },
   MainFooter: {
     flexDirection: 'row',
     height: 80,
-    paddingTop: 10,
     backgroundColor: '#55098b',
     justifyContent: 'space-around',
     alignItems: 'center'
   },
   horizontally: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignSelf: 'center'
   },
   vertical: {
     flexDirection: 'column',
@@ -167,22 +126,23 @@ const styles = StyleSheet.create({
     marginVertical: 16
   },
   logo: {
-    width: 150,
-    height: 150,
-    borderRadius: 10,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
     marginVertical: 16,
     alignSelf: 'center'
   },
   progressContainer: {
     alignItems: 'center',
-    marginTop: 80,
+    marginTop: 30,
     paddingHorizontal: 10,
     marginVertical: 16
   },
   progressTitle: {
     fontSize: 30,
     marginBottom: 5,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   text: {
     flexDirection: 'row',

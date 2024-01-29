@@ -1,10 +1,10 @@
 export const NAVIGATION_MAIN = {
-  home: 'Home',
-  lesson: 'LessonDetails',
-  post: 'Post',
-  chat: 'Chat',
-  login: 'Login',
-  job: 'Job'
+  home: 'HomeNavigator',
+  lesson: 'LessonNavigator',
+  post: 'PostNavigator',
+  chat: 'ChatNavigator',
+  signup: 'SignupNavigator',
+  job: 'JobNavigator'
 };
 
 export const NAVIGATION_TAB = {
@@ -24,22 +24,25 @@ export const NAVIGATION_COURSE = {
 
 export const NAVIGATION_USER = {
   user: 'User',
-  login: 'Login',
-  signup: 'SignUp',
-  membersignup: 'MemberSignUp',
-  employersignup: 'EmployerSignUp'
+  login: 'Login'
 };
 
+export const NAVIGATION_SIGNUP = {
+  signup: 'Signup',
+  memberSignup: 'MemberSignUp',
+  employerSignup: 'EmployerSignUp'
+
+};
 export const NAVIGATION_FORUM = {
   forum: 'Forum',
-  createforum: 'CreateForum',
-  editforum: 'EditForum',
-  postforum: 'PostForum'
+  createForum: 'CreateForum',
+  editForum: 'EditForum',
+  post: 'PostForum'
 };
 
 export const NAVIGATION_JOB = {
   jobs: 'Jobs',
-  jobsdetails: 'JobsDetails'
+  job: 'JobsDetails'
 };
 
 export const NAVIGATION_CHAT = {

@@ -15,7 +15,7 @@ const ScreenCourses = ({ navigation }) => {
       activeOpacity={0.8}
       onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
         screen: NAVIGATION_COURSE.lessons,
-        params: { data: course }
+        params: { data: course, name: course.name }
       })}
     >
       <ImageBackground
@@ -75,8 +75,7 @@ const styles = StyleSheet.create({
   },
   MainAllLessonText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff'
+    fontWeight: 'bold'
   },
   MainSearchText: {
     fontSize: 18,

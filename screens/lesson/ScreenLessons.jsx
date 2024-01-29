@@ -29,10 +29,7 @@ const ScreenLessons = ({ route, navigation }) => {
       <ImageBackground
         source={data.image}
         style={styles.LessonImageBackground}
-      >
-        {/* <MaterialIcons size={30} name="arrow-left"/> */}
-        <Text style={styles.LessonTitle}>{data.name}</Text>
-      </ImageBackground>
+      />
       <View style={styles.LessonContentView}>
         <View style={styles.LessonLinkView}>
           <Text style={styles.LessonLinkText}>Pleace click here for more information of this lesson</Text>
