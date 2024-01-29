@@ -13,17 +13,23 @@ const NavigatorSignup = () => (
     <Stack.Screen
       name={NAVIGATION_SIGNUP.signup}
       component={ScreenSignup}
-      // options={({ route }) => ({
-      //   title: route.params.name
-      // })}
+      options={({ route }) => ({
+        title: ''
+      })}
     />
     <Stack.Screen
       name={NAVIGATION_SIGNUP.memberSignup}
       component={ScreenMemberSignUp}
+      options={({ route }) => ({
+        title: ''
+      })}
     />
     <Stack.Screen
       name={NAVIGATION_SIGNUP.employerSignup}
       component={ScreenEmployerSignUp}
+      options={({ route }) => ({
+        title: ''
+      })}
     />
   </Stack.Navigator>
 );

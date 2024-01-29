@@ -4,32 +4,24 @@ import { View, Text, StyleSheet, Button, Modal, ScrollView, TouchableOpacity, Im
 const detail = [
   {
     id: '1',
-    jobTitle: 'Software Engineer',
-    companyName: 'ABC Company',
-    location: 'New York, NY',
-    description:
-      'ABC Company is seeking a talented Software Engineer to join our team. In this role, you will be responsible for developing and maintaining software applications to meet our clients\' needs. We are looking for someone with strong coding skills and a passion for problem-solving.',
-
+    jobTitle: 'Full-time Library Materials Organizer',
+    companyName: 'Adecco Personnel Limited',
+    location: 'Public Libraries in Hong Kong, Kowloon and the New Territories',
+    description: 'Full-time, LCSD Outsourcing Contracts',
     highlight: [
-      'Promote and sell fuel card services',
-      'Provide after sales service and CRM support',
-      'Basic Salary + Attractive Commission + Performance Bonus'
+      '17 days of public holidays',
+      'On-the-job training and good promotion prospects'
     ],
     responsibilities: [
-      'Develop high-quality software solutions based on client requirements.',
-      'Collaborate with cross-functional teams to define, design, and ship new features.',
-      'Write clean, maintainable code and perform code reviews.',
-      'Debug and resolve software defects.'
+      'Responsible for organizing all kinds of library materials, including classification, sorting and shelving, cleaning and disinfecting books, and transportation and other manual work'
     ],
     requirements: [
-      'Bachelor\'s degree in Computer Science or related field.',
-      'Proficient in one or more programming languages such as Java, C++, or Python.',
-      'Experience with software development methodologies and best practices.',
-      'Strong problem-solving and analytical skills.',
-      'Excellent communication and teamwork abilities.'
+      'Work 6 days per week, 8 hours per day',
+      '5 days off per month',
+      'Secondary 3 or equivalent in Hong Kong'
     ],
-    time: '2024-01-17 10:56:22',
-    companyImage: require('../../assets/adaptive-icon.png')
+    time: '2023-01-31 23:59:59',
+    companyImage: require('../../assets/adecco.png')
   }
 ];
 

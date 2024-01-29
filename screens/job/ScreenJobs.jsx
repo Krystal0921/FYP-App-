@@ -8,33 +8,39 @@ import { NAVIGATION_JOB, NAVIGATION_MAIN } from '../../const/navigations';
 const initialJobData = [
   {
     id: '1',
-    jobTitle: 'Software Engineer',
-    companyName: 'ABC Company',
-    avatar: require('../../assets/favicon.png')
+    jobTitle: 'Full-time Library Materials Organizer',
+    companyName: 'Adecco Personnel Limited',
+    avatar: require('../../assets/adecco.png')
   },
   {
     id: '2',
-    jobTitle: 'Frontend Developer',
-    companyName: 'XYZ Inc.',
-    avatar: require('../../assets/favicon.png')
+    jobTitle: 'Part-time Library Materials Organizer',
+    companyName: 'Adecco Personnel Limited',
+    avatar: require('../../assets/adecco.png')
   },
   {
     id: '3',
-    jobTitle: 'Data Analyst',
-    companyName: 'PQR Corporation',
-    avatar: require('../../assets/favicon.png')
+    jobTitle: 'Barista',
+    companyName: 'Séan Café & Lounge',
+    avatar: require('../../assets/sean_cafe.jpg')
   },
   {
     id: '4',
-    jobTitle: 'UI/UX Designer',
-    companyName: 'DEF Solutions',
-    avatar: require('../../assets/favicon.png')
+    jobTitle: 'Waiters',
+    companyName: 'Séan Café & Lounge',
+    avatar: require('../../assets/sean_cafe.jpg')
   },
   {
     id: '5',
-    jobTitle: 'Backend Developer',
-    companyName: 'GHI Technologies',
-    avatar: require('../../assets/favicon.png')
+    jobTitle: 'Mechanic Assistant (Tire)',
+    companyName: 'The Kowloon Motor Bus Co. (1933) Ltd',
+    avatar: require('../../assets/kmb.png')
+  },
+  {
+    id: '6',
+    jobTitle: 'Assistant Officer, Customer Service',
+    companyName: 'The Kowloon Motor Bus Co. (1933) Ltd',
+    avatar: require('../../assets/kmb.png')
   }
 ];
 
@@ -58,15 +64,12 @@ const ScreenJobs = () => {
 
   const navigation = useNavigation();
 
-  const handleButtonPress = () => {
-    navigation.navigate('JobDetail');
-  };
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.jobItem}
       onPress={() => navigation.navigate(NAVIGATION_MAIN.job, {
-        screen: NAVIGATION_JOB.job
+        screen: NAVIGATION_JOB.job,
+        params: { name: '' }
       })}
     >
       <Image source={item.avatar} style={styles.avatar} />

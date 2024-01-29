@@ -12,7 +12,7 @@ const NavigatorChat = () => (
       name={NAVIGATION_CHAT.chat}
       component={ScreenChat}
       options={({ route }) => ({
-        title: route.params.name
+        title: 'cherrie0912'
       })}
     />
   </Stack.Navigator>

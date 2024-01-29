@@ -36,15 +36,13 @@ const ScreenForum = ({ navigation }) => (
           screen: NAVIGATION_FORUM.post
         })}
       >
+        <Text style={styles.AllForumText}>How accurate for battery level is myPhonak app?</Text>
         <Image
           style={styles.AllForumImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/myPhonak_app.png')}
         />
-        <View>
-          <Text style={styles.AllForumText}>First Post</Text>
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </View>
+        <Text style={styles.AllForumParagraph}>Lately I have been leaving my KS9s turned on and in my ears all night streaming nature sounds and music in order to block out the neighborhood "disk jockey" who was keeping me up all night. (I tried every type and strength of earplugs first and none were )</Text>
+        <Text style={styles.AllForumTime}>2024-01-16 19:29:47</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -53,15 +51,13 @@ const ScreenForum = ({ navigation }) => (
           screen: NAVIGATION_FORUM.post
         })}
       >
+        <Text style={styles.AllForumText}>Assessment for Cochlear Implant - I'm a candidate!</Text>
         <Image
           style={styles.AllForumImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/cochlear_implant.jpg')}
         />
-        <View>
-          <Text style={styles.AllForumText}>Second Post</Text>
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </View>
+        <Text style={styles.AllForumParagraph}>Yesterday was assessment day. We were up very early to make the drive to Toronto and arrived in plenty of time, which was a very good thing as there was a long line-up to enter the main entrance to the hospital that snaked well down the sidewalk. It was v</Text>
+        <Text style={styles.AllForumTime}>2024-01-17 09:51:36</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -70,15 +66,13 @@ const ScreenForum = ({ navigation }) => (
           screen: NAVIGATION_FORUM.post
         })}
       >
+        <Text style={styles.AllForumText}>Borderline for hearing aids?</Text>
         <Image
           style={styles.AllForumImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/Borderline.jpg')}
         />
-        <View>
-          <Text style={styles.AllForumText}>Third Post</Text>
-          <Text style={styles.AllForumParagraph}>paragraph</Text>
-          <Text style={styles.AllForumTime}>21:01:2024 19:57</Text>
-        </View>
+        <Text style={styles.AllForumParagraph}>I saw an MD/ENT today due to my own perceived hearing loss. Did a hearing test which included bone conduction and tympany I think (was not sure exactly what it was). He said he doesn't think I will benefit from HA because my loss, such as it is, is mostly</Text>
+        <Text style={styles.AllForumTime}>2024-01-17 09:51:36</Text>
       </TouchableOpacity>
     </SafeAreaView>
   </ScrollView>
@@ -134,21 +128,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   AllForum: {
+    padding: 10,
     marginTop: 10,
     marginBottom: 10,
     paddingBottom: 10,
     borderRadius: 10,
     width: 330,
     backgroundColor: '#D8BFD8',
-    flexDirection: 'row'
+    flexDirection: 'column'
   },
   AllForumImage: {
-    height: 50,
-    width: 50,
+    height: 100,
+    width: 100,
     marginRight: 20,
     marginLeft: 20,
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
+    alignSelf: 'center'
   },
   AllForumText: {
     fontSize: 20,
@@ -161,7 +157,7 @@ const styles = StyleSheet.create({
   AllForumTime: {
     fontWeight: '600',
     paddingTop: 100,
-    paddingLeft: 120
+    paddingLeft: 170
   }
 });
 

@@ -11,6 +11,9 @@ const NavigatorJobDetails = () => (
     <Stack.Screen
       name={NAVIGATION_JOB.job}
       component={ScreenJobsDetails}
+      options={({ route }) => ({
+        title: route.params.name
+      })}
     />
   </Stack.Navigator>
 );

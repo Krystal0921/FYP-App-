@@ -13,14 +13,23 @@ const NavigatorForumDetails = () => (
     <Stack.Screen
       name={NAVIGATION_FORUM.post}
       component={ScreenPost}
+      options={({ route }) => ({
+        title: ''
+      })}
     />
     <Stack.Screen
       name={NAVIGATION_FORUM.createForum}
       component={ScreenCreateForum}
+      options={({ route }) => ({
+        title: 'Create Post'
+      })}
     />
     <Stack.Screen
       name={NAVIGATION_FORUM.editForum}
       component={ScreenEditForum}
+      options={({ route }) => ({
+        title: 'Edit Post'
+      })}
     />
   </Stack.Navigator>
 );

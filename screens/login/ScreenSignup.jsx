@@ -14,9 +14,7 @@ const ScreenSignup = ({ navigation }) => (
     <Text />
     <TouchableOpacity
       style={styles.SignUpTypeButton}
-      onPress={() => navigation.navigate(NAVIGATION_SIGNUP.employerSignup, {
-        params: { name: '' }
-      })}
+      onPress={() => navigation.navigate(NAVIGATION_SIGNUP.employerSignup)}
     >
       <Text style={styles.SignUpTypeButtonText}>Employer</Text>
     </TouchableOpacity>

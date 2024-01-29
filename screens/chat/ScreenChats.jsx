@@ -6,17 +6,17 @@ import { NAVIGATION_CHAT, NAVIGATION_MAIN } from '../../const/navigations';
 const chatData = [
   {
     id: '1',
-    name: 'John',
+    name: 'cherrie0912',
     message: 'Hello, how are you?',
     time: '10:30 AM',
-    avatar: require('../../assets/favicon.png')
+    avatar: require('../../assets/Cherrie.jpeg')
   },
   {
     id: '2',
     name: 'Jane Smith',
     message: 'I am good, thanks!',
     time: '11:45 AM',
-    avatar: require('../../assets/favicon.png')
+    avatar: require('../../assets/default-profile-picture.jpg')
   }
 ];
 

@@ -6,7 +6,7 @@ import { NAVIGATION_FORUM } from '../../const/navigations';
 const ScreenPost = ({ navigation }) => (
   <SafeAreaView style={styles.ForumBackgound}>
     <ScrollView contentContainerStyle={styles.ForumScrollView}>
-      <Text style={styles.ForumTitle}>Title Name</Text>
+      <Text style={styles.ForumTitle}>How accurate for battery level is myPhonak app?</Text>
       <TouchableOpacity
         style={styles.SignUpTypeButton}
         onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
@@ -18,63 +18,62 @@ const ScreenPost = ({ navigation }) => (
       <View style={styles.ForumTitleImageView}>
         <Image
           style={styles.ForumTitleImage}
-          source={require('../../assets/backgroundd.png')}
+          source={require('../../assets/myPhonak_app.png')}
         />
       </View>
-      <Text style={styles.ForumDesciptionText}>This is a Desciption.This is a Desciption.This is a Desciption.This is a Desciption.This is a Desciption.</Text>
-
+      <Text style={styles.ForumDesciptionText}>Lately I have been leaving my KS9s turned on and in my ears all night streaming nature sounds and music in order to block out the neighborhood "disk jockey" who was keeping me up all night. (I tried every type and strength of earplugs first and none were )</Text>
       <View style={styles.ForumCommentView}>
         <Image
           style={styles.ForumCommentImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/Cherrie.jpeg')}
         />
         <View>
-          <Text style={styles.ForumCommentText}>First Comment</Text>
-          <Text style={styles.ForumCommentParagraph}>Comment Details</Text>
+          <Text style={styles.ForumCommentText}>cherrie0912</Text>
+          <Text style={styles.ForumCommentParagraph}>Good sharing.</Text>
           <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
         </View>
       </View>
       <View style={styles.ForumCommentView}>
         <Image
           style={styles.ForumCommentImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/default-profile-picture.jpg')}
         />
         <View>
-          <Text style={styles.ForumCommentText}>Second Comment</Text>
-          <Text style={styles.ForumCommentParagraph}>Comment Details</Text>
+          <Text style={styles.ForumCommentText}>kris0111</Text>
+          <Text style={styles.ForumCommentParagraph}>Excellent!</Text>
           <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
         </View>
       </View>
       <View style={styles.ForumCommentView}>
         <Image
           style={styles.ForumCommentImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/default-profile-picture.jpg')}
         />
         <View>
-          <Text style={styles.ForumCommentText}>Third Comment</Text>
-          <Text style={styles.ForumCommentParagraph}>Comment Details</Text>
+          <Text style={styles.ForumCommentText}>jackyIsZero001</Text>
+          <Text style={styles.ForumCommentParagraph}>Wow</Text>
           <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
         </View>
       </View>
       <View style={styles.ForumCommentView}>
         <Image
           style={styles.ForumCommentImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/default-profile-picture.jpg')}
         />
         <View>
-          <Text style={styles.ForumCommentText}>Forth Comment</Text>
-          <Text style={styles.ForumCommentParagraph}>Comment Details</Text>
+          <Text style={styles.ForumCommentText}>ivy023yyy</Text>
+          <Text style={styles.ForumCommentParagraph}>Looks great!</Text>
           <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
         </View>
       </View>
       <View style={styles.ForumCommentView}>
         <Image
           style={styles.ForumCommentImage}
-          source={require('../../assets/setting-icon.png')}
+          source={require('../../assets/default-profile-picture.jpg')}
         />
         <View>
-          <Text style={styles.ForumCommentText}>Fifth Comment</Text>
-          <Text style={styles.ForumCommentParagraph}>Comment Details</Text>
+          <Text style={styles.ForumCommentText}>wandy090</Text>
+          <Text style={styles.ForumCommentParagraph}>Oops</Text>
           <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
         </View>
       </View>
@@ -83,6 +82,7 @@ const ScreenPost = ({ navigation }) => (
       <TextInput
         style={styles.MainSearchText}
         placeholder="Type Some Comment"
+        placeholderTextColor="#888"
       />
       <TouchableOpacity>
         <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
@@ -116,19 +116,21 @@ const styles = StyleSheet.create({
     paddingLeft: 120
   },
   MainSearchText: {
-    fontSize: 18,
-    marginLeft: 5
+    flex: 1,
+    height: '100%',
+    color: '#333',
+    fontSize: 16,
+    marginLeft: 8
   },
   MainSearchView: {
-    height: 60,
-    width: 350,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 15,
-    backgroundColor: '#F5F5F7',
-    borderRadius: 30,
+    backgroundColor: '#f1f3f4',
+    height: 48,
+    paddingHorizontal: 16,
+    borderRadius: 24,
+    flexDirection: 'row',
     alignItems: 'center',
-    flexDirection: 'row'
+    borderWidth: 1,
+    borderColor: '#ddd'
   },
   ForumCommentParagraph: {
     marginLeft: 10
@@ -168,6 +170,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   ForumTitleImage: {
+    padding: 10,
     height: 150,
     width: 300,
     resizeMode: 'contain'
@@ -183,6 +186,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   ForumTitle: {
+    padding: 10,
     fontSize: 25,
     fontWeight: 'bold',
     alignSelf: 'center'
