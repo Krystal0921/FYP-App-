@@ -20,7 +20,7 @@ const ScreenLogin = ({ navigation }) => {
       const user = response.data;
       // TODO: save user data to local storage, so that we can check auth state in the future
 
-      navigation.navigate(NAVIGATION_TAB.course);
+      navigation.navigate(NAVIGATION_USER.user);
     } catch (e) {
       // if login response status !== 200
       switch (e.response.status) {

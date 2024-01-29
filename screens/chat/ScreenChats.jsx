@@ -13,7 +13,7 @@ const chatData = [
   },
   {
     id: '2',
-    name: 'Jane Smith',
+    name: 'kris0111',
     message: 'I am good, thanks!',
     time: '11:45 AM',
     avatar: require('../../assets/default-profile-picture.jpg')

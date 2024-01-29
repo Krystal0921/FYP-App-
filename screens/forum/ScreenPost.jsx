@@ -146,7 +146,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginLeft: 20,
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
+    borderRadius: 25
   },
   ForumCommentView: {
     marginTop: 10,
