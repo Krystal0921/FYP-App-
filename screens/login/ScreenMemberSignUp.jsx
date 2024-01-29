@@ -25,7 +25,6 @@ const ScreenMemberSignUp = ({ navigation }) => {
       updatedMType = "3";
     }
     setMType(updatedMType);
-    alert(updatedMType)
   };
 
 

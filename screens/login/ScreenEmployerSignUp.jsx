@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView } from 'react-native';
+import { TouchableOpacity, SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, Button } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { Switch } from 'react-native-gesture-handler';
 import { NAVIGATION_USER } from '../../const/navigations';
+import { ImagePickerIOS } from 'react-native';
+import { launchImageLibrary } from 'react-native-image-picker';
+
 
 const ScreenEmployerSignUp = ({ navigation }) => {
   const [checked, setChecked] = useState('first');
@@ -15,8 +18,27 @@ const ScreenEmployerSignUp = ({ navigation }) => {
   const [contact, setContact] = useState('');
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
-  const [photo, setPhoto] = useState('');
+  const [photoUri, setPhotoUri] = useState(null);
 
+
+  const handleImageSelection = () => {
+    const options = {
+      title: 'Select Image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image selection');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        setPhotoUri(response.uri);
+      }
+    });
+  };
 
 
   const handleCheckBoxToggle = () => {
@@ -33,7 +55,7 @@ const ScreenEmployerSignUp = ({ navigation }) => {
       cContact: contact,
       cAddress :address,
       cNumber: number,
-      cPhoto: photo
+      cPhoto: photoUri
     };
 
     if (password !== confirmPassword) {
@@ -132,9 +154,10 @@ const ScreenEmployerSignUp = ({ navigation }) => {
         <TextInput style={styles.EmploymentSignUpInputText} placeholder="Company Contact" />
         <TextInput style={styles.EmploymentSignUpInputText} placeholder="Company Address" />
         <TextInput style={styles.EmploymentSignUpInputText} placeholder="Company Register Number" /> */}
-        <Text style={styles.EmploymentSignUpUploadImagesText}>Please upload your company logo:</Text>
+        <Text style={styles.EmploymentSignUpUploadImagesText} >Please upload your company logo:</Text>
         <TouchableOpacity
           style={styles.EmploymentSignUpButton}
+          onPress={handleImageSelection}
         >
           <Text style={styles.EmploymentSignUpButtonText}>Upload Images</Text>
         </TouchableOpacity>
@@ -144,7 +167,8 @@ const ScreenEmployerSignUp = ({ navigation }) => {
           onPress={handleCheckBoxToggle}
         />
         <View style={{ paddingTop: 10, paddingBottom: 10 }}>
-          <TouchableOpacity style={styles.EmploymentSignUpButton}>
+          <TouchableOpacity style={styles.EmploymentSignUpButton}onPress={handleSignUp}>
+          {photoUri && <Image source={{ uri: photoUri }} style={{ width: 200, height: 200 }} />}
             <Text style={styles.EmploymentSignUpButtonText}>Register</Text>
           </TouchableOpacity>
         </View>
