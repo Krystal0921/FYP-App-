@@ -14,8 +14,8 @@ const ScreenLessons = ({ route, navigation }) => {
       </View>
       <View style={styles.LessonButtonCircle}>
         <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
-            screen: NAVIGATION_COURSE.quiz
+          onPress={() => navigation.navigate(NAVIGATION_COURSE.read, {
+            screen: NAVIGATION_COURSE.read
           })}
         >
           <MaterialIcons size={40} name="arrow-right" />
@@ -43,12 +43,37 @@ const ScreenLessons = ({ route, navigation }) => {
             <LessonContentList index={index} content={item} />
           )}
         />
+        <TouchableOpacity
+          style={styles.AllLessonQuizButton}
+          onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
+            screen: NAVIGATION_COURSE.quiz
+          })}
+        >
+          <Text style={styles.AllLessonQuizText}>Quiz</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  AllLessonQuizButton: {
+    alignSelf: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 16,
+    width: 300,
+    backgroundColor: '#264858',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: 'center'
+  },
+  AllLessonQuizText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
   AllLessonBackgroundView: {
     paddingHorizontal: 20,
     paddingVertical: 10,

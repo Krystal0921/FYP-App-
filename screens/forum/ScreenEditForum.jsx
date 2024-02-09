@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } fro
 const ScreenEditForum = ({ navigation }) => (
   <SafeAreaView style={styles.EditForumBackgound}>
     <View style={styles.EditForumView}>
-      <Text style={styles.EditForumInputText}>Post Title</Text>
+      <Text style={styles.EditForumInputText}>How accurate for battery level is myPhonak app?</Text>
     </View>
     <View style={styles.EditForumView}>
       <TouchableOpacity style={styles.EditForumButton}>
