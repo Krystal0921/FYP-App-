@@ -20,14 +20,14 @@ const NavigatorLesson = () => (
     <Stack.Screen
       name={NAVIGATION_COURSE.quiz}
       component={ScreenQuiz}
-      options={({ route }) => ({
+      options={() => ({
         title: 'Number and Letter'
       })}
     />
     <Stack.Screen
       name={NAVIGATION_COURSE.read}
       component={ScreenRead}
-      options={({ route }) => ({
+      options={() => ({
         title: ''
       })}
     />

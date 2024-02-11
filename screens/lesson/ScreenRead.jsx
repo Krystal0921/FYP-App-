@@ -5,34 +5,50 @@ import courses from '../../const/courses';
 const ScreenRead = ({ route, navigation }) => {
   let lessonRead;
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const onClickNext = (index) => {
-    lessonRead.scrollToIndex({ animated: true, index: index + 1 });
+    try {
+      lessonRead.scrollToIndex({ animated: true, index: index + 1 });
+    } catch (e) {
+      console.log(e);
+      navigation.goBack();
+    }
   };
 
-  const LessonRead = ({ course }) => (
-    <View style={styles.SectionReadInformation}>
-      <Image style={styles.SectionReadImage} source={course.image} />
-      <TouchableOpacity
-        style={styles.SectionReadButton}
-        onPress={() => onClickNext(index)}
-      >
-        <Text style={styles.SectionReadButtonText}>Next</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
   return (
-    <SafeAreaView style={styles.SectionReadBackgound}>
+    <View style={styles.SectionReadBackgound}>
       <FlatList
         data={courses}
         horizontal
         pagingEnabled
+        scrollEnabled={false}
         ref={(ref) => {
           lessonRead = ref;
         }}
-        renderItem={({ item, index }) => <LessonRead course={item} />}
+        renderItem={({ item, index }) => (
+          <View style={styles.SectionReadInformation}>
+            <Image style={styles.SectionReadImage} source={item.image} />
+            {index + 1 != 3
+              ? (
+                <TouchableOpacity
+                  style={styles.SectionReadButton}
+                  onPress={() => onClickNext(index)}
+                >
+                  <Text style={styles.SectionReadButtonText}>Next</Text>
+                </TouchableOpacity>
+              )
+              : (
+                <TouchableOpacity
+                  style={styles.SectionReadButton}
+                  onPress={() => onClickNext(index)}
+                >
+                  <Text style={styles.SectionReadButtonText}>Finish</Text>
+                </TouchableOpacity>
+              )}
+          </View>
+        )}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -46,7 +62,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
     paddingTop: 50,
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 20
   },
   SectionReadButton: {
     paddingTop: 10,
@@ -73,3 +90,22 @@ const styles = StyleSheet.create({
 });
 
 export default ScreenRead;
+
+// {index+1!=chapter.length?
+
+//  <TouchableOpacity
+//   onPress={()=>onClickNext(index)}
+//       style={{backgroundColor:Colors.primary,
+//   padding:10,borderRadius:7,position:'absolute',bottom:0,
+//   width:'110%'}}>
+//           <Text style={{textAlign:'center',color:Colors.white}}>Next</Text>
+//   </TouchableOpacity>:
+
+//   <TouchableOpacity
+//   onPress={()=>onClickNext(index)}
+//       style={{backgroundColor:Colors.green,
+//   padding:10,borderRadius:7,position:'absolute',bottom:0,
+//   width:'110%'}}>
+//           <Text style={{textAlign:'center',color:Colors.white}}>Finish</Text>
+//   </TouchableOpacity>
+// }
