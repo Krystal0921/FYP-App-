@@ -12,15 +12,30 @@ const ScreenLessons = ({ route, navigation }) => {
       <View style={{ paddingHorizontal: 20, flex: 1 }}>
         <Text style={styles.AllLessonTitle}>{content.title}</Text>
       </View>
-      <View style={styles.LessonButtonCircle}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate(NAVIGATION_COURSE.read, {
-            screen: NAVIGATION_COURSE.read
-          })}
-        >
-          <MaterialIcons size={40} name="arrow-right" />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.LessonButtonCircle}
+        onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
+          screen: NAVIGATION_COURSE.quiz
+        })}
+      >
+        <MaterialIcons size={40} name="play-arrow" />
+      </TouchableOpacity>
+    </View>
+  );
+
+  const renderQuizSection = () => (
+    <View style={styles.AllQuizBackgroundView}>
+      <View style={{ paddingHorizontal: 20, flex: 1 }}>
+        <Text style={styles.AllQuizTitle}>Quiz</Text>
       </View>
+      <TouchableOpacity
+        style={styles.LessonButtonCircle}
+        onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
+          screen: NAVIGATION_COURSE.quiz
+        })}
+      >
+        <MaterialIcons size={40} name="play-arrow" />
+      </TouchableOpacity>
     </View>
   );
 
@@ -32,7 +47,7 @@ const ScreenLessons = ({ route, navigation }) => {
       />
       <View style={styles.LessonContentView}>
         <View style={styles.LessonLinkView}>
-          <Text style={styles.LessonLinkText}>Pleace click here for more information of this lesson</Text>
+          <Text style={styles.LessonLinkText}>Please click here for more information of this lesson</Text>
         </View>
         <Text style={styles.LessonConrentText}>Lesson Content</Text>
         <FlatList
@@ -42,57 +57,39 @@ const ScreenLessons = ({ route, navigation }) => {
           renderItem={({ item, index }) => (
             <LessonContentList index={index} content={item} />
           )}
+          ListFooterComponent={renderQuizSection}
         />
-        <TouchableOpacity
-          style={styles.AllLessonQuizButton}
-          onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
-            screen: NAVIGATION_COURSE.quiz
-          })}
-        >
-          <Text style={styles.AllLessonQuizText}>Quiz</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  AllLessonQuizButton: {
-    alignSelf: 'center',
-    paddingTop: 10,
-    paddingBottom: 10,
-    fontSize: 16,
-    width: 300,
-    backgroundColor: '#264858',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    alignItems: 'center'
-  },
-  AllLessonQuizText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold'
-  },
   AllLessonBackgroundView: {
     paddingHorizontal: 20,
     paddingVertical: 10,
     flexDirection: 'row'
+  },
+  AllQuizBackgroundView: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    backgroundColor: '#8B0960'
   },
   AllLessonNumber: {
     fontSize: 40,
     fontWeight: 'bold',
     color: '#E4E7F4'
   },
-  AllLessonTime: {
-    fontSize: 15,
-    color: '#A0A5BD',
-    fontWeight: '500',
-    marginBottom: 5
-  },
   AllLessonTitle: {
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  AllQuizTitle: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    color: '#fff'
   },
   LessonImageBackground: {
     height: 300,
