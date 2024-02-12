@@ -13,7 +13,6 @@ const ScreenQuiz = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.SectionBackgound}>
       <Image
-        style={styles.MainTitleImage}
         source={background}
       />
       <Text style={styles.SectionQuestionTitle}>Question</Text>

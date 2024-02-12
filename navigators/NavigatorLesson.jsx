@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NAVIGATION_COURSE } from '../const/navigations';
 import ScreenLessons from '../screens/lesson/ScreenLessons';
 import ScreenQuiz from '../screens/lesson/ScreenQuiz';
+import ScreenRead from '../screens/lesson/ScreenRead';
 
 const Stack = createStackNavigator();
 
@@ -19,8 +20,15 @@ const NavigatorLesson = () => (
     <Stack.Screen
       name={NAVIGATION_COURSE.quiz}
       component={ScreenQuiz}
-      options={({ route }) => ({
+      options={() => ({
         title: 'Number and Letter'
+      })}
+    />
+    <Stack.Screen
+      name={NAVIGATION_COURSE.read}
+      component={ScreenRead}
+      options={() => ({
+        title: ''
       })}
     />
   </Stack.Navigator>
