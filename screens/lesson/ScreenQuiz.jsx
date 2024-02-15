@@ -1,15 +1,41 @@
 import React, { useState } from 'react';
 import { StyleSheet, Alert, View, Text, ImageBackground, FlatList, SafeAreaView, Image, Button, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
+<<<<<<< Updated upstream
 import background from '../../assets/0.png';
+=======
+import courses from '../../const/courses';
+import ProgressBar from './ProgressBar';
+>>>>>>> Stashed changes
 
-const ScreenQuiz = ({ navigation }) => {
+const ScreenQuiz = ({ route, navigation }) => {
+  const { data } = route.params;
   const [checked, setChecked] = useState('first');
+<<<<<<< Updated upstream
+=======
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(1 / 10);
+  let lessonQuiz;
+>>>>>>> Stashed changes
 
   const handleRadioPress = (value) => {
     setChecked(value);
   };
 
+<<<<<<< Updated upstream
+=======
+  const onClickNext = (index) => {
+    setProgress((index + 2) / 10);
+    try {
+      lessonQuiz.scrollToIndex({ animated: true, index: index + 1 });
+      setCurrentIndex(index + 1);
+    } catch (e) {
+      console.log(e);
+      navigation.goBack();
+    }
+  };
+
+>>>>>>> Stashed changes
   return (
     <SafeAreaView style={styles.SectionBackgound}>
       <Image

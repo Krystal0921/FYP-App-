@@ -3,10 +3,20 @@ import { StyleSheet, SafeAreaView, Image, TouchableOpacity, Text, FlatList, View
 import courses from '../../const/courses';
 
 const ScreenRead = ({ route, navigation }) => {
+<<<<<<< Updated upstream
+=======
+  const { name, data } = route.params;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(1 / 10);
+>>>>>>> Stashed changes
   let lessonRead;
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const onClickNext = (index) => {
+<<<<<<< Updated upstream
+=======
+    setProgress((index + 2) / 10);
+>>>>>>> Stashed changes
     try {
       lessonRead.scrollToIndex({ animated: true, index: index + 1 });
     } catch (e) {
@@ -18,7 +28,12 @@ const ScreenRead = ({ route, navigation }) => {
   return (
     <View style={styles.SectionReadBackgound}>
       <FlatList
+<<<<<<< Updated upstream
         data={courses}
+=======
+        data={data.page}
+        showsVerticalScrollIndicator={false}
+>>>>>>> Stashed changes
         horizontal
         pagingEnabled
         scrollEnabled={false}
@@ -27,8 +42,15 @@ const ScreenRead = ({ route, navigation }) => {
         }}
         renderItem={({ item, index }) => (
           <View style={styles.SectionReadInformation}>
+<<<<<<< Updated upstream
             <Image style={styles.SectionReadImage} source={item.image} />
             {index + 1 != 3
+=======
+            <Image style={styles.SectionReadImage} source={item.rImage} />
+            <Text>{item.rId}</Text>
+            <Text style={styles.SectionReadText}>English Name is: {item.rName}</Text>
+            {index + 1 != 10
+>>>>>>> Stashed changes
               ? (
                 <TouchableOpacity
                   style={styles.SectionReadButton}

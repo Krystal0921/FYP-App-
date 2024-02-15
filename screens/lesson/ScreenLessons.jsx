@@ -15,7 +15,11 @@ const ScreenLessons = ({ route, navigation }) => {
       <TouchableOpacity
         style={styles.LessonButtonCircle}
         onPress={() => navigation.navigate(NAVIGATION_COURSE.read, {
+<<<<<<< Updated upstream
           screen: NAVIGATION_COURSE.read
+=======
+          name: session.id, data: session
+>>>>>>> Stashed changes
         })}
       >
         <MaterialIcons size={40} name="play-arrow" />
@@ -23,12 +27,12 @@ const ScreenLessons = ({ route, navigation }) => {
     </View>
   );
 
-  const QuizSection = () => (
+  const QuizSection = ({ session }) => (
     <View style={styles.QuizSectionContainer}>
       <TouchableOpacity
         style={styles.QuizButton}
         onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
-          screen: NAVIGATION_COURSE.quiz
+          data: session
         })}
       >
         <Text style={styles.QuizButtonText}>Take Quiz</Text>

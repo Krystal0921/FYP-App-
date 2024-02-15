@@ -7,10 +7,12 @@ import NavigatorUser from './NavigatorUser';
 import NavigatorForum from './NavigatorForum';
 import NavigatorJob from './NavigatorJob';
 import NavigatorChats from './NavigatorChats';
+import { getData } from '../const/AsyncStorage';
 
 const Tab = createBottomTabNavigator();
 
 const NavigatorBottomTab = ({ navigation }) => (
+
   <Tab.Navigator
     initialRouteName={NAVIGATION_TAB.course}
     screenOptions={{
@@ -57,7 +59,7 @@ const NavigatorBottomTab = ({ navigation }) => (
     />
     <Tab.Screen
       name={NAVIGATION_TAB.chats}
-      component={NavigatorChats}
+      component={getData('loggedin') == 'true' ? NavigatorUser : NavigatorChats}
       options={{
         title: 'Chat',
         tabBarIcon: ({ focused }) => (
