@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN } from '../../const/navigations';
 import { storeData } from '../../const/AsyncStorage'; // Import AsyncStorage
 
@@ -14,6 +15,7 @@ const ScreenLogin = ({ navigation }) => {
         username,
         password
       };
+
       fetch('http://44.221.91.193:3000/login/', {
         method: 'POST',
         headers: {
@@ -21,16 +23,10 @@ const ScreenLogin = ({ navigation }) => {
         },
         body: JSON.stringify(data)
       })
-
         .then((response) => response.json())
         .then((responseData) => {
           if (responseData.success) {
-            // Store username and password
-            storeData('username', username);
-            storeData('password', password);
-            storeData('loggedin', 'true');
-            alert('Welcome.');
-            navigation.navigate(NAVIGATION_TAB.course);
+            navigation.navigate(NAVIGATION_USER.user);
           } else if (responseData.code === 1) {
             alert(responseData.msg);
           } else {

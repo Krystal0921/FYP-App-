@@ -44,7 +44,6 @@ const ScreenChats = () => {
   return (
 
     <View style={styles.container}>
-      <Text>a{() => getData(loggedin)}b</Text>
       <FlatList
         data={chatData}
         renderItem={renderItem}

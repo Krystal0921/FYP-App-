@@ -1,25 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_COURSE } from '../../const/navigations';
 
 const ScreenLessons = ({ route, navigation }) => {
-  const { data } = route.params;
+  const { lessonId } = route.params;
+  const [courses, setCourses] = useState([]);
+  const [SId, setSId] = useState('');
 
-  const LessonContentList = ({ content, index }) => (
+  useEffect(() => {
+    const Section = async () => {
+      try {
+        const sectiondata = {
+          SId: lessonId
+        };
+
+        const response = await fetch('http://44.221.91.193:3000/Lesson/Section/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sectiondata })
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          alert(responseData.data[0].description);
+          setCourses(responseData.data);
+        } else if (responseData.code === 1) {
+          alert(responseData.msg);
+        } else {
+          alert('Wrong username or password');
+        }
+      } catch (error) {
+        alert('Lesson Section Error');
+      }
+    };
+
+    Section();
+  }, [lessonId]);
+
+  const LessonContentList = ({ session, index }) => (
     <View style={styles.AllLessonBackgroundView}>
       <Text style={styles.AllLessonNumber}>{`0${index + 1}`}</Text>
       <View style={{ paddingHorizontal: 20, flex: 1 }}>
-        <Text style={styles.AllLessonTitle}>{content.title}</Text>
+        <Text style={styles.AllLessonTitle}>{session.title}</Text>
       </View>
       <TouchableOpacity
         style={styles.LessonButtonCircle}
         onPress={() => navigation.navigate(NAVIGATION_COURSE.read, {
-<<<<<<< Updated upstream
-          screen: NAVIGATION_COURSE.read
-=======
-          name: session.id, data: session
->>>>>>> Stashed changes
+          name: session, data: session
         })}
       >
         <MaterialIcons size={40} name="play-arrow" />
@@ -32,6 +61,7 @@ const ScreenLessons = ({ route, navigation }) => {
       <TouchableOpacity
         style={styles.QuizButton}
         onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
+          screen: NAVIGATION_COURSE.quiz,
           data: session
         })}
       >
@@ -43,20 +73,22 @@ const ScreenLessons = ({ route, navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
       <ImageBackground
-        source={data.image}
+        // source={data.image}
         style={styles.LessonImageBackground}
       />
       <View style={styles.LessonContentView}>
+        <Text>{lessonId}</Text>
+        <Text>{SId}</Text>
         <View style={styles.LessonLinkView}>
           <Text style={styles.LessonLinkText}>Please click here for more information of this lesson</Text>
         </View>
         <Text style={styles.LessonContentText}>Lesson Content</Text>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data.courseContent}
+          data={courses}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item, index }) => (
-            <LessonContentList index={index} content={item} />
+          renderItem={({ item }) => (
+            <LessonContentList session={item} />
           )}
           ListFooterComponent={QuizSection}
         />

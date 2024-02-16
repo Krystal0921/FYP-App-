@@ -4,14 +4,6 @@ const courses = [
     name: "Daily Communication",
     totalCourse: "25",
     image: require("../assets/daily-communication.jpg"),
-<<<<<<< Updated upstream
-    courseContent: [
-      { id: "S001", title: "Number and Letter" },
-      { id: "S002", title: "Time Related" },
-      { id: "S003", title: "Weather" },
-      { id: "S004", title: "Animal" },
-      { id: "S005", title: "Greeting" },
-=======
     sessions: [
       {
         id: "S001",
@@ -293,7 +285,6 @@ const courses = [
           },
         ],
       },
->>>>>>> Stashed changes
     ],
     quiz: {
       id: "Q001",
@@ -314,14 +305,6 @@ const courses = [
     name: "Travel Communication",
     totalCourse: "20",
     image: require("../assets/travel-communication.png"),
-<<<<<<< Updated upstream
-    courseContent: [
-      { id: "S006", title: "Place" },
-      { id: "S007", title: "Food" },
-      { id: "S008", title: "Transportation" },
-      { id: "S009", title: "Festival" },
-      { id: "S010", title: "Phrase for travel" },
-=======
     sessions: [
       {
         id: "S006",
@@ -603,7 +586,6 @@ const courses = [
           },
         ],
       },
->>>>>>> Stashed changes
     ],
     quiz: {
       id: "Q002",
@@ -618,13 +600,6 @@ const courses = [
     name: "Workplace Communication",
     totalCourse: "10",
     image: require("../assets/workplace-communication.jpg"),
-<<<<<<< Updated upstream
-    courseContent: [
-      { id: "S011", title: "Job Occupation" },
-      { id: "S012", title: "Job Related Tools" },
-      { id: "S013", title: "Workplace Environment" },
-      { id: "S014", title: "Vocabulary for Meeting" },
-=======
     sessions: [
       {
         id: "S011",
@@ -850,7 +825,6 @@ const courses = [
           },
         ],
       },
->>>>>>> Stashed changes
       { id: "S015", title: "Interview" },
     ],
     quiz: {

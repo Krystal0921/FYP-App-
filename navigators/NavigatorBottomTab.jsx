@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Image, Pressable, TouchableOpacity, Icon, Text } from 'react-native';
 import { NAVIGATION_TAB, NAVIGATION_COURSE } from '../const/navigations';
 import NavigatorCourses from './NavigatorCourses';
 import NavigatorUser from './NavigatorUser';
@@ -59,7 +58,7 @@ const NavigatorBottomTab = ({ navigation }) => (
     />
     <Tab.Screen
       name={NAVIGATION_TAB.chats}
-      component={getData('loggedin') == 'true' ? NavigatorUser : NavigatorChats}
+      component={NavigatorChats}
       options={{
         title: 'Chat',
         tabBarIcon: ({ focused }) => (

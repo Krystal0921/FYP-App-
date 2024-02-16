@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, Image, Dimensions, FlatList, TextInput, SafeAreaView, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
-import courses from '../../const/courses';
 import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
 import background from '../../assets/backgroundd.png';
 
@@ -10,47 +9,68 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const ScreenCourses = ({ navigation }) => {
-  const CourseCard = ({ course }) => (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
-        screen: NAVIGATION_COURSE.lessons,
-        params: { data: course, name: course.name }
-      })}
-    >
-      <ImageBackground
-        source={course.image}
-        style={styles.MainAllLessonBackground}
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://44.221.91.193:3000/Lesson/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({})
+        });
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+          setCourses(responseData.data);
+        } else if (responseData.code === 1) {
+          alert(responseData.msg);
+        } else {
+          alert('Wrong username or password');
+        }
+      } catch (error) {
+        alert('Lesson Error');
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const CourseCard = ({ course }) => {
+    const lessonPhotoPath = `../assets/${course.lessonPhoto}`;
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
+          screen: NAVIGATION_COURSE.lessons,
+          params: { lessonId: course.lessonId, name: course.name }
+        })}
       >
-        <Text
-          multiline
-          numberOfLines={2}
-          style={styles.MainAllLessonTitle}
-        >
-          {course.name}
-        </Text>
-      </ImageBackground>
-    </TouchableOpacity>
-  );
+        <ImageBackground source={{ uri: lessonPhotoPath }} style={styles.MainAllLessonBackground}>
+          <Text multiline numberOfLines={2} style={styles.MainAllLessonTitle}>
+            {course.lessonName}
+          </Text>
+        </ImageBackground>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.MainBackground}>
       <View style={styles.MainTitleImageView}>
-        <Image
-          style={styles.MainTitleImage}
-          source={background}
-        />
+        <Image style={styles.MainTitleImage} source={background} />
       </View>
       <View>
         <View style={styles.MainSearchView}>
           <MaterialIcons size={30} name="search" />
-          <TextInput
-            style={styles.MainSearchText}
-            placeholder="Search for anything"
-          />
+          <TextInput style={styles.MainSearchText} placeholder="Search for anything" />
         </View>
         <View style={styles.MainAllLessonTextView}>
-          <Text style={styles.MainAllLessonText}>All Lesson</Text>
+          <Text style={styles.MainAllLessonText}>All Lessons</Text>
         </View>
       </View>
       <View style={styles.MainAllLessonList}>
@@ -93,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   MainTitleImageView: {
-    ustifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   MainTitleImage: {
