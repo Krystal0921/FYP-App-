@@ -3,8 +3,16 @@ import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet, Toucha
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_COURSE } from '../../const/navigations';
 
+const imageMapping = {
+  'daily-communication.jpg': require('../../assets/daily-communication.jpg'),
+  'travel-communication.png': require('../../assets/travel-communication.png'),
+  'workplace-communication.jpg': require('../../assets/workplace-communication.jpg')
+};
+
+const getImageSource = (imageFilename) => imageMapping[imageFilename];
+
 const ScreenLessons = ({ route, navigation }) => {
-  const { lessonId } = route.params;
+  const { lessonId, image } = route.params;
   const [section, setSection] = useState([]);
 
   useEffect(() => {
@@ -71,7 +79,7 @@ const ScreenLessons = ({ route, navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
       <ImageBackground
-        // source={data.image}
+        source={getImageSource(image)}
         style={styles.LessonImageBackground}
       />
       <View style={styles.LessonContentView}>

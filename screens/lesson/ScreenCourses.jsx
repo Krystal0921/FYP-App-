@@ -37,24 +37,34 @@ const ScreenCourses = ({ navigation }) => {
     fetchCourses();
   }, []);
 
-  const CourseCard = ({ course }) => (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
-        screen: NAVIGATION_COURSE.lessons,
-        params: { lessonId: course.lessonId, name: course.name }
-      })}
-    >
-      <ImageBackground
-      // source={}
-        style={styles.MainAllLessonBackground}
+  const CourseCard = ({ course }) => {
+    const imageMapping = {
+      'daily-communication.jpg': require('../../assets/daily-communication.jpg'),
+      'travel-communication.png': require('../../assets/travel-communication.png'),
+      'workplace-communication.jpg': require('../../assets/workplace-communication.jpg')
+    };
+
+    const getImageSource = (imageFilename) => imageMapping[imageFilename];
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
+          screen: NAVIGATION_COURSE.lessons,
+          params: { lessonId: course.lessonId, name: course.name, image: course.lessonPhoto }
+        })}
       >
-        <Text multiline numberOfLines={2} style={styles.MainAllLessonTitle}>
-          {course.lessonName}
-        </Text>
-      </ImageBackground>
-    </TouchableOpacity>
-  );
+        <ImageBackground
+          source={getImageSource(course.lessonPhoto)}
+          style={styles.MainAllLessonBackground}
+        >
+          <Text multiline numberOfLines={2} style={styles.MainAllLessonTitle}>
+            {course.lessonName}
+          </Text>
+        </ImageBackground>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.MainBackground}>
