@@ -21,9 +21,7 @@ const ScreenCourses = ({ navigation }) => {
           },
           body: JSON.stringify({})
         });
-
         const responseData = await response.json();
-
         if (responseData.success) {
           setCourses(responseData.data);
         } else if (responseData.code === 1) {
@@ -39,25 +37,24 @@ const ScreenCourses = ({ navigation }) => {
     fetchCourses();
   }, []);
 
-  const CourseCard = ({ course }) => {
-    const lessonPhotoPath = `../assets/${course.lessonPhoto}`;
-
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
-          screen: NAVIGATION_COURSE.lessons,
-          params: { lessonId: course.lessonId, name: course.name }
-        })}
+  const CourseCard = ({ course }) => (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
+        screen: NAVIGATION_COURSE.lessons,
+        params: { lessonId: course.lessonId, name: course.name }
+      })}
+    >
+      <ImageBackground
+      // source={}
+        style={styles.MainAllLessonBackground}
       >
-        <ImageBackground source={{ uri: lessonPhotoPath }} style={styles.MainAllLessonBackground}>
-          <Text multiline numberOfLines={2} style={styles.MainAllLessonTitle}>
-            {course.lessonName}
-          </Text>
-        </ImageBackground>
-      </TouchableOpacity>
-    );
-  };
+        <Text multiline numberOfLines={2} style={styles.MainAllLessonTitle}>
+          {course.lessonName}
+        </Text>
+      </ImageBackground>
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView style={styles.MainBackground}>

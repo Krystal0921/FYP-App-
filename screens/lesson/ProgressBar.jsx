@@ -1,11 +1,16 @@
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
-import * as Progress from 'react-native-progress';
+import { ColorSpace } from 'react-native-reanimated';
 
-export default function ProgressBar({ progress }) {
+export default function ProgressBar({ contentLength, contentIndex }) {
+  const arraySize = Array.from({ length: contentLength }, (_, index) => index + 2);
+  const width = 100 / contentLength;
+
   return (
-    <View>
-      <Progress.Bar progress={progress} width={Dimensions.get('screen').width * 0.85} />
+    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      {arraySize.map((item, index) => (
+        <View style={{ backgroundColor: `${index <= contentIndex ? '#55098B' : 'grey'}`, width, borderRadius: 10, height: 10, margin: 5, flex: 1 }} />
+      ))}
     </View>
   );
 }

@@ -5,14 +5,13 @@ import { NAVIGATION_COURSE } from '../../const/navigations';
 
 const ScreenLessons = ({ route, navigation }) => {
   const { lessonId } = route.params;
-  const [courses, setCourses] = useState([]);
-  const [SId, setSId] = useState('');
+  const [section, setSection] = useState([]);
 
   useEffect(() => {
-    const Section = async () => {
+    const fetchSectionData = async () => {
       try {
-        const sectiondata = {
-          SId: lessonId
+        const data = {
+          lessonId
         };
 
         const response = await fetch('http://44.221.91.193:3000/Lesson/Section/', {
@@ -20,35 +19,34 @@ const ScreenLessons = ({ route, navigation }) => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ sectiondata })
+          body: JSON.stringify(data)
         });
+
         const responseData = await response.json();
+
         if (responseData.success) {
-          alert(responseData.data[0].description);
-          setCourses(responseData.data);
-        } else if (responseData.code === 1) {
-          alert(responseData.msg);
+          setSection(responseData.data);
         } else {
-          alert('Wrong username or password');
+          alert(responseData.msg || 'Failed to fetch section data');
         }
       } catch (error) {
-        alert('Lesson Section Error');
+        alert(`Lesson Section Error: ${error.message}`);
       }
     };
 
-    Section();
+    fetchSectionData();
   }, [lessonId]);
 
   const LessonContentList = ({ session, index }) => (
     <View style={styles.AllLessonBackgroundView}>
       <Text style={styles.AllLessonNumber}>{`0${index + 1}`}</Text>
       <View style={{ paddingHorizontal: 20, flex: 1 }}>
-        <Text style={styles.AllLessonTitle}>{session.title}</Text>
+        <Text style={styles.AllLessonTitle}>{session.sectionTitle}</Text>
       </View>
       <TouchableOpacity
         style={styles.LessonButtonCircle}
         onPress={() => navigation.navigate(NAVIGATION_COURSE.read, {
-          name: session, data: session
+          name: session.sectionTitle, lessonId: session.lessonId, sectionId: session.sectionId
         })}
       >
         <MaterialIcons size={40} name="play-arrow" />
@@ -77,18 +75,16 @@ const ScreenLessons = ({ route, navigation }) => {
         style={styles.LessonImageBackground}
       />
       <View style={styles.LessonContentView}>
-        <Text>{lessonId}</Text>
-        <Text>{SId}</Text>
         <View style={styles.LessonLinkView}>
           <Text style={styles.LessonLinkText}>Please click here for more information of this lesson</Text>
         </View>
         <Text style={styles.LessonContentText}>Lesson Content</Text>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={courses}
+          data={section}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <LessonContentList session={item} />
+          renderItem={({ item, index }) => (
+            <LessonContentList session={item} index={index} />
           )}
           ListFooterComponent={QuizSection}
         />
