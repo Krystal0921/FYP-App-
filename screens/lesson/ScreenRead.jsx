@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRoute,useRef } from 'react';
-import { StyleSheet, Image, TouchableOpacity, Text, FlatList, View, Dimensions,Button } from 'react-native';
-import ProgressBar from './ProgressBar';
+import React, { useEffect, useState, useRoute, useRef } from 'react';
+import { StyleSheet, Image, TouchableOpacity, Text, FlatList, View, Dimensions, Button } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { height, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import ProgressBar from './ProgressBar';
 import { videoMapping } from './VideoSource.jsx';
 
 const ScreenRead = ({ route, navigation }) => {
@@ -45,9 +45,6 @@ const ScreenRead = ({ route, navigation }) => {
     fetchSectionData();
   }, [lessonId, sectionId]);
 
-
-  
-
   const onClickNext = (index) => {
     try {
       lessonRead.scrollToIndex({ animated: true, index: index + 1 });
@@ -65,31 +62,28 @@ const ScreenRead = ({ route, navigation }) => {
         horizontal
         pagingEnabled
         scrollEnabled={false}
-
         ref={(ref) => {
           lessonRead = ref;
         }}
-      
         renderItem={({ item, index }) => (
           <View style={styles.SectionReadInformation}>
-          <ProgressBar contentLength={5} contentIndex={index}/>
-        
-          <Video
-        ref={videoRef}
-        style={styles.SectionReadImage}
-        playsInSilentLockedModeIOS ={ true }
-        source={videoMapping[item.contentData]}
-        useNativeControls
-        resizeMode={ResizeMode.CONTAIN}
-        onPlaybackStatusUpdate={status => setStatus(() => status)}
-        isMuted={true}
-        volume={1.0}
-      />
+            <ProgressBar contentLength={5} contentIndex={index} />
 
+            <Video
+              ref={videoRef}
+              style={styles.SectionReadImage}
+              playsInSilentLockedModeIOS
+              source={videoMapping[item.contentData]}
+              useNativeControls
+              resizeMode={ResizeMode.CONTAIN}
+              onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+              isMuted
+              volume={1.0}
+            />
             <Text style={styles.SectionReadText}>English Name: {item.description}</Text>
             <Text style={styles.SectionReadSubText}>Reference: </Text>
             <Text style={styles.SectionReadSubText}>{item.reference}</Text>
-            {index + 1 != 10
+            {index + 1 !== 10
               ? (
                 <TouchableOpacity
                   style={styles.SectionReadButton}
@@ -113,38 +107,16 @@ const ScreenRead = ({ route, navigation }) => {
   );
 };
 
-const SectionCard = ({ section, index, videoMapping, onClickNext }) => (
-  <View style={styles.SectionReadInformation}>
-    <ProgressBar contentLength={5} contentIndex={index} />
-    <Video
-      video={videoMapping[section.contentData]}
-      autoplay={false}
-      defaultMuted
-      videoWidth={1500}
-      videoHeight={1000}
-    />
-    <Text style={styles.SectionReadText}>English Name: {section.description}</Text>
-    <Text style={styles.SectionReadSubText}>Reference: </Text>
-    <Text style={styles.SectionReadSubText}>{section.reference}</Text>
-    <TouchableOpacity
-      style={styles.SectionReadButton}
-      onPress={() => onClickNext(index)}
-    >
-      <Text style={styles.SectionReadButtonText}>{index + 1 !== 10 ? 'Next' : 'Finish'}</Text>
-    </TouchableOpacity>
-  </View>
-);
-
 const styles = StyleSheet.create({
   SectionReadSubText: {
-    fontSize: 15,
     top: 100,
+    fontSize: 15,
     paddingBottom: 10
   },
   SectionReadText: {
+    top: 80,
     fontSize: 18,
     fontWeight: 'bold',
-    top: 100,
     paddingBottom: 10
   },
   SectionReadInformation: {
@@ -166,11 +138,11 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 5,
     fontSize: 17,
-    width: 300,
+    width: 320,
     backgroundColor: '#264858',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 5,
+    alignSelf: 'center',
     alignItems: 'center'
   },
   SectionReadButtonText: {
@@ -179,29 +151,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   SectionReadImage: {
-    height: 300,
-    width: 350,
-    resizeMode: 'contain'
+    top: 80,
+    height: 250,
+    width: 320,
+    resizeMode: 'contain',
+    alignSelf: 'center'
   },
   SectionReadVideo: {
     width: Dimensions.get('window').width - 80,
-    height: Dimensions.get('window').width * 0.5625, // 16:9 aspect ratio
+    height: Dimensions.get('window').width * 0.5625 // 16:9 aspect ratio
   },
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#ecf0f1'
   },
   video: {
     alignSelf: 'center',
     width: 320,
-    height: 200,
+    height: 200
   },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 });
 
 export default ScreenRead;

@@ -9,7 +9,7 @@ export default function ProgressBar({ contentLength, contentIndex }) {
   return (
     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
       {arraySize.map((item, index) => (
-        <View style={{ backgroundColor: `${index <= contentIndex ? '#55098B' : 'grey'}`, width, borderRadius: 10, height: 10, margin: 5, flex: 1 }} />
+        <View style={{ backgroundColor: `${index <= contentIndex / 2 ? '#55098B' : 'grey'}`, width, borderRadius: 10, height: 10, margin: 5, flex: 1 }} />
       ))}
     </View>
   );
