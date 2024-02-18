@@ -1,12 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, Text, FlatList, View, Dimensions } from 'react-native';
-import Video from 'react-native-video';
+import React, { useEffect, useState, useRoute,useRef } from 'react';
+import { StyleSheet, Image, TouchableOpacity, Text, FlatList, View, Dimensions,Button } from 'react-native';
 import ProgressBar from './ProgressBar';
+import { Video, ResizeMode } from 'expo-av';
+import { height, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import { videoMapping } from './VideoSource.jsx';
 
 const ScreenRead = ({ route, navigation }) => {
-  const { lessonId, sectionId } = route.params;
+  const videoRef = useRef(null);
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+  const { lessonId } = route.params;
+  const { sectionId } = route.params;
   const [read, setRead] = useState([]);
-  const lessonRead = useRef(null);
+  let lessonRead;
 
   useEffect(() => {
     const fetchSectionData = async () => {
@@ -39,26 +45,16 @@ const ScreenRead = ({ route, navigation }) => {
     fetchSectionData();
   }, [lessonId, sectionId]);
 
+
+  
+
   const onClickNext = (index) => {
     try {
-      lessonRead.current.scrollToIndex({ animated: true, index: index + 1 });
+      lessonRead.scrollToIndex({ animated: true, index: index + 1 });
     } catch (e) {
       console.log(e);
       navigation.goBack();
     }
-  };
-
-  const videoMapping = {
-    '1.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Number/1.mp4'),
-    '7.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Number/7.mp4'),
-    '8.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Number/8.mp4'),
-    '9.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Number/9.mp4'),
-    '10.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Number/10.mp4'),
-    'A.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Letter/A.mp4'),
-    'b.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Letter/B.mp4'),
-    'C.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Letter/C.mp4'),
-    'D.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Letter/D.mp4'),
-    'E.mp4': require('../../assets/SignLanguage_Video/DailyCommunication/NumberAndLetter/Letter/E.mp4')
   };
 
   return (
@@ -69,9 +65,48 @@ const ScreenRead = ({ route, navigation }) => {
         horizontal
         pagingEnabled
         scrollEnabled={false}
-        ref={lessonRead}
+
+        ref={(ref) => {
+          lessonRead = ref;
+        }}
+      
         renderItem={({ item, index }) => (
-          <SectionCard section={item} index={index} videoMapping={videoMapping} onClickNext={onClickNext} />
+          <View style={styles.SectionReadInformation}>
+          <ProgressBar contentLength={5} contentIndex={index}/>
+        
+          <Video
+        ref={videoRef}
+        style={styles.SectionReadImage}
+        playsInSilentLockedModeIOS ={ true }
+        source={videoMapping[item.contentData]}
+        useNativeControls
+        resizeMode={ResizeMode.CONTAIN}
+        onPlaybackStatusUpdate={status => setStatus(() => status)}
+        isMuted={true}
+        volume={1.0}
+      />
+
+            <Text style={styles.SectionReadText}>English Name: {item.description}</Text>
+            <Text style={styles.SectionReadSubText}>Reference: </Text>
+            <Text style={styles.SectionReadSubText}>{item.reference}</Text>
+            {index + 1 != 10
+              ? (
+                <TouchableOpacity
+                  style={styles.SectionReadButton}
+                  onPress={() => onClickNext(index)}
+                >
+                  <Text style={styles.SectionReadButtonText}>Next</Text>
+                </TouchableOpacity>
+              )
+              : (
+                <TouchableOpacity
+                  style={styles.SectionReadButton}
+                  onPress={() => onClickNext(index)}
+                >
+                  <Text style={styles.SectionReadButtonText}>Finish</Text>
+                </TouchableOpacity>
+              )}
+          </View>
         )}
       />
     </View>
@@ -142,7 +177,31 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold'
-  }
+  },
+  SectionReadImage: {
+    height: 300,
+    width: 350,
+    resizeMode: 'contain'
+  },
+  SectionReadVideo: {
+    width: Dimensions.get('window').width - 80,
+    height: Dimensions.get('window').width * 0.5625, // 16:9 aspect ratio
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+  },
+  video: {
+    alignSelf: 'center',
+    width: 320,
+    height: 200,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default ScreenRead;
