@@ -13,8 +13,6 @@ const ScreenRead = ({ route, navigation }) => {
   const { sectionId } = route.params;
   const [read, setRead] = useState([]);
   let lessonRead;
- 
-
 
   useEffect(() => {
     const fetchSectionData = async () => {
@@ -53,13 +51,12 @@ const ScreenRead = ({ route, navigation }) => {
   const onClickNext = (index) => {
     try {
       lessonRead.scrollToIndex({ animated: true, index: index + 1 });
-    
     } catch (e) {
-      console.log();
+      console.log(e);
       navigation.goBack();
     }
   };
-  
+
   return (
     <View style={styles.SectionReadBackgound}>
       <FlatList
@@ -68,6 +65,7 @@ const ScreenRead = ({ route, navigation }) => {
         horizontal
         pagingEnabled
         scrollEnabled={false}
+
         ref={(ref) => {
           lessonRead = ref;
         }}
@@ -114,6 +112,28 @@ const ScreenRead = ({ route, navigation }) => {
     </View>
   );
 };
+
+const SectionCard = ({ section, index, videoMapping, onClickNext }) => (
+  <View style={styles.SectionReadInformation}>
+    <ProgressBar contentLength={5} contentIndex={index} />
+    <Video
+      video={videoMapping[section.contentData]}
+      autoplay={false}
+      defaultMuted
+      videoWidth={1500}
+      videoHeight={1000}
+    />
+    <Text style={styles.SectionReadText}>English Name: {section.description}</Text>
+    <Text style={styles.SectionReadSubText}>Reference: </Text>
+    <Text style={styles.SectionReadSubText}>{section.reference}</Text>
+    <TouchableOpacity
+      style={styles.SectionReadButton}
+      onPress={() => onClickNext(index)}
+    >
+      <Text style={styles.SectionReadButtonText}>{index + 1 !== 10 ? 'Next' : 'Finish'}</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 const styles = StyleSheet.create({
   SectionReadSubText: {
