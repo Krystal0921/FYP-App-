@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NAVIGATION_CHAT, NAVIGATION_MAIN } from '../../const/navigations';
+import { getData } from '../../const/AsyncStorage';
 
 const chatData = [
   {
@@ -22,6 +23,9 @@ const chatData = [
 
 const ScreenChats = () => {
   const navigation = useNavigation();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loggedin, setLoggedin] = useState('');
 
   const handleButtonPress = () => {
     navigation.navigate(NAVIGATION_MAIN.chat, { screen: NAVIGATION_CHAT.chat, params: { name: 'John' } });
@@ -37,8 +41,8 @@ const ScreenChats = () => {
       <Text style={styles.time}>{item.time}</Text>
     </TouchableOpacity>
   );
-
   return (
+
     <View style={styles.container}>
       <FlatList
         data={chatData}

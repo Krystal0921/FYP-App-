@@ -2,14 +2,29 @@ import React, { useState } from 'react';
 import { StyleSheet, Alert, View, Text, ImageBackground, FlatList, SafeAreaView, Image, Button, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import background from '../../assets/0.png';
+import courses from '../../const/courses';
+import ProgressBar from './ProgressBar';
 
-const ScreenQuiz = ({ navigation }) => {
+const ScreenQuiz = ({ route, navigation }) => {
+  const { data } = route.params;
   const [checked, setChecked] = useState('first');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(1 / 10);
+  let lessonQuiz;
 
   const handleRadioPress = (value) => {
     setChecked(value);
   };
-
+  const onClickNext = (index) => {
+    setProgress((index + 2) / 10);
+    try {
+      lessonQuiz.scrollToIndex({ animated: true, index: index + 1 });
+      setCurrentIndex(index + 1);
+    } catch (e) {
+      console.log(e);
+      navigation.goBack();
+    }
+  };
   return (
     <SafeAreaView style={styles.SectionBackgound}>
       <Image

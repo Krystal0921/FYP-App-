@@ -1,21 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_COURSE } from '../../const/navigations';
 
-const ScreenLessons = ({ route, navigation }) => {
-  const { data } = route.params;
+const imageMapping = {
+  'daily-communication.jpg': require('../../assets/daily-communication.jpg'),
+  'travel-communication.png': require('../../assets/travel-communication.png'),
+  'workplace-communication.jpg': require('../../assets/workplace-communication.jpg')
+};
 
-  const LessonContentList = ({ content, index }) => (
+const getImageSource = (imageFilename) => imageMapping[imageFilename];
+
+const ScreenLessons = ({ route, navigation }) => {
+  const { lessonId, image } = route.params;
+  const [section, setSection] = useState([]);
+
+  useEffect(() => {
+    const fetchSectionData = async () => {
+      try {
+        const data = {
+          lessonId
+        };
+
+        const response = await fetch('http://44.221.91.193:3000/Lesson/Section/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+          setSection(responseData.data);
+        } else {
+          alert(responseData.msg || 'Failed to fetch section data');
+        }
+      } catch (error) {
+        alert(`Lesson Section Error: ${error.message}`);
+      }
+    };
+
+    fetchSectionData();
+  }, [lessonId]);
+
+  const LessonContentList = ({ session, index }) => (
     <View style={styles.AllLessonBackgroundView}>
       <Text style={styles.AllLessonNumber}>{`0${index + 1}`}</Text>
       <View style={{ paddingHorizontal: 20, flex: 1 }}>
-        <Text style={styles.AllLessonTitle}>{content.title}</Text>
+        <Text style={styles.AllLessonTitle}>{session.sectionTitle}</Text>
       </View>
       <TouchableOpacity
         style={styles.LessonButtonCircle}
         onPress={() => navigation.navigate(NAVIGATION_COURSE.read, {
-          screen: NAVIGATION_COURSE.read
+          name: session.sectionTitle, lessonId: session.lessonId, sectionId: session.sectionId
         })}
       >
         <MaterialIcons size={40} name="play-arrow" />
@@ -23,12 +62,13 @@ const ScreenLessons = ({ route, navigation }) => {
     </View>
   );
 
-  const QuizSection = () => (
+  const QuizSection = ({ session }) => (
     <View style={styles.QuizSectionContainer}>
       <TouchableOpacity
         style={styles.QuizButton}
         onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
-          screen: NAVIGATION_COURSE.quiz
+          screen: NAVIGATION_COURSE.quiz,
+          data: session
         })}
       >
         <Text style={styles.QuizButtonText}>Take Quiz</Text>
@@ -39,7 +79,7 @@ const ScreenLessons = ({ route, navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
       <ImageBackground
-        source={data.image}
+        source={getImageSource(image)}
         style={styles.LessonImageBackground}
       />
       <View style={styles.LessonContentView}>
@@ -49,10 +89,10 @@ const ScreenLessons = ({ route, navigation }) => {
         <Text style={styles.LessonContentText}>Lesson Content</Text>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data.courseContent}
+          data={section}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
-            <LessonContentList index={index} content={item} />
+            <LessonContentList session={item} index={index} />
           )}
           ListFooterComponent={QuizSection}
         />

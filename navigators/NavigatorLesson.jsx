@@ -27,8 +27,8 @@ const NavigatorLesson = () => (
     <Stack.Screen
       name={NAVIGATION_COURSE.read}
       component={ScreenRead}
-      options={() => ({
-        title: ''
+      options={({ route }) => ({
+        title: route.params.name
       })}
     />
   </Stack.Navigator>

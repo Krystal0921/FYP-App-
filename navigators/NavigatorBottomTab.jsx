@@ -1,16 +1,17 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Image, Pressable, TouchableOpacity, Icon, Text } from 'react-native';
 import { NAVIGATION_TAB, NAVIGATION_COURSE } from '../const/navigations';
 import NavigatorCourses from './NavigatorCourses';
 import NavigatorUser from './NavigatorUser';
 import NavigatorForum from './NavigatorForum';
 import NavigatorJob from './NavigatorJob';
 import NavigatorChats from './NavigatorChats';
+import { getData } from '../const/AsyncStorage';
 
 const Tab = createBottomTabNavigator();
 
 const NavigatorBottomTab = ({ navigation }) => (
+
   <Tab.Navigator
     initialRouteName={NAVIGATION_TAB.course}
     screenOptions={{
