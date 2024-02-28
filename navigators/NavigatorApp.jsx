@@ -2,15 +2,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useRef } from 'react';
 import NavigatorMain from './NavigatorMain';
 import { storeData } from '../const/AsyncStorage';
+import AuthProvider from '../components/AuthProvider';
 
 const NavigatorApp = () => {
-  storeData('loggedin', 'false');
   const navigationRef = useRef(null);
 
   return (
-    <NavigationContainer ref={navigationRef}>
-      <NavigatorMain />
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer ref={navigationRef}>
+        <NavigatorMain />
+      </NavigationContainer>
+    </AuthProvider>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Pressable } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../components/AuthProvider';
 
 const user = [
   {
@@ -18,7 +19,7 @@ const user = [
 const ScreenUser = () => {
   const navigation = useNavigation();
   const [isAnimated, setIsAnimated] = useState(false);
-
+  const { onLogout } = useAuth();
   const handleAnimate = () => {
     setIsAnimated(true);
   };
@@ -90,6 +91,7 @@ const ScreenUser = () => {
           </View>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={() => onLogout()}><Text>Logout</Text></TouchableOpacity>
     </View>
   );
 };
