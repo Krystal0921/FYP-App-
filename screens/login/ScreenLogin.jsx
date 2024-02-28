@@ -9,7 +9,7 @@ import { authContext } from '../../components/AuthProvider'; // Import AsyncStor
 const ScreenLogin = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { onLogin, onAuthClear } = useContext(authContext);
+  const { onLogin } = useContext(authContext);
   const Login = async () => {
     try {
       const data = {
