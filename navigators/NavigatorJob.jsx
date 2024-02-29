@@ -15,13 +15,13 @@ const NavigatorJob = () => {
       {user ? (
         <Stack.Screen
           options={{ headerShown: false }}
-          name={NAVIGATION_JOB.login}
+          name={NAVIGATION_JOB.jobs}
           component={ScreenJobs}
         />
       ) : (
         <Stack.Screen
           options={{ headerShown: false }}
-          name={NAVIGATION_JOB.jobs}
+          name={NAVIGATION_JOB.jobLogin}
           component={ScreenLogin}
         />
       )}

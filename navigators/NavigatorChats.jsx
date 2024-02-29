@@ -18,7 +18,7 @@ const NavigatorChats = () => {
         />
       ) : (
         <Stack.Screen
-          name={NAVIGATION_CHAT.login}
+          name={NAVIGATION_CHAT.chatLogin}
           component={ScreenLogin}
           options={{ headerShown: false }}
         />

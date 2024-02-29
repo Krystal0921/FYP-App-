@@ -25,7 +25,7 @@ export const NAVIGATION_COURSE = {
 
 export const NAVIGATION_USER = {
   user: "User",
-  login: "Login",
+  userLogin: "Login",
 };
 
 export const NAVIGATION_SIGNUP = {
@@ -41,13 +41,13 @@ export const NAVIGATION_FORUM = {
 };
 
 export const NAVIGATION_JOB = {
-  login: "Login",
+  jobLogin: "Login",
   jobs: "Jobs",
   job: "JobsDetails",
 };
 
 export const NAVIGATION_CHAT = {
-  login: "Login",
+  chatLogin: "Login",
   chats: "Chats",
   chat: "ChatDetails",
 };

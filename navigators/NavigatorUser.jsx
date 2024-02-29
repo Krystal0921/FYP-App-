@@ -12,7 +12,7 @@ const NavigatorLogin = () => {
     <Stack.Navigator>
       {user ? (
         <Stack.Screen
-          name={NAVIGATION_USER.user}
+          name={NAVIGATION_USER.userLogin}
           component={ScreenUser}
           options={{ headerShown: false }}
         />
