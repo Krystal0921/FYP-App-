@@ -1,38 +1,40 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN } from '../../const/navigations';
-import { storeData } from '../../const/AsyncStorage'; // Import AsyncStorage
+import { storeData } from '../../const/AsyncStorage';
+import { authContext } from '../../components/AuthProvider'; // Import AsyncStorage
 
 const ScreenLogin = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const { onLogin } = useContext(authContext);
   const Login = async () => {
     try {
       const data = {
         username,
         password
       };
-
-      fetch('http://44.221.91.193:3000/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then((response) => response.json())
-        .then((responseData) => {
-          if (responseData.success) {
-            navigation.navigate(NAVIGATION_USER.user);
-          } else if (responseData.code === 1) {
-            alert(responseData.msg);
-          } else {
-            alert('Wrong username or password');
-          }
-        });
+      await onLogin(data);
+      navigation.navigate(NAVIGATION_USER.user);
+      // fetch('http://44.221.91.193:3000/login/', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(data)
+      // })
+      //   .then((response) => response.json())
+      //   .then((responseData) => {
+      //     if (responseData.success) {
+      //       navigation.navigate(NAVIGATION_USER.user);
+      //     } else if (responseData.code === 1) {
+      //       alert(responseData.msg);
+      //     } else {
+      //       alert('Wrong username or password');
+      //     }
+      //   });
     } catch (e) {
       switch (e.response.status) {
         case 401:
