@@ -16,25 +16,26 @@ const ScreenLogin = ({ navigation }) => {
         username,
         password
       };
-      await onLogin(data);
-      navigation.navigate(NAVIGATION_USER.user);
-      // fetch('http://44.221.91.193:3000/login/', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(data)
-      // })
-      //   .then((response) => response.json())
-      //   .then((responseData) => {
-      //     if (responseData.success) {
-      //       navigation.navigate(NAVIGATION_USER.user);
-      //     } else if (responseData.code === 1) {
-      //       alert(responseData.msg);
-      //     } else {
-      //       alert('Wrong username or password');
-      //     }
-      //   });
+      // await onLogin(data);
+      // navigation.navigate(NAVIGATION_USER.user);
+      fetch('http://44.221.91.193:3000/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then((response) => response.json())
+        .then(async (responseData) => {
+          if (responseData.success) {
+            await onLogin(data);
+            navigation.navigate(NAVIGATION_TAB.course);
+          } else if (responseData.code === 1) {
+            alert(responseData.msg);
+          } else {
+            alert('Wrong username or password');
+          }
+        });
     } catch (e) {
       switch (e.response.status) {
         case 401:

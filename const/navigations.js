@@ -41,11 +41,13 @@ export const NAVIGATION_FORUM = {
 };
 
 export const NAVIGATION_JOB = {
+  login: "Login",
   jobs: "Jobs",
   job: "JobsDetails",
 };
 
 export const NAVIGATION_CHAT = {
+  login: "Login",
   chats: "Chats",
   chat: "ChatDetails",
 };
