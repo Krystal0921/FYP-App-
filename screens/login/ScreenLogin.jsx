@@ -9,15 +9,15 @@ import { authContext } from '../../components/AuthProvider'; // Import AsyncStor
 const ScreenLogin = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userId] = useState('');
   const { onLogin } = useContext(authContext);
   const Login = async () => {
     try {
       const data = {
         username,
-        password
+        password,
+        userId
       };
-      // await onLogin(data);
-      // navigation.navigate(NAVIGATION_USER.user);
       fetch('http://44.221.91.193:3000/login/', {
         method: 'POST',
         headers: {
@@ -29,6 +29,8 @@ const ScreenLogin = ({ navigation }) => {
         .then(async (responseData) => {
           if (responseData.success) {
             await onLogin(data);
+            await AsyncStorage.setItem('userId', responseData.userId);
+            await AsyncStorage.setItem('username', responseData.username);
             navigation.navigate(NAVIGATION_TAB.course);
           } else if (responseData.code === 1) {
             alert(responseData.msg);

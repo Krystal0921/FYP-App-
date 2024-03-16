@@ -1,18 +1,34 @@
 import React, { useEffect, useState, useRoute, useRef } from 'react';
 import { StyleSheet, Image, TouchableOpacity, Text, FlatList, View, Dimensions, Button } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
-import { height, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+// import { height, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from './ProgressBar';
 import { videoMapping } from './VideoSource.jsx';
+import NAVIGATION_COURSE from '../../const/navigations';
 
 const ScreenRead = ({ route, navigation }) => {
   const videoRef = useRef(null);
-  const video = React.useRef(null);
+  // const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
-  const { lessonId } = route.params;
-  const { sectionId } = route.params;
+  const { lessonId, sectionId, mark } = route.params;
+  const [userId, setUserId] = useState(null);
+  // const [mId, lessonIdRecord, sectionIdRecord] = useState(null);
   const [read, setRead] = useState([]);
   let lessonRead;
+
+  useEffect(() => {
+    const getUserId = async () => {
+      try {
+        const userId = await AsyncStorage.getItem('userId');
+        setUserId(userId);
+      } catch (error) {
+        console.error('Error retrieving userId from AsyncStorage:', error);
+      }
+    };
+
+    getUserId();
+  }, []);
 
   useEffect(() => {
     const fetchSectionData = async () => {
@@ -45,12 +61,43 @@ const ScreenRead = ({ route, navigation }) => {
     fetchSectionData();
   }, [lessonId, sectionId]);
 
-  const onClickNext = (index) => {
+  const onClickNext = async (index) => {
     try {
       lessonRead.scrollToIndex({ animated: true, index: index + 1 });
     } catch (e) {
-      console.log(e);
-      navigation.goBack();
+      console.error(e);
+
+      // Fetch member lesson progress data from the database
+      try {
+        const response = await fetch('http://44.221.91.193:3000/MemberLessonProgress/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ mId: userId })
+        });
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+          const match = responseData.data.some((record) => (
+            record.lessonId === lessonId
+            && record.sectionId === sectionId
+            && record.userId === userId
+          ));
+
+          if (match) {
+            navigation.goBack();
+          } else {
+            navigation.navigate(NAVIGATION_COURSE.feedback);
+          }
+        } else {
+          alert(responseData.msg || 'Failed to fetch member progress data');
+        }
+      } catch (error) {
+        console.error('Error fetching member progress data:', error);
+        alert('Failed to fetch member progress data');
+      }
     }
   };
 
