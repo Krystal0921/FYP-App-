@@ -91,7 +91,7 @@ const ScreenUser = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => onLogout()}><Text>Logout</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.logout} onPress={() => onLogout()}><Text style={styles.logoutText}>Logout</Text></TouchableOpacity>
     </View>
   );
 };
@@ -152,6 +152,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 20,
     textAlign: 'center'
+  },
+  logout: {
+    alignSelf: 'center',
+    backgroundColor: '#3B6DAF',
+    width: 300,
+    height: 50
+  },
+  logoutText: {
+    padding: 5,
+    alignSelf: 'center',
+    color: '#FFFFFF',
+    fontSize: 25
   }
 });
 

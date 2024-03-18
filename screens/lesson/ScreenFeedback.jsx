@@ -1,17 +1,18 @@
 import React, { useEffect, useState, useRoute, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import NAVIGATION_COURSE from '../../const/navigations';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { RadioButton } from 'react-native-paper';
+import NAVIGATION_COURSE from '../../const/navigations';
 
-const ScreenFeedback = ({ onSubmit, lessonId, route, navigation }) => {
-  const { lessonId } = route.params;
+const ScreenFeedback = ({ route, navigation }) => {
+  const { onSubmit, lessonId, sectionId } = route.params;
+
   const [feedback, setFeedback] = useState({
-    lessonContent1: null, // Initial value for radio group 1
-    lessonContent2: null, // Initial value for radio group 2
-    lessonContent3: null, // Initial value for radio group 3
-    lessonContent4: null, // Initial value for radio group 4
-    lessonContent5: null, // Initial value for radio group 5
-    suggestions: '',     // Initial value for suggestions text area
+    lessonContent1: null,
+    lessonContent2: null,
+    lessonContent3: null,
+    lessonContent4: null,
+    lessonContent5: null,
+    suggestions: ''
   });
 
   const handleRadioChange = (name, value) => {
@@ -23,7 +24,6 @@ const ScreenFeedback = ({ onSubmit, lessonId, route, navigation }) => {
   };
 
   const handleSubmit = () => {
-    // Check if all radio buttons are answered
     const isAllAnswered = Object.values(feedback).every(
       (value) => value !== null
     );
@@ -33,7 +33,10 @@ const ScreenFeedback = ({ onSubmit, lessonId, route, navigation }) => {
       return;
     }
 
-    onSubmit(feedback, lessonId); // Pass feedback data and lessonId to parent component for submission
+    // submit feedback form(need to change))
+    onSubmit(feedback, lessonId);
+
+    navigation.navigate(NAVIGATION_COURSE.lessons);
   };
 
   return (
@@ -100,7 +103,7 @@ const ScreenFeedback = ({ onSubmit, lessonId, route, navigation }) => {
       <View style={styles.suggestionsContainer}>
         <Text style={styles.suggestionsLabel}>Please share any suggestions you have for the future development of the Sign Language Learning Community. (Optional)</Text>
         <TextInput
-          multiline={true}
+          multiline
           numberOfLines={5}
           style={styles.suggestionsInput}
           onChangeText={handleSuggestionsChange}
@@ -118,41 +121,41 @@ const ScreenFeedback = ({ onSubmit, lessonId, route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 20
   },
   sectionHeader: {
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 10
   },
   radioButtonContainer: {
-    marginBottom: 15,
+    marginBottom: 15
   },
   radioButtonLabel: {
-    marginBottom: 5,
+    marginBottom: 5
   },
   suggestionsContainer: {
-    marginBottom: 20,
+    marginBottom: 20
   },
   suggestionsLabel: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   suggestionsInput: {
     height: 150,
     padding: 10,
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 5
   },
   submitButton: {
     backgroundColor: '#4CAF50',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 5
   },
   submitButtonText: {
     color: 'white',
     fontSize: 16,
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 });
 
 export default ScreenFeedback;

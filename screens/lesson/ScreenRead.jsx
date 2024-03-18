@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRoute, useRef } from 'react';
 import { StyleSheet, Image, TouchableOpacity, Text, FlatList, View, Dimensions, Button } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
-// import { height, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from './ProgressBar';
 import { videoMapping } from './VideoSource.jsx';
@@ -66,38 +65,39 @@ const ScreenRead = ({ route, navigation }) => {
       lessonRead.scrollToIndex({ animated: true, index: index + 1 });
     } catch (e) {
       console.error(e);
+    }
 
-      // Fetch member lesson progress data from the database
-      try {
-        const response = await fetch('http://44.221.91.193:3000/MemberLessonProgress/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ mId: userId })
-        });
+    const userId = await AsyncStorage.getItem('userId');
 
-        const responseData = await response.json();
+    try {
+      const response = await fetch('http://44.221.91.193:3000/UpdateLessonProgress/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ mId: userId })
+      });
 
-        if (responseData.success) {
-          const match = responseData.data.some((record) => (
-            record.lessonId === lessonId
-            && record.sectionId === sectionId
-            && record.userId === userId
-          ));
+      const responseData = await response.json();
 
-          if (match) {
-            navigation.goBack();
-          } else {
-            navigation.navigate(NAVIGATION_COURSE.feedback);
-          }
+      if (responseData.success) {
+        const match = responseData.data.some((record) => (
+          record.lessonId === lessonId
+          && record.sectionId === sectionId
+          && record.userId === userId
+        ));
+
+        if (match) {
+          navigation.goBack();
         } else {
-          alert(responseData.msg || 'Failed to fetch member progress data');
+          navigation.navigate(NAVIGATION_COURSE.courses);
         }
-      } catch (error) {
-        console.error('Error fetching member progress data:', error);
-        alert('Failed to fetch member progress data');
+      } else {
+        alert(responseData.msg || 'Failed to fetch member progress data');
       }
+    } catch (error) {
+      console.error('Error fetching member progress data:', error);
+      alert('Failed to fetch member progress data');
     }
   };
 
