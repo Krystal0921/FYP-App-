@@ -70,7 +70,7 @@ const ScreenRead = ({ route, navigation }) => {
     const userId = await AsyncStorage.getItem('userId');
 
     try {
-      const response = await fetch('http://44.221.91.193:3000/UpdateLessonProgress/', {
+      const response = await fetch('http://44.221.91.193:3000/SectionTaken', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -82,15 +82,14 @@ const ScreenRead = ({ route, navigation }) => {
 
       if (responseData.success) {
         const match = responseData.data.some((record) => (
-          record.lessonId === lessonId
-          && record.sectionId === sectionId
+          record.sectionId === sectionId
           && record.userId === userId
         ));
 
         if (match) {
           navigation.goBack();
         } else {
-          navigation.navigate(NAVIGATION_COURSE.courses);
+          navigation.navigate(NAVIGATION_COURSE.feedback);
         }
       } else {
         alert(responseData.msg || 'Failed to fetch member progress data');
