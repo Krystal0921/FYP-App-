@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN } from '../../const/navigations';
+import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN, NAVIGATION_COURSE } from '../../const/navigations';
 import { storeData } from '../../const/AsyncStorage';
 import { authContext } from '../../components/AuthProvider'; // Import AsyncStorage
 
@@ -32,7 +32,7 @@ const ScreenLogin = ({ navigation }) => {
             console.log('Storing userId:', responseData.data[0].mId);
             await AsyncStorage.setItem('userId', responseData.data[0].mId);
             await AsyncStorage.setItem('username', responseData.data[0].mName);
-            navigation.navigate(NAVIGATION_TAB.course);
+            navigation.navigate(NAVIGATION_COURSE.courses);
           } else if (responseData.code === 1) {
             alert(responseData.msg);
           } else {

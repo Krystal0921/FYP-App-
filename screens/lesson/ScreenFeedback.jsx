@@ -159,11 +159,9 @@
 // });
 
 // export default ScreenFeedback;
-
-
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/core';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import NAVIGATION_COURSE from '../../const/navigations';
@@ -173,8 +171,6 @@ const ScreenFeedback = () => {
 
   const route = useRoute();
   const { sectionId, lessonId } = route.params;
-  console.log('sectionId:', sectionId);
-  console.log('lessonId:', lessonId);
 
   const [feedback, setFeedback] = useState({
     lessonContent1: null,
@@ -194,126 +190,165 @@ const ScreenFeedback = () => {
   };
 
   const handleSubmit = () => {
-    const isAllAnswered = Object.values(feedback).every(
-      (value) => value !== null
-    );
+    const isAllAnswered = Object.values(feedback).every((value) => value !== null);
 
     if (!isAllAnswered) {
       alert('Please answer all questions before submitting.');
-      return;
     }
-
-    navigation.navigate(NAVIGATION_COURSE.feedback, {
-      feedbackData: feedback,
+    navigation.navigate(NAVIGATION_COURSE.lessons, {
+      lessonId,
+      feedbackData: feedback
     });
   };
 
   return (
-    <ScrollView >
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.heading}>Feedback</Text>
-      <Text>Section ID: {sectionId}</Text>
-        <Text>Lesson ID: {lessonId}</Text>
 
-      <Text style={styles.sectionHeader}>For the system:</Text>
-      <View style={styles.radioButtonContainer}>
-        <Text style={styles.radioButtonLabel}>The lesson sections contain enough content.</Text>
-        <RadioButton.Group value={feedback.lessonContent1} onValueChange={(value) => handleRadioChange('lessonContent1', value)}>
-          <RadioButton value={1}>Totally Disagree</RadioButton>
-          <RadioButton value={2}>Disagree</RadioButton>
-          <RadioButton value={3}>Neutral</RadioButton>
-          <RadioButton value={4}>Agree</RadioButton>
-          <RadioButton value={5}>Totally Agree</RadioButton>
-        </RadioButton.Group>
+      <View style={styles.section}>
+        <Text style={styles.sectionHeader}>For the system:</Text>
+        <View style={styles.questionContainer}>
+          <Text style={styles.questionText}>The lesson sections contain enough content.</Text>
+          <View style={styles.radioButtonRow}>
+            {['Totally Disagree', 'Disagree', 'Neutral', 'Agree', 'Totally Agree'].map((label, index) => (
+              <View key={label} style={styles.radioButtonLabelContainer}>
+                <Text style={styles.radioButtonLabel}>{label}</Text>
+                <RadioButton
+                  value={index + 1}
+                  status={feedback.lessonContent1 === index + 1 ? 'checked' : 'unchecked'}
+                  onPress={() => handleRadioChange('lessonContent1', index + 1)}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.questionContainer}>
+          <Text style={styles.questionText}>There are an adequate number of sections.</Text>
+          <View style={styles.radioButtonRow}>
+            {['Totally Disagree', 'Disagree', 'Neutral', 'Agree', 'Totally Agree'].map((label, index) => (
+              <View key={label} style={styles.radioButtonLabelContainer}>
+                <Text style={styles.radioButtonLabel}>{label}</Text>
+                <RadioButton
+                  value={index + 1}
+                  status={feedback.lessonContent2 === index + 1 ? 'checked' : 'unchecked'}
+                  onPress={() => handleRadioChange('lessonContent2', index + 1)}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
       </View>
 
-      <View style={styles.radioButtonContainer}>
-        <Text style={styles.radioButtonLabel}>There are an adequate number of sections.</Text>
-         <RadioButton.Group value={feedback.lessonContent2} onValueChange={(value) => handleRadioChange('lessonContent2', value)}>
-           <RadioButton value={1}>Totally Disagree</RadioButton>
-           <RadioButton value={2}>Disagree</RadioButton>
-           <RadioButton value={3}>Neutral</RadioButton>
-           <RadioButton value={4}>Agree</RadioButton>
-           <RadioButton value={5}>Totally Agree</RadioButton>
-         </RadioButton.Group>
-         </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionHeader}>For the current section:</Text>
+        <View style={styles.questionContainer}>
+          <Text style={styles.questionText}>The learning material meets my requirement.</Text>
+          <View style={styles.radioButtonRow}>
+            {['Totally Disagree', 'Disagree', 'Neutral', 'Agree', 'Totally Agree'].map((label, index) => (
+              <View key={label} style={styles.radioButtonLabelContainer}>
+                <Text style={styles.radioButtonLabel}>{label}</Text>
+                <RadioButton
+                  value={index + 1}
+                  status={feedback.lessonContent3 === index + 1 ? 'checked' : 'unchecked'}
+                  onPress={() => handleRadioChange('lessonContent3', index + 1)}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
 
-       <Text style={styles.sectionHeader}>For the current section:</Text>
-      <View style={styles.radioButtonContainer}>
-         <Text style={styles.radioButtonLabel}>The learning material meets my requirement.</Text>
-         <RadioButton.Group value={feedback.lessonContent3} onValueChange={(value) => handleRadioChange('lessonContent3', value)}>
-          <RadioButton value={1}>Totally Disagree</RadioButton>
-           <RadioButton value={2}>Disagree</RadioButton>
-           <RadioButton value={3}>Neutral</RadioButton>
-           <RadioButton value={4}>Agree</RadioButton>
-           <RadioButton value={5}>Totally Agree</RadioButton>
-         </RadioButton.Group>
-       </View>
+        <View style={styles.questionContainer}>
+          <Text style={styles.questionText}>There are enough supporting media resources.</Text>
+          <View style={styles.radioButtonRow}>
+            {['Totally Disagree', 'Disagree', 'Neutral', 'Agree', 'Totally Agree'].map((label, index) => (
+              <View key={label} style={styles.radioButtonLabelContainer}>
+                <Text style={styles.radioButtonLabel}>{label}</Text>
+                <RadioButton
+                  value={index + 1}
+                  status={feedback.lessonContent4 === index + 1 ? 'checked' : 'unchecked'}
+                  onPress={() => handleRadioChange('lessonContent4', index + 1)}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
 
-      <View style={styles.radioButtonContainer}>
-                 <Text style={styles.radioButtonLabel}>There are enough supporting media resources.</Text>
-         <RadioButton.Group value={feedback.lessonContent4} onValueChange={(value) => handleRadioChange('lessonContent4', value)}>
-           <RadioButton value={1}>Totally Disagree</RadioButton>
-           <RadioButton value={2}>Disagree</RadioButton>
-           <RadioButton value={3}>Neutral</RadioButton>
-           <RadioButton value={4}>Agree</RadioButton>
-           <RadioButton value={5}>Totally Agree</RadioButton>
-         </RadioButton.Group>
-       </View>
+        <View style={styles.questionContainer}>
+          <Text style={styles.questionText}>The explanation of learning material is clear.</Text>
+          <View style={styles.radioButtonRow}>
+            {['Totally Disagree', 'Disagree', 'Neutral', 'Agree', 'Totally Agree'].map((label, index) => (
+              <View key={label} style={styles.radioButtonLabelContainer}>
+                <Text style={styles.radioButtonLabel}>{label}</Text>
+                <RadioButton
+                  value={index + 1} // values 1 to 5
+                  status={feedback.lessonContent5 === index + 1 ? 'checked' : 'unchecked'}
+                  onPress={() => handleRadioChange('lessonContent5', index + 1)}
+                />
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
 
-      <View style={styles.radioButtonContainer}>
-         <Text style={styles.radioButtonLabel}>The explanation of learning material is clear.</Text>
-         <RadioButton.Group value={feedback.lessonContent5}  onValueChange={(value) => handleRadioChange('lessonContent5', value)}>
-           <RadioButton value={1}>Totally Disagree</RadioButton>
-           <RadioButton value={2}>Disagree</RadioButton>
-           <RadioButton value={3}>Neutral</RadioButton>
-           <RadioButton value={4}>Agree</RadioButton>
-           <RadioButton value={5}>Totally Agree</RadioButton>
-         </RadioButton.Group>
-       </View>
-
-
-      <View style={styles.suggestionsContainer}>
-        <Text style={styles.suggestionsLabel}>Please share any suggestions you have for the future development of the Sign Language Learning Community. (Optional)</Text>
+      <View style={styles.section}>
+        <Text style={styles.sectionHeader}>Additional Comments:</Text>
         <TextInput
           multiline
-          numberOfLines={5}
           style={styles.suggestionsInput}
           onChangeText={handleSuggestionsChange}
           value={feedback.suggestions}
+          placeholder="Please share any suggestions you have for the future development of the Sign Language Learning Community. (Optional)"
         />
       </View>
-
-
 
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
-    </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20
+    flexGrow: 1,
+    padding: 20,
+    justifyContent: 'center'
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center'
+  },
+  section: {
+    marginBottom: 8
   },
   sectionHeader: {
-    fontSize: 18,
-    marginBottom: 10
+    fontSize: 20,
+    marginBottom: 10,
+    fontWeight: 'bold'
   },
-  radioButtonContainer: {
+  questionContainer: {
     marginBottom: 15
   },
+  questionText: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 15
+  },
+  radioButtonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 14
+  },
+  radioButtonLabelContainer: {
+    alignItems: 'center'
+  },
   radioButtonLabel: {
-    marginBottom: 5
-  },
-  suggestionsContainer: {
-    marginBottom: 20
-  },
-  suggestionsLabel: {
-    marginBottom: 10
+    marginBottom: 5,
+    fontSize: 14,
+    textAlign: 'center'
   },
   suggestionsInput: {
     height: 150,

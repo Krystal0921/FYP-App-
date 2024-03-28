@@ -226,11 +226,6 @@
 
 // export default ScreenRead;
 
-
-
-
-
-
 import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
@@ -245,6 +240,7 @@ const ScreenRead = ({ route, navigation }) => {
   const { lessonId, sectionId, mark } = route.params;
   const [userId, setUserId] = useState(null);
   const [read, setRead] = useState([]);
+  let lessonRead;
 
   useEffect(() => {
     const getUserId = async () => {
@@ -306,20 +302,16 @@ const ScreenRead = ({ route, navigation }) => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ mId: mId, sectionId: sectionId })
+          body: JSON.stringify({ mId, sectionId })
         });
-  
+
         const responseData = await response.json();
-  
+
         if (responseData.success) {
           if (responseData.data === 'has taken') {
-            alert(`User ID: ${mId}, Section ID: ${sectionId} - has taken`);
             navigation.goBack();
           } else {
-            alert(`User ID: ${mId}, Section ID: ${sectionId} ${lessonId}- not taken`);
-            
             navigation.navigate(NAVIGATION_COURSE.feedback, { sectionId, lessonId });
-           
           }
         } else {
           alert(responseData.msg || 'Failed to fetch member progress data');

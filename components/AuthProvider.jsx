@@ -12,10 +12,13 @@ export const AuthProvider = ({ children }) => {
     setUser(user);
   };
 
-  const onLogout = () => {
-    console.log('Logout');
-    AsyncStorage.removeItem('user');
-    setUser(null);
+  const onLogout = async (userData) => {
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+    } catch (error) {
+      console.error('Error storing user data:', error);
+    }
   };
 
   useEffect(() => {
