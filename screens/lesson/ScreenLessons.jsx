@@ -430,7 +430,8 @@ const ScreenLessons = ({ route, navigation }) => {
           style={styles.QuizButton}
           onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
             screen: NAVIGATION_COURSE.quiz,
-            data: lessonId
+            data: lessonId,
+            lessonName
           })}
         >
           <Text style={styles.QuizButtonText}>Take Quiz {mark}/10</Text>

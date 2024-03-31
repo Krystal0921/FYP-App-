@@ -341,7 +341,7 @@ const ScreenQuiz = ({ route, navigation }) => {
           }
         }
         navigation.navigate(NAVIGATION_COURSE.lessons, {
-          lessonId
+          lessonId, lessonName
         });
       } catch (error) {
         console.error('Error fetching insert quiz mark data:', error);
