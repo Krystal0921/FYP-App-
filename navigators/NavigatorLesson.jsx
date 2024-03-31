@@ -26,7 +26,7 @@ const NavigatorLesson = () => {
         name={NAVIGATION_COURSE.quiz}
         component={ScreenQuiz}
         options={() => ({
-          title: 'Number and Letter'
+          title: 'Quiz'
         })}
         params={user}
       />

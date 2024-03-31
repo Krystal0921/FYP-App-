@@ -51,7 +51,7 @@ const ScreenCourses = ({ navigation }) => {
         activeOpacity={0.8}
         onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
           screen: NAVIGATION_COURSE.lessons,
-          params: { lessonId: course.lessonId, name: course.name, image: course.lessonPhoto }
+          params: { lessonId: course.lessonId, name: course.lessonName, image: course.lessonPhoto }
         })}
       >
         <ImageBackground
