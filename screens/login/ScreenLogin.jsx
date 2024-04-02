@@ -2,22 +2,22 @@ import React, { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN } from '../../const/navigations';
+import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN, NAVIGATION_COURSE } from '../../const/navigations';
 import { storeData } from '../../const/AsyncStorage';
 import { authContext } from '../../components/AuthProvider'; // Import AsyncStorage
 
 const ScreenLogin = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userId] = useState('');
   const { onLogin } = useContext(authContext);
   const Login = async () => {
     try {
       const data = {
         username,
-        password
+        password,
+        userId
       };
-      // await onLogin(data);
-      // navigation.navigate(NAVIGATION_USER.user);
       fetch('http://44.221.91.193:3000/login/', {
         method: 'POST',
         headers: {
@@ -29,7 +29,10 @@ const ScreenLogin = ({ navigation }) => {
         .then(async (responseData) => {
           if (responseData.success) {
             await onLogin(data);
-            navigation.navigate(NAVIGATION_TAB.course);
+            console.log('Storing userId:', responseData.data[0].mId);
+            await AsyncStorage.setItem('userId', responseData.data[0].mId);
+            await AsyncStorage.setItem('username', responseData.data[0].mName);
+            navigation.navigate(NAVIGATION_COURSE.courses);
           } else if (responseData.code === 1) {
             alert(responseData.msg);
           } else {

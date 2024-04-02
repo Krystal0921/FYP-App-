@@ -1,36 +1,40 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const storeData = async (key, value) => {
+const storeUserData = async (userId, username) => {
   try {
-    await AsyncStorage.setItem(key, value);
-    console.log("Data stored successfully:", key, value);
+    // Store user ID and username as an object
+    const userData = { userId, username };
+    await AsyncStorage.setItem("userData", JSON.stringify(userData));
+    console.log("User data stored successfully:", userData);
   } catch (error) {
-    console.error("Error storing data:", error);
+    console.error("Error storing user data:", error);
   }
 };
 
-const getData = async (key) => {
+const getUserData = async () => {
   try {
-    const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      console.log("Data retrieved successfully:", key, value);
-      return value;
+    const userDataItem = await AsyncStorage.getItem("userData");
+    if (userDataItem !== null) {
+      // Parse the stored user data
+      const userData = JSON.parse(userDataItem);
+      console.log("User data retrieved successfully:", userData);
+      return userData;
     }
-    console.log("No data found for key:", key);
+    console.log("No user data found.");
     return null;
   } catch (error) {
-    console.error("Error retrieving data:", error);
+    console.error("Error retrieving user data:", error);
     return null;
   }
 };
 
-const removeData = async (key) => {
+const removeUserData = async () => {
   try {
-    await AsyncStorage.removeItem(key);
-    console.log("Data removed successfully:", key);
+    await AsyncStorage.removeItem("userData");
+    console.log("User data removed successfully.");
   } catch (error) {
-    console.error("Error removing data:", error);
+    console.error("Error removing user data:", error);
   }
 };
 
-export { storeData, getData, removeData };
+export { storeUserData, getUserData, removeUserData };
