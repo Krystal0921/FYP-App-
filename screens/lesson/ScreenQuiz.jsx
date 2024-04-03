@@ -138,7 +138,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Video, ResizeMode } from "expo-av";
-
+import * as Animatable from "react-native-animatable";
 import { videoMapping } from "./VideoSource.jsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RadioButton } from "react-native-paper";
@@ -229,13 +229,29 @@ const ScreenQuiz = ({ route, navigation }) => {
     }
 
     if (checked === correctAns) {
-      // setMark((prevMark) => {
-      //   const newMark = prevMark + 1;
-      //   console.log("Mark:", newMark);
-      //   return newMark;
-      // });
+      setMark((prevMark) => {
+        const newMark = prevMark + 1;
+        console.log("Mark:", newMark);
+        return newMark;
+      });
 
-      setMark((prevMark) => prevMark + 1);
+      Alert.alert("Correct Answer", "Great job!", [
+        {
+          text: "OK",
+          onPress: () => {
+            if (nextIndex < read.length) {
+              try {
+                lessonQuizRef.current.scrollToIndex({
+                  animated: true,
+                  index: nextIndex,
+                });
+              } catch (e) {
+                console.error(e);
+              }
+            }
+          },
+        },
+      ]);
       console.log("Prev Mark:", marks);
 
       if (nextIndex < read.length) {
@@ -274,10 +290,6 @@ const ScreenQuiz = ({ route, navigation }) => {
       try {
         const mId = userId;
         const mark = marks;
-
-        console.log("insert Mark:", mark);
-        console.log("insert Marks:", marks);
-
         if (!userId) {
           await publisUserQuizMark(mark, lessonId);
         } else {

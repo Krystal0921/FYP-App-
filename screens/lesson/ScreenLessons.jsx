@@ -250,6 +250,7 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -364,7 +365,7 @@ const ScreenLessons = ({ route, navigation }) => {
         <View style={{ paddingHorizontal: 20, flex: 1 }}>
           <Text style={styles.AllLessonTitle}>{session.sectionTitle}</Text>
         </View>
-        {isTaken ? <Text style={styles.greenTick}>✔️</Text> : null}
+
         <TouchableOpacity
           style={styles.LessonButtonCircle}
           onPress={() =>
@@ -375,7 +376,14 @@ const ScreenLessons = ({ route, navigation }) => {
             })
           }
         >
-          <MaterialIcons size={40} name="play-arrow" />
+          {isTaken ? (
+            <Image
+              style={styles.logo}
+              source={require("../../assets/tick-mark.png")}
+            />
+          ) : (
+            <MaterialIcons size={40} name="play-arrow" />
+          )}
         </TouchableOpacity>
       </View>
     );
@@ -545,6 +553,10 @@ const styles = StyleSheet.create({
   greenTick: {
     marginLeft: 10,
     color: "green",
+  },
+  logo: {
+    width: 60,
+    height: 54,
   },
 });
 
