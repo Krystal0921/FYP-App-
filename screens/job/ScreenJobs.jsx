@@ -47,8 +47,26 @@ const initialJobData = [
 const ScreenJobs = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredJobs, setFilteredJobs] = useState(initialJobData);
+  const [jobs, setJobs] = useState('');
 
   useEffect(() => {
+    const fetchJobData = async () => {
+      try {
+        const response = await fetch('http://44.221.91.193:3000/JobList', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const responseData = await response.json();
+        setJobs(responseData.data);
+        // alert(jobs[0].jId);
+      } catch (error) {
+        alert('Jobs Error');
+      }
+    };
+    fetchJobData();
+
     const debouncedSearch = debounce(handleSearch, 300); // Debounce the search function
     debouncedSearch();
 
@@ -72,7 +90,7 @@ const ScreenJobs = () => {
         params: { name: '' }
       })}
     >
-      <Image source={item.avatar} style={styles.avatar} />
+      <Image style={styles.avatar} source={item.avatar} />
       <View style={styles.jobDetails}>
         <Text style={styles.jobTitle}>{item.jobTitle}</Text>
         <Text style={styles.jobSubtitle}>{item.companyName}</Text>
@@ -97,7 +115,7 @@ const ScreenJobs = () => {
         </View>
       </View>
       <FlatList
-        data={filteredJobs}
+        data={jobs}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.jobList}

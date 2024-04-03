@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Pressable } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../components/AuthProvider';
+import { authContext, useAuth } from '../../components/AuthProvider';
 
-const user = [
+const users = [
   {
     sid: 'm0000001',
     name: 'cherrie0912',
@@ -20,17 +21,85 @@ const ScreenUser = () => {
   const navigation = useNavigation();
   const [isAnimated, setIsAnimated] = useState(false);
   const { onLogout } = useAuth();
+
+  const { user } = useAuth();
+  const [userId, setUserId] = useState('');
+  const [userInformation, setUserInformation] = useState([]);
+  const [userProgressInformation, setUserProgressInformation] = useState([]);
+
   const handleAnimate = () => {
     setIsAnimated(true);
   };
 
+  useEffect(() => {
+    const fetchUserInformation = async () => {
+      try {
+        // const { userA } = useAuth();
+        // alert(JSON.stringify(user));
+        // alert(user.userId);
+        const fetchUserData = async () => {
+          const data = {
+            mId: user.userId
+          };
+          const response = await fetch('http://44.221.91.193:3000/MemberDetail/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          const responseData = await response.json();
+          if (responseData.success) {
+            setUserInformation(responseData.data[0]);
+          } else {
+            alert(responseData.msg || 'Failed to fetch user data');
+          }
+        };
+
+        const fetchOtherApiData = async () => {
+          const data = {
+            mId: user.userId
+          };
+          const response = await fetch('http://44.221.91.193:3000/MemberLessonProgress', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+          const responseData = await response.json();
+          if (responseData.success) {
+            // alert(responseData.data[0].totalMark);
+            // alert(responseData.data[1].totalMark);
+            // alert(responseData.data[2].totalMark);
+            setUserProgressInformation(responseData.data);
+            // alert(userProgressInformation[0].totalMark);
+          } else {
+            alert(responseData.msg || 'Failed to fetch user progress data');
+          }
+        };
+
+        await Promise.all([fetchUserData(), fetchOtherApiData()]);
+      } catch (error) {
+        alert('User Information Progress Error');
+      }
+    };
+    fetchUserInformation();
+  }, [userId]);
+
+  const imageMapping = {
+    'default-profile-picture.jpg': require('../../assets/default-profile-picture.jpg')
+  };
+
+  const getImageSource = (imageFilename) => imageMapping[imageFilename];
+
   return (
     <View style={styles.container}>
       <View style={styles.vertical}>
-        <Image style={styles.logo} source={user[0].icon} />
+        <Image style={styles.logo} source={getImageSource(userInformation.mPhoto)} />
         <View style={styles.vertical}>
-          <Text style={styles.text}>Name : {user[0].name}</Text>
-          <Text style={styles.text}>E-mail : {user[0].email}</Text>
+          <Text style={styles.text}>Name : {userInformation.mName}</Text>
+          <Text style={styles.text}>E-mail : {userInformation.mEmail}</Text>
         </View>
       </View>
       <View style={styles.hrLine} />
@@ -39,7 +108,7 @@ const ScreenUser = () => {
         <TouchableOpacity onPress={handleAnimate}>
           <View style={styles.progressContainer}>
             <CircularProgress
-              value={user[0].lesson1Progress}
+              value={userProgressInformation[0]?.totalMark}
               radius={50}
               strokeWidth={5}
               backgroundColor="#e0e0e0"
@@ -57,7 +126,7 @@ const ScreenUser = () => {
         <TouchableOpacity onPress={handleAnimate}>
           <View style={styles.progressContainer}>
             <CircularProgress
-              value={user[0].lesson2Progress}
+              value={userProgressInformation[1]?.totalMark}
               radius={50}
               strokeWidth={5}
               backgroundColor="#e0e0e0"
@@ -75,7 +144,7 @@ const ScreenUser = () => {
         <TouchableOpacity onPress={handleAnimate}>
           <View style={styles.progressContainer}>
             <CircularProgress
-              value={user[0].lesson3Progress}
+              value={userProgressInformation[2]?.totalMark}
               radius={50}
               strokeWidth={5}
               backgroundColor="#e0e0e0"

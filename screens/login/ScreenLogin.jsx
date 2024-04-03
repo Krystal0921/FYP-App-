@@ -9,7 +9,7 @@ import { authContext } from '../../components/AuthProvider'; // Import AsyncStor
 const ScreenLogin = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [userId] = useState('');
+  const [userId, setUserId] = useState('');
   const { onLogin } = useContext(authContext);
   const Login = async () => {
     try {
@@ -28,10 +28,13 @@ const ScreenLogin = ({ navigation }) => {
         .then((response) => response.json())
         .then(async (responseData) => {
           if (responseData.success) {
+            await setUserId(responseData.data[0].mId);
+            data.userId = responseData.data[0].mId;
+            alert(data.userId);
             await onLogin(data);
-            console.log('Storing userId:', responseData.data[0].mId);
-            await AsyncStorage.setItem('userId', responseData.data[0].mId);
-            await AsyncStorage.setItem('username', responseData.data[0].mName);
+            // console.log('Storing userId:', responseData.data[0].mId);
+            // await AsyncStorage.setItem('userId', responseData.data[0].mId);
+            // await AsyncStorage.setItem('username', responseData.data[0].mName);
             navigation.navigate(NAVIGATION_COURSE.courses);
           } else if (responseData.code === 1) {
             alert(responseData.msg);
