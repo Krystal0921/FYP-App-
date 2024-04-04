@@ -253,7 +253,6 @@ const ScreenQuiz = ({ route, navigation }) => {
         },
       ]);
       console.log("Prev Mark:", marks);
-
       if (nextIndex < read.length) {
         try {
           lessonQuizRef.current.scrollToIndex({

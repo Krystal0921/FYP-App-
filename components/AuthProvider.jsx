@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         markData[lessonId] = {
           lessonId: lessonId.toString(),
-          mark: mark.toString(),
+          mark: "0",
         };
         console.log(`Adding new mark ${mark} for lessonId ${lessonId}.`);
       }

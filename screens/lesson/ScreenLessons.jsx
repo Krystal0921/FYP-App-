@@ -255,6 +255,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NAVIGATION_COURSE } from "../../const/navigations";
+import { useAuth } from "../../components/AuthProvider";
 
 const imageMapping = {
   L01: require("../../assets/daily-communication.jpg"),
@@ -268,6 +269,7 @@ const ScreenLessons = ({ route, navigation }) => {
   const [userId, setUserId] = useState(null);
   const { lessonId, image } = route.params;
   const [section, setSection] = useState([]);
+  const { publisUserQuizMark } = useAuth();
 
   useEffect(() => {
     const getUserId = async () => {
@@ -396,10 +398,25 @@ const ScreenLessons = ({ route, navigation }) => {
       const fetchQuizMark = async () => {
         try {
           if (!userId) {
+            console.log("userId:" + userId);
+            await publisUserQuizMark(mark, lessonId);
             const storedMarkData = await AsyncStorage.getItem("markData");
             const parsedMarkData = JSON.parse(storedMarkData);
-            const mark = parsedMarkData[lessonId].mark;
+            const mark = parsedMarkData[lessonId]?.mark;
+            console.log("storedMarkData:" + storedMarkData);
             setQuizMark(mark);
+
+            // if (storedMarkData) {
+            //   const mark = parsedMarkData[lessonId]?.mark;
+
+            //   console.log("storedMarkData:" + storedMarkData);
+            //   if (mark === undefined) {
+            //     await publisUserQuizMark(mark, lessonId);
+            //   } else {
+            //     setQuizMark(mark);
+            //   }
+            //   console.log("mark:" + mark);
+            // }
           } else {
             const mId = userId;
             const response = await fetch("http://44.221.91.193:3000/QuizMark", {
@@ -427,13 +444,14 @@ const ScreenLessons = ({ route, navigation }) => {
           }
         } catch (error) {
           console.error("Error fetching quiz mark data:", error);
-          alert("Failed to fetch quiz mark data");
+          // alert("Failed to fetch quiz mark data");
         }
       };
 
       fetchQuizMark();
     }, [lessonId]);
 
+    console.log("marks:" + mark);
     return (
       <View style={styles.QuizSectionContainer}>
         <TouchableOpacity
@@ -445,7 +463,7 @@ const ScreenLessons = ({ route, navigation }) => {
             })
           }
         >
-          <Text style={styles.QuizButtonText}>Take Quiz {mark}/10</Text>
+          <Text style={styles.QuizButtonText}>Take Quiz {mark} / 10</Text>
         </TouchableOpacity>
       </View>
     );
