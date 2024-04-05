@@ -30,7 +30,7 @@ const ScreenLogin = ({ navigation }) => {
           if (responseData.success) {
             await setUserId(responseData.data[0].mId);
             data.userId = responseData.data[0].mId;
-            alert(data.userId);
+            // alert(data.userId);
             await onLogin(data);
             // console.log('Storing userId:', responseData.data[0].mId);
             // await AsyncStorage.setItem('userId', responseData.data[0].mId);
