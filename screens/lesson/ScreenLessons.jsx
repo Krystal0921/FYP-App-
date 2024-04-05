@@ -242,15 +242,7 @@
 // export default ScreenLessons;
 
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NAVIGATION_COURSE } from '../../const/navigations';

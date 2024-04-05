@@ -2,94 +2,102 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_FORUM } from '../../const/navigations';
+import { useAuth } from '../../components/AuthProvider';
 
-const ScreenPost = ({ navigation }) => (
-  <SafeAreaView style={styles.ForumBackgound}>
-    <ScrollView contentContainerStyle={styles.ForumScrollView}>
-      <Text style={styles.ForumTitle}>How accurate for battery level is myPhonak app?</Text>
-      <TouchableOpacity
-        style={styles.SignUpTypeButton}
-        onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
-          screen: NAVIGATION_FORUM.post
-        })}
-      >
-        <Text style={styles.SignUpTypeButtonText}>Edit</Text>
-      </TouchableOpacity>
-      <View style={styles.ForumTitleImageView}>
-        <Image
-          style={styles.ForumTitleImage}
-          source={require('../../assets/myPhonak_app.png')}
-        />
-      </View>
-      <Text style={styles.ForumDesciptionText}>Lately I have been leaving my KS9s turned on and in my ears all night streaming nature sounds and music in order to block out the neighborhood "disk jockey" who was keeping me up all night. (I tried every type and strength of earplugs first and none were )</Text>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/Cherrie.jpeg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>cherrie0912</Text>
-          <Text style={styles.ForumCommentParagraph}>Good sharing.</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+const ScreenPost = ({ navigation }) => {
+  const { user } = useAuth();
+  return (
+    <SafeAreaView style={styles.ForumBackgound}>
+      <ScrollView contentContainerStyle={styles.ForumScrollView}>
+        <Text style={styles.ForumTitle}>How accurate for battery level is myPhonak app?</Text>
+        { user ? (
+          <TouchableOpacity
+            style={styles.SignUpTypeButton}
+            onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
+              screen: NAVIGATION_FORUM.post
+            })}
+          >
+            <Text style={styles.SignUpTypeButtonText}>Edit</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity />
+        )}
+        <View style={styles.ForumTitleImageView}>
+          <Image
+            style={styles.ForumTitleImage}
+            source={require('../../assets/myPhonak_app.png')}
+          />
         </View>
-      </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>kris0111</Text>
-          <Text style={styles.ForumCommentParagraph}>Excellent!</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+        <Text style={styles.ForumDesciptionText}>Lately I have been leaving my KS9s turned on and in my ears all night streaming nature sounds and music in order to block out the neighborhood "disk jockey" who was keeping me up all night. (I tried every type and strength of earplugs first and none were )</Text>
+        <View style={styles.ForumCommentView}>
+          <Image
+            style={styles.ForumCommentImage}
+            source={require('../../assets/Cherrie.jpeg')}
+          />
+          <View>
+            <Text style={styles.ForumCommentText}>cherrie0912</Text>
+            <Text style={styles.ForumCommentParagraph}>Good sharing.</Text>
+            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>jackyIsZero001</Text>
-          <Text style={styles.ForumCommentParagraph}>Wow</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+        <View style={styles.ForumCommentView}>
+          <Image
+            style={styles.ForumCommentImage}
+            source={require('../../assets/default-profile-picture.jpg')}
+          />
+          <View>
+            <Text style={styles.ForumCommentText}>kris0111</Text>
+            <Text style={styles.ForumCommentParagraph}>Excellent!</Text>
+            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>ivy023yyy</Text>
-          <Text style={styles.ForumCommentParagraph}>Looks great!</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+        <View style={styles.ForumCommentView}>
+          <Image
+            style={styles.ForumCommentImage}
+            source={require('../../assets/default-profile-picture.jpg')}
+          />
+          <View>
+            <Text style={styles.ForumCommentText}>jackyIsZero001</Text>
+            <Text style={styles.ForumCommentParagraph}>Wow</Text>
+            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>wandy090</Text>
-          <Text style={styles.ForumCommentParagraph}>Oops</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+        <View style={styles.ForumCommentView}>
+          <Image
+            style={styles.ForumCommentImage}
+            source={require('../../assets/default-profile-picture.jpg')}
+          />
+          <View>
+            <Text style={styles.ForumCommentText}>ivy023yyy</Text>
+            <Text style={styles.ForumCommentParagraph}>Looks great!</Text>
+            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+          </View>
         </View>
+        <View style={styles.ForumCommentView}>
+          <Image
+            style={styles.ForumCommentImage}
+            source={require('../../assets/default-profile-picture.jpg')}
+          />
+          <View>
+            <Text style={styles.ForumCommentText}>wandy090</Text>
+            <Text style={styles.ForumCommentParagraph}>Oops</Text>
+            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+          </View>
+        </View>
+      </ScrollView>
+      <View style={styles.MainSearchView}>
+        <TextInput
+          style={styles.MainSearchText}
+          placeholder="Type Some Comment"
+          placeholderTextColor="#888"
+        />
+        <TouchableOpacity>
+          <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
+        </TouchableOpacity>
       </View>
-    </ScrollView>
-    <View style={styles.MainSearchView}>
-      <TextInput
-        style={styles.MainSearchText}
-        placeholder="Type Some Comment"
-        placeholderTextColor="#888"
-      />
-      <TouchableOpacity>
-        <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
-      </TouchableOpacity>
-    </View>
-  </SafeAreaView>
-);
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   SignUpTypeButton: {

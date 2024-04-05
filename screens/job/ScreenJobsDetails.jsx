@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, Modal, ScrollView, TouchableOpacity, Image } from 'react-native';
 
 const detail = [
@@ -25,14 +25,16 @@ const detail = [
   }
 ];
 
-const ScreenJobsDetails = () => {
+const ScreenJobsDetails = ({ route }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [jobsDetails, setJobsDetails] = useState([]);
+  const [jobsDetails2, setJobsDetails2] = useState('');
+  const { jId } = route.params;
 
   const formattedDate = detail[0].time.split(' ')[0];
 
   const handleUploadFile = () => {
-
   };
 
   const handleSendEmail = () => {
@@ -47,56 +49,104 @@ const ScreenJobsDetails = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+  useEffect(() => {
+    const fetchJobsDetails = async () => {
+      try {
+        const fetchUserData = async () => {
+          // alert(jId);
+          const data = {
+            jId
+          };
+          const response = await fetch(
+            'http://44.221.91.193:3000/JobDetail',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            }
+          );
+          const responseData = await response.json();
+          if (responseData.success) {
+          // alert(responseData.data[0].jobTitle);
+            setJobsDetails(responseData.data[0]);
+          } else {
+            alert(responseData.msg || 'Failed to fetch section data');
+          }
+        };
+
+        const fetchUserData2 = async () => {
+          const response = await fetch(
+            'http://44.221.91.193:3000/JobList',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+          );
+          const responseData = await response.json();
+          setJobsDetails2(responseData.data[0]);
+        };
+
+        await Promise.all([fetchUserData(), fetchUserData2()]);
+      } catch (error) {
+        alert('Jobs Details Error 1');
+      }
+    };
+    fetchJobsDetails();
+  }, [jId]);
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <Image
           style={styles.logo}
-          source={detail[0].companyImage}
+          source={{ uri: `data:image/jpeg;base64,${jobsDetails2.image}` }}
         />
-        <Text style={styles.title}>{detail[0].jobTitle}</Text>
-        <Text style={styles.subtitle}>{detail[0].companyName}</Text>
+        <Text style={styles.title}>{jobsDetails.jobTitle}</Text>
+        <Text style={styles.subtitle}>{jobsDetails2.cName}</Text>
         <Text style={styles.sectionTitle}>Location</Text>
-        <Text style={styles.sectionText}>{detail[0].location}</Text>
-        <Text style={styles.sectionTitle}>Job Highlight : </Text>
+        <Text style={styles.sectionText}>{jobsDetails.location}</Text>
 
-        {detail[0].highlight.map((item, index) => (
+        <Text style={styles.sectionTitle}>Job Highlight : </Text>
+        {jobsDetails.highlights && jobsDetails.highlights.split(', ').map((item, index) => (
           <View style={styles.text} key={index}>
             <Text style={styles.bulletPoint}>•</Text>
             <Text style={styles.text}>{item}</Text>
           </View>
         ))}
+
         <View style={styles.hrLine} />
         <Text style={styles.sectionTitle}>Description : </Text>
+        <Text style={styles.text}>{jobsDetails.description}</Text>
 
-        <Text style={styles.text}>{detail[0].description}</Text>
         <View style={styles.hrLine} />
         <Text style={styles.sectionTitle}>Responsibilities : </Text>
-
-        {detail[0].responsibilities.map((item, index) => (
+        {jobsDetails.responsibilities && jobsDetails.responsibilities.split(', ').map((item, index) => (
           <View style={styles.text} key={index}>
             <Text style={styles.bulletPoint}>•</Text>
             <Text style={styles.text}>{item}</Text>
           </View>
         ))}
+
         <View style={styles.hrLine} />
         <Text style={styles.sectionTitle}>Requirements : </Text>
-
-        {detail[0].requirements.map((item, index) => (
+        {jobsDetails.requirements && jobsDetails.requirements.split(', ').map((item, index) => (
           <View style={styles.text} key={index}>
             <Text style={styles.bulletPoint}>•</Text>
             <Text style={styles.text}>{item}</Text>
           </View>
         ))}
-        <View style={styles.hrLine} />
-        <Text style={styles.sectionText}>Post Date: {formattedDate}</Text>
 
+        <View style={styles.hrLine} />
+        <Text style={styles.sectionText}>Post Date: {jobsDetails.createAt}</Text>
         <Text />
 
         <TouchableOpacity style={styles.applyButton} onPress={toggleModal}>
           <Text style={styles.applyButtonText}>Apply Now</Text>
         </TouchableOpacity>
-
         <Modal visible={isModalVisible} animationType="slide" transparent>
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
@@ -127,8 +177,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 18,
-    color: '#777',
-    marginBottom: 16
+    color: '#777'
   },
   sectionTitle: {
     fontSize: 20,

@@ -87,13 +87,13 @@ const ScreenJobs = () => {
       style={styles.jobItem}
       onPress={() => navigation.navigate(NAVIGATION_MAIN.job, {
         screen: NAVIGATION_JOB.job,
-        params: { name: '' }
+        params: { name: '', jId: item.jId }
       })}
     >
-      <Image style={styles.avatar} source={item.avatar} />
+      <Image style={styles.avatar} source={{ uri: `data:image/jpeg;base64,${item.image}` }} />
       <View style={styles.jobDetails}>
         <Text style={styles.jobTitle}>{item.jobTitle}</Text>
-        <Text style={styles.jobSubtitle}>{item.companyName}</Text>
+        <Text style={styles.jobSubtitle}>{item.cName}</Text>
       </View>
     </TouchableOpacity>
   );

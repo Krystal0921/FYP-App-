@@ -21,7 +21,6 @@ const ScreenUser = () => {
   const navigation = useNavigation();
   const [isAnimated, setIsAnimated] = useState(false);
   const { onLogout } = useAuth();
-
   const { user } = useAuth();
   const [userId, setUserId] = useState('');
   const [userInformation, setUserInformation] = useState([]);
@@ -56,7 +55,7 @@ const ScreenUser = () => {
           }
         };
 
-        const fetchOtherApiData = async () => {
+        const fetchOtherUserData = async () => {
           const data = {
             mId: user.userId
           };
@@ -79,7 +78,7 @@ const ScreenUser = () => {
           }
         };
 
-        await Promise.all([fetchUserData(), fetchOtherApiData()]);
+        await Promise.all([fetchUserData(), fetchOtherUserData()]);
       } catch (error) {
         alert('User Information Progress Error');
       }
