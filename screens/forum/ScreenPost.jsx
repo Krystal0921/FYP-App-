@@ -5,10 +5,9 @@ import { NAVIGATION_FORUM } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
 const ScreenPost = ({ route, navigation }) => {
-  const { postId, title, image } = route.params;
+  const { postId, title, image, content } = route.params;
   const { user } = useAuth();
-  const [post1, setPost1] = useState([]);
-  const [post2, setPost2] = useState([]);
+  const [post, setPost] = useState([]);
 
   const imageMapping = {
     'default-profile-picture.jpg': require('../../assets/default-profile-picture.jpg')
@@ -19,7 +18,7 @@ const ScreenPost = ({ route, navigation }) => {
   useEffect(() => {
     const fetchPostData = async () => {
       try {
-        const fetchPostData1 = async () => {
+        const fetchPostData = async () => {
           // alert(postId);
           const data = {
             postId
@@ -36,32 +35,18 @@ const ScreenPost = ({ route, navigation }) => {
           );
           const responseData = await response.json();
           if (responseData.success) {
-            setPost1(responseData.data);
+            setPost(responseData.data);
           } else {
             alert(responseData.msg || 'Failed to fetch post data');
           }
         };
-
-        const fetchPostData2 = async () => {
-          const response = await fetch(
-            'http://44.221.91.193:3000/Forum',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            }
-          );
-          const responseData = await response.json();
-          setPost2(responseData.data[0]);
-        };
-        await Promise.all([fetchPostData1(), fetchPostData2()]);
+        await Promise.all([fetchPostData()]);
       } catch (error) {
         alert('Post Error');
       }
     };
     fetchPostData();
-  }, [postId]);
+  }, [postId, title, image, content]);
 
   const forumlist = ({ item }) => {
     const formattedTime = new Date(item.createAt).toLocaleString();
@@ -83,13 +68,13 @@ const ScreenPost = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.ForumBackgound}>
       <ScrollView contentContainerStyle={styles.ForumScrollView}>
-        <Text style={styles.ForumTitle}>{post2.title}</Text>
+        <Text style={styles.ForumTitle}>{title}</Text>
         { user ? (
           <TouchableOpacity
             style={styles.SignUpTypeButton}
             onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
               screen: NAVIGATION_FORUM.post,
-              params: { title: post2.title }
+              params: { postId }
             })}
           >
             <Text style={styles.SignUpTypeButtonText}>Edit</Text>
@@ -100,12 +85,12 @@ const ScreenPost = ({ route, navigation }) => {
         <View style={styles.ForumTitleImageView}>
           <Image
             style={styles.ForumTitleImage}
-            source={{ uri: `data:image/jpeg;base64,${post2.image}` }}
+            source={{ uri: `data:image/jpeg;base64,${image}` }}
           />
         </View>
-        <Text style={styles.ForumDesciptionText}>{post2.content}</Text>
+        <Text style={styles.ForumDesciptionText}>{content}</Text>
         <FlatList
-          data={post1}
+          data={post}
           renderItem={forumlist}
         />
       </ScrollView>

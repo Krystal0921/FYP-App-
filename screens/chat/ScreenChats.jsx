@@ -23,9 +23,6 @@ const chatData = [
 
 const ScreenChats = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loggedin, setLoggedin] = useState('');
 
   const handleButtonPress = () => {
     navigation.navigate(NAVIGATION_MAIN.chat, { screen: NAVIGATION_CHAT.chat, params: { name: 'John' } });

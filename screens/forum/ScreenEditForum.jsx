@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
 
 const ScreenEditForum = ({ route, navigation }) => {
-  const { title } = route.params;
-  alert(title);
+  const { titles, contents } = route.params;
+  alert(titles);
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+
+    };
+    fetchPostData();
+  }, [titles, contents]);
+
   return (
     <SafeAreaView style={styles.EditForumBackgound}>
       <View style={styles.EditForumView}>
