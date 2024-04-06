@@ -5,7 +5,7 @@ import { NAVIGATION_FORUM } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
 const ScreenPost = ({ route, navigation }) => {
-  const { postId } = route.params;
+  const { postId, title, image } = route.params;
   const { user } = useAuth();
   const [post1, setPost1] = useState([]);
   const [post2, setPost2] = useState([]);
@@ -92,7 +92,7 @@ const ScreenPost = ({ route, navigation }) => {
               params: { title: post2.title }
             })}
           >
-            <Text style={styles.SignUpTypeButtonText}>Edit{post2.title}</Text>
+            <Text style={styles.SignUpTypeButtonText}>Edit</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity />
