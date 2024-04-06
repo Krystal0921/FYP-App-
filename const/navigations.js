@@ -22,6 +22,7 @@ export const NAVIGATION_COURSE = {
   setting: "Setting",
   read: "Read",
   feedback: "Feedback",
+  aiQuiz: "AI Quiz",
 };
 
 export const NAVIGATION_USER = {

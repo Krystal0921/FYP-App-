@@ -465,6 +465,17 @@ const ScreenLessons = ({ route, navigation }) => {
         >
           <Text style={styles.QuizButtonText}>Take Quiz {mark} / 10</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.QuizButton}
+          onPress={() =>
+            navigation.navigate(NAVIGATION_COURSE.aiQuiz, {
+              screen: NAVIGATION_COURSE.aiQuiz,
+              data: lessonId,
+            })
+          }
+        >
+          <Text style={styles.QuizButtonText}>AI Quiz </Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -553,20 +564,31 @@ const styles = StyleSheet.create({
   QuizSectionContainer: {
     paddingHorizontal: 20,
     paddingVertical: 15,
-    backgroundColor: "#8B0960",
+
     borderRadius: 10,
     marginBottom: 10,
   },
   QuizButton: {
+    marginBottom: 10,
     backgroundColor: "#8B0960",
-    paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   QuizButtonText: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
   },
   greenTick: {
     marginLeft: 10,
