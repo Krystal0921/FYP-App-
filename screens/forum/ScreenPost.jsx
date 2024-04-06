@@ -1,23 +1,98 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_FORUM } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
-const ScreenPost = ({ navigation }) => {
+const ScreenPost = ({ route, navigation }) => {
+  const { postId } = route.params;
   const { user } = useAuth();
+  const [post1, setPost1] = useState([]);
+  const [post2, setPost2] = useState([]);
+
+  const imageMapping = {
+    'default-profile-picture.jpg': require('../../assets/default-profile-picture.jpg')
+  };
+
+  const getImageSource = (imageFilename) => imageMapping[imageFilename];
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      try {
+        const fetchPostData1 = async () => {
+          // alert(postId);
+          const data = {
+            postId
+          };
+          const response = await fetch(
+            'http://44.221.91.193:3000/PostComment',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            }
+          );
+          const responseData = await response.json();
+          if (responseData.success) {
+            setPost1(responseData.data);
+          } else {
+            alert(responseData.msg || 'Failed to fetch post data');
+          }
+        };
+
+        const fetchPostData2 = async () => {
+          const response = await fetch(
+            'http://44.221.91.193:3000/Forum',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+          );
+          const responseData = await response.json();
+          setPost2(responseData.data[0]);
+        };
+        await Promise.all([fetchPostData1(), fetchPostData2()]);
+      } catch (error) {
+        alert('Post Error');
+      }
+    };
+    fetchPostData();
+  }, [postId]);
+
+  const forumlist = ({ item }) => {
+    const formattedTime = new Date(item.createAt).toLocaleString();
+    return (
+      <View style={styles.ForumCommentView}>
+        <Image
+          style={styles.ForumCommentImage}
+          source={getImageSource(item.mPhoto)}
+        />
+        <View>
+          <Text style={styles.ForumCommentText}>{item.mName}</Text>
+          <Text style={styles.ForumCommentParagraph}>{item.commentContent}</Text>
+          <Text style={styles.ForumCommentTime}>{formattedTime}</Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.ForumBackgound}>
       <ScrollView contentContainerStyle={styles.ForumScrollView}>
-        <Text style={styles.ForumTitle}>How accurate for battery level is myPhonak app?</Text>
+        <Text style={styles.ForumTitle}>{post2.title}</Text>
         { user ? (
           <TouchableOpacity
             style={styles.SignUpTypeButton}
             onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
-              screen: NAVIGATION_FORUM.post
+              screen: NAVIGATION_FORUM.post,
+              params: { title: post2.title }
             })}
           >
-            <Text style={styles.SignUpTypeButtonText}>Edit</Text>
+            <Text style={styles.SignUpTypeButtonText}>Edit{post2.title}</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity />
@@ -25,65 +100,14 @@ const ScreenPost = ({ navigation }) => {
         <View style={styles.ForumTitleImageView}>
           <Image
             style={styles.ForumTitleImage}
-            source={require('../../assets/myPhonak_app.png')}
+            source={{ uri: `data:image/jpeg;base64,${post2.image}` }}
           />
         </View>
-        <Text style={styles.ForumDesciptionText}>Lately I have been leaving my KS9s turned on and in my ears all night streaming nature sounds and music in order to block out the neighborhood "disk jockey" who was keeping me up all night. (I tried every type and strength of earplugs first and none were )</Text>
-        <View style={styles.ForumCommentView}>
-          <Image
-            style={styles.ForumCommentImage}
-            source={require('../../assets/Cherrie.jpeg')}
-          />
-          <View>
-            <Text style={styles.ForumCommentText}>cherrie0912</Text>
-            <Text style={styles.ForumCommentParagraph}>Good sharing.</Text>
-            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-          </View>
-        </View>
-        <View style={styles.ForumCommentView}>
-          <Image
-            style={styles.ForumCommentImage}
-            source={require('../../assets/default-profile-picture.jpg')}
-          />
-          <View>
-            <Text style={styles.ForumCommentText}>kris0111</Text>
-            <Text style={styles.ForumCommentParagraph}>Excellent!</Text>
-            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-          </View>
-        </View>
-        <View style={styles.ForumCommentView}>
-          <Image
-            style={styles.ForumCommentImage}
-            source={require('../../assets/default-profile-picture.jpg')}
-          />
-          <View>
-            <Text style={styles.ForumCommentText}>jackyIsZero001</Text>
-            <Text style={styles.ForumCommentParagraph}>Wow</Text>
-            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-          </View>
-        </View>
-        <View style={styles.ForumCommentView}>
-          <Image
-            style={styles.ForumCommentImage}
-            source={require('../../assets/default-profile-picture.jpg')}
-          />
-          <View>
-            <Text style={styles.ForumCommentText}>ivy023yyy</Text>
-            <Text style={styles.ForumCommentParagraph}>Looks great!</Text>
-            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-          </View>
-        </View>
-        <View style={styles.ForumCommentView}>
-          <Image
-            style={styles.ForumCommentImage}
-            source={require('../../assets/default-profile-picture.jpg')}
-          />
-          <View>
-            <Text style={styles.ForumCommentText}>wandy090</Text>
-            <Text style={styles.ForumCommentParagraph}>Oops</Text>
-            <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-          </View>
-        </View>
+        <Text style={styles.ForumDesciptionText}>{post2.content}</Text>
+        <FlatList
+          data={post1}
+          renderItem={forumlist}
+        />
       </ScrollView>
       <View style={styles.MainSearchView}>
         <TextInput
@@ -121,7 +145,7 @@ const styles = StyleSheet.create({
   ForumCommentTime: {
     color: '#8F95B2',
     fontWeight: '600',
-    paddingLeft: 120
+    paddingLeft: 90
   },
   MainSearchText: {
     flex: 1,

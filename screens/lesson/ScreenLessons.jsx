@@ -290,9 +290,7 @@ const ScreenLessons = ({ route, navigation }) => {
             body: JSON.stringify(data)
           }
         );
-
         const responseData = await response.json();
-
         if (responseData.success) {
           setSection(responseData.data);
         } else {
@@ -302,7 +300,6 @@ const ScreenLessons = ({ route, navigation }) => {
         alert(`Lesson Section Error: ${error.message}`);
       }
     };
-
     fetchSectionData();
   }, [lessonId]);
 

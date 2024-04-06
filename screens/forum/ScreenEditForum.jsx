@@ -1,26 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
 
-const ScreenEditForum = ({ navigation }) => (
-  <SafeAreaView style={styles.EditForumBackgound}>
-    <View style={styles.EditForumView}>
-      <Text style={styles.EditForumInputText}>How accurate for battery level is myPhonak app?</Text>
-    </View>
-    <View style={styles.EditForumView}>
-      <TouchableOpacity style={styles.EditForumButton}>
-        <Text style={styles.EditForumButtonText}>Post Image (Option)</Text>
-      </TouchableOpacity>
-    </View>
-    <View>
-      <TextInput multiline numberOfLines={10} style={styles.EditForumDetailsInputText} placeholder="Post Details" />
-    </View>
-    <View style={styles.EditForumView}>
-      <TouchableOpacity style={styles.EditForumButton}>
-        <Text style={styles.EditForumButtonText}>Edit</Text>
-      </TouchableOpacity>
-    </View>
-  </SafeAreaView>
-);
+const ScreenEditForum = ({ route, navigation }) => {
+  const { title } = route.params;
+  alert(title);
+  return (
+    <SafeAreaView style={styles.EditForumBackgound}>
+      <View style={styles.EditForumView}>
+        <Text style={styles.EditForumInputText}>{title}</Text>
+      </View>
+      <View style={styles.EditForumView}>
+        <TouchableOpacity style={styles.EditForumButton}>
+          <Text style={styles.EditForumButtonText}>Post Image (Option)</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+        <TextInput multiline numberOfLines={10} style={styles.EditForumDetailsInputText} placeholder="Post Details" />
+      </View>
+      <View style={styles.EditForumView}>
+        <TouchableOpacity style={styles.EditForumButton}>
+          <Text style={styles.EditForumButtonText}>Edit</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   EditForumTitle: {

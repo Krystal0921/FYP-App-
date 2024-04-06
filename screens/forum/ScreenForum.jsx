@@ -1,11 +1,53 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, TextInput, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, StyleSheet, TextInput, View, Text, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_FORUM, NAVIGATION_MAIN } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
 const ScreenForum = ({ navigation }) => {
   const { user } = useAuth();
+  const [forumList, setForumList] = useState('');
+
+  useEffect(() => {
+    const fetchForumList = async () => {
+      try {
+        const response = await fetch('http://44.221.91.193:3000/Forum', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const responseData = await response.json();
+        setForumList(responseData.data);
+        // alert(jobs[0].jId);
+      } catch (error) {
+        alert('Forum Error');
+      }
+    };
+    fetchForumList();
+  }, []);
+
+  const forumlist = ({ item }) => {
+    const formattedTime = new Date(item.createAt).toLocaleString();
+    return (
+      <TouchableOpacity
+        style={styles.AllForum}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
+          screen: NAVIGATION_FORUM.post,
+          params: { postId: item.postId }
+        })}
+      >
+        <Text style={styles.AllForumText}>{item.title}</Text>
+        <Image
+          style={styles.AllForumImage}
+          source={{ uri: `data:image/jpeg;base64,${item.image}` }}
+        />
+        <Text style={styles.AllForumParagraph}>{item.content}</Text>
+        <Text style={styles.AllForumTime}>{formattedTime}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.AllForumScrollView}>
       <SafeAreaView style={styles.AllForumBackgound}>
@@ -35,51 +77,10 @@ const ScreenForum = ({ navigation }) => {
             <View />
           )}
         </View>
-
-        <TouchableOpacity
-          style={styles.AllForum}
-          onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
-            screen: NAVIGATION_FORUM.post
-          })}
-        >
-          <Text style={styles.AllForumText}>How accurate for battery level is myPhonak app?</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/myPhonak_app.png')}
-          />
-          <Text style={styles.AllForumParagraph}>Lately I have been leaving my KS9s turned on and in my ears all night streaming nature sounds and music in order to block out the neighborhood "disk jockey" who was keeping me up all night. (I tried every type and strength of earplugs first and none were )</Text>
-          <Text style={styles.AllForumTime}>2024-01-16 19:29:47</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.AllForum}
-          onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
-            screen: NAVIGATION_FORUM.post
-          })}
-        >
-          <Text style={styles.AllForumText}>Assessment for Cochlear Implant - I'm a candidate!</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/cochlear_implant.jpg')}
-          />
-          <Text style={styles.AllForumParagraph}>Yesterday was assessment day. We were up very early to make the drive to Toronto and arrived in plenty of time, which was a very good thing as there was a long line-up to enter the main entrance to the hospital that snaked well down the sidewalk. It was v</Text>
-          <Text style={styles.AllForumTime}>2024-01-17 09:51:36</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.AllForum}
-          onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
-            screen: NAVIGATION_FORUM.post
-          })}
-        >
-          <Text style={styles.AllForumText}>Borderline for hearing aids?</Text>
-          <Image
-            style={styles.AllForumImage}
-            source={require('../../assets/Borderline.jpg')}
-          />
-          <Text style={styles.AllForumParagraph}>I saw an MD/ENT today due to my own perceived hearing loss. Did a hearing test which included bone conduction and tympany I think (was not sure exactly what it was). He said he doesn't think I will benefit from HA because my loss, such as it is, is mostly</Text>
-          <Text style={styles.AllForumTime}>2024-01-17 09:51:36</Text>
-        </TouchableOpacity>
+        <FlatList
+          data={forumList}
+          renderItem={forumlist}
+        />
       </SafeAreaView>
     </ScrollView>
   );
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   AllForumTime: {
     fontWeight: '600',
     paddingTop: 100,
-    paddingLeft: 170
+    paddingLeft: 150
   }
 });
 
