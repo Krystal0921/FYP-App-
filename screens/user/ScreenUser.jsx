@@ -206,7 +206,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#3B6DAF',
     width: 300,
-    height: 50
+    height: 50,
+    borderRadius: 10
   },
   logoutText: {
     padding: 5,

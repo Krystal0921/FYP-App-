@@ -32,7 +32,7 @@ const ScreenJobsDetails = ({ route }) => {
   const [jobsDetails2, setJobsDetails2] = useState('');
   const { jId } = route.params;
 
-  const formattedDate = detail[0].time.split(' ')[0];
+  const formattedTime = new Date(jobsDetails.createAt).toLocaleString();
 
   const handleUploadFile = () => {
   };
@@ -141,7 +141,7 @@ const ScreenJobsDetails = ({ route }) => {
         ))}
 
         <View style={styles.hrLine} />
-        <Text style={styles.sectionText}>Post Date: {jobsDetails.createAt}</Text>
+        <Text style={styles.sectionText}>Post Date: {formattedTime}</Text>
         <Text />
 
         <TouchableOpacity style={styles.applyButton} onPress={toggleModal}>

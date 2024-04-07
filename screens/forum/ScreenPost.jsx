@@ -74,7 +74,8 @@ const ScreenPost = ({ route, navigation }) => {
             style={styles.SignUpTypeButton}
             onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
               screen: NAVIGATION_FORUM.post,
-              params: { postId }
+              title,
+              content
             })}
           >
             <Text style={styles.SignUpTypeButtonText}>Edit</Text>
