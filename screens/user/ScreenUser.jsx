@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { NAVIGATION_TAB } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
-const ScreenUser = () => {
+const ScreenUser = ({ navigation }) => {
   const [isAnimated, setIsAnimated] = useState(false);
   const { onLogout } = useAuth();
   const { user } = useAuth();
@@ -54,7 +55,7 @@ const ScreenUser = () => {
 
         await Promise.all([fetchUserData(), fetchOtherUserData()]);
       } catch (error) {
-        alert('User Information Progress Error');
+        alert('User Information Error');
       }
     };
     fetchUserInformation();
@@ -62,6 +63,11 @@ const ScreenUser = () => {
 
   const handleAnimate = () => {
     setIsAnimated(true);
+    navigation.navigate(NAVIGATION_TAB.course);
+    // navigation.navigate(
+    //   NAVIGATION_COURSE.lessons
+    //   { params: { lessonId: 'L01' } }
+    // );
   };
 
   const imageMapping = {

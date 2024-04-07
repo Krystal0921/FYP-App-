@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NAVIGATION_TAB, NAVIGATION_USER, NAVIGATION_MAIN, NAVIGATION_COURSE } from '../../const/navigations';
-import { storeData } from '../../const/AsyncStorage';
+import { NAVIGATION_TAB, NAVIGATION_MAIN } from '../../const/navigations';
 import { authContext } from '../../components/AuthProvider'; // Import AsyncStorage
 
 const ScreenLogin = ({ navigation }) => {
@@ -31,7 +29,7 @@ const ScreenLogin = ({ navigation }) => {
             await setUserId(responseData.data[0].mId);
             data.userId = responseData.data[0].mId;
             await onLogin(data);
-            navigation.navigate(NAVIGATION_COURSE.courses);
+            navigation.navigate(NAVIGATION_TAB.course);
           } else if (responseData.code === 1) {
             alert(responseData.msg);
           } else {
