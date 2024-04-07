@@ -5,18 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { authContext, useAuth } from '../../components/AuthProvider';
 
-const users = [
-  {
-    sid: 'm0000001',
-    name: 'cherrie0912',
-    email: 'cherrie@pg95.com',
-    icon: require('../../assets/Cherrie.jpeg'),
-    lesson1Progress: 60,
-    lesson2Progress: 10,
-    lesson3Progress: 90
-  }
-];
-
 const ScreenUser = () => {
   const navigation = useNavigation();
   const [isAnimated, setIsAnimated] = useState(false);
@@ -33,9 +21,6 @@ const ScreenUser = () => {
   useEffect(() => {
     const fetchUserInformation = async () => {
       try {
-        // const { userA } = useAuth();
-        // alert(JSON.stringify(user));
-        // alert(user.userId);
         const fetchUserData = async () => {
           const data = {
             mId: user.userId
@@ -68,11 +53,7 @@ const ScreenUser = () => {
           });
           const responseData = await response.json();
           if (responseData.success) {
-            // alert(responseData.data[0].totalMark);
-            // alert(responseData.data[1].totalMark);
-            // alert(responseData.data[2].totalMark);
             setUserProgressInformation(responseData.data);
-            // alert(userProgressInformation[0].totalMark);
           } else {
             alert(responseData.msg || 'Failed to fetch user progress data');
           }
@@ -119,7 +100,7 @@ const ScreenUser = () => {
               animate={isAnimated}
               duration={800}
             />
-            <Text style={styles.text}>Lesson 1</Text>
+            <Text style={styles.text}>Daily</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleAnimate}>
@@ -137,7 +118,7 @@ const ScreenUser = () => {
               animate={isAnimated}
               duration={800}
             />
-            <Text style={styles.text}>Lesson 2</Text>
+            <Text style={styles.text}>Travel</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleAnimate}>
@@ -155,7 +136,7 @@ const ScreenUser = () => {
               animate={isAnimated}
               duration={800}
             />
-            <Text style={styles.text}>Lesson 3</Text>
+            <Text style={styles.text}>Workplace</Text>
           </View>
         </TouchableOpacity>
       </View>

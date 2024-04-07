@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
 
 const ScreenEditForum = ({ route, navigation }) => {
-  const { titles, contents } = route.params;
-  alert(titles);
+  const { postId } = route.params;
+  alert(postId);
 
   useEffect(() => {
     const fetchPostData = async () => {
 
     };
     fetchPostData();
-  }, [titles, contents]);
+  }, [postId]);
 
   return (
     <SafeAreaView style={styles.EditForumBackgound}>
       <View style={styles.EditForumView}>
-        <Text style={styles.EditForumInputText}>{title}</Text>
+        <Text style={styles.EditForumInputText}>{postId}</Text>
       </View>
       <View style={styles.EditForumView}>
         <TouchableOpacity style={styles.EditForumButton}>

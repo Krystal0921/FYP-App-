@@ -1,8 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { authContext, useAuth } from '../../components/AuthProvider';
 
-const ScreenChat = () => {
+const ScreenChat = ({ route }) => {
   const [inputText, setInputText] = useState('');
+  const { user } = useAuth();
+  const [userId, setUserId] = useState('');
+  const { chatId } = route.params;
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // alert(chatId);
+      const data = {
+        chatId
+      };
+      try {
+        const response = await fetch('http://44.221.91.193:3000/ChatMessage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          // alert(responseData.data[0].msgId);
+          setChats(responseData.data);
+        } else {
+          alert(responseData.msg || 'Failed to fetch chats data');
+        }
+      } catch (error) {
+        console.log('Chat Error');
+      }
+    };
+
+    fetchData();
+  }, [chatId]);
 
   const [messages, setMessages] = useState([
     { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:30:22' },
@@ -14,14 +48,15 @@ const ScreenChat = () => {
   ]);
 
   const renderMessage = ({ item }) => {
-    const isUser = item.sender === 'You';
+    // alert(user.userId);
+    const isUser = user.userId === item.userId;
     const messageContainerStyle = isUser ? styles.userMessageContainer : styles.senderMessageContainer;
     const messageTextStyle = isUser ? styles.userMessageText : styles.senderMessageText;
 
     return (
       <View style={messageContainerStyle}>
-        <Text style={messageTextStyle}>{item.content}</Text>
-        <Text style={styles.timestamp}>{item.timestamp}</Text>
+        <Text style={messageTextStyle}>{item.msg_content}</Text>
+        <Text style={styles.timestamp}>{item.createAt}</Text>
       </View>
     );
   };
@@ -30,7 +65,7 @@ const ScreenChat = () => {
     if (inputText.trim() !== '') {
       const newMessage = {
         id: messages.length + 1,
-        sender: 'You',
+        sender: user.userId,
         content: inputText.trim(),
         timestamp: new Date()
       };
@@ -43,8 +78,7 @@ const ScreenChat = () => {
     <View style={styles.container}>
       <View style={styles.messagesContainer}>
         <FlatList
-          data={messages}
-          keyExtractor={(item) => item.id.toString()}
+          data={chats}
           renderItem={renderMessage}
         />
       </View>
