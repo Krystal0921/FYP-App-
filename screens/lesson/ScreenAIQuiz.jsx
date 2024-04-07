@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { NAVIGATION_COURSE, NAVIGATION_MAIN } from "../../const/navigations";
+import * as ImageManipulator from "expo-image-manipulator";
 
 const ScreenAIQuiz = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [base64Image, setBase64Image] = useState(null);
   const [predictedLabel, setPredictedLabel] = useState(null);
-  let isCorrect;
+  const [randomQuestion, setRandomQuestion] = useState(null);
+  const [answer, setAnswer] = useState(null);
+
+  [isCorrect, setIsCorrect] = useState(null);
+
   const questions = [
     ["What is 'A' in sign language?", "A"],
     ["What is 'B' in sign language?", "B"],
@@ -19,29 +24,66 @@ const ScreenAIQuiz = () => {
     ["What is '9' in sign language?", "9"],
     ["What is '10' in sign language?", "10"],
   ];
+  useEffect(() => {
+    const randomQuestions =
+      questions[Math.floor(Math.random() * questions.length)];
+    const question = randomQuestions[0];
+    const answers = randomQuestions[1];
 
-  const randomQuestion =
-    questions[Math.floor(Math.random() * questions.length)];
-  const question = randomQuestion[0];
-  const answer = randomQuestion[1];
+    setRandomQuestion(question);
+    setAnswer(answers);
+  }, []);
 
   const handleFileUpload = async () => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+    if (status !== "granted") {
+      alert("Permission to access the camera roll is required!");
       return;
     }
 
-    const imagePickerResult = await ImagePicker.launchImageLibraryAsync();
+    const imagePickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      quality: 1, // Set the initial quality to 1
+    });
 
-    if (!imagePickerResult.cancelled) {
-      setSelectedImage(imagePickerResult.uri);
-      convertToBase64(imagePickerResult.uri);
+    if (!imagePickerResult.canceled) {
+      const { uri } = imagePickerResult;
+
+      // Compress or resize the image
+      const compressedImage = await ImageManipulator.manipulateAsync(
+        uri,
+        [{ resize: { width: 415, height: 415 } }],
+        {
+          compress: 1,
+          format: ImageManipulator.SaveFormat.PNG,
+        }
+      );
+
+      console.log("Compressed Image URI: ", compressedImage.uri);
+      console.log("Compressed Image Size: ", compressedImage.size);
+
+      // Read the compressed image file as a Blob
+      const response = await fetch(compressedImage.uri);
+      const blob = await response.blob();
+
+      // Convert the Blob to Base64
+      const base64String = await blobToBase64(blob);
+
+      setSelectedImage(base64String);
+      // setSelectedImage(compressedImage.uri);
+      convertToBase64(base64String);
     }
   };
-
+  const blobToBase64 = async (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
   const convertToBase64 = async (imageUri) => {
     try {
       const response = await fetch(imageUri);
@@ -64,7 +106,11 @@ const ScreenAIQuiz = () => {
 
   const handleUploadButtonPress = () => {
     if (base64Image) {
-      uploadImageToAIQuiz(base64Image);
+      const base64WithoutPrefix = base64Image.substring(
+        "data:image/png;base64,".length
+      );
+      console.log("Base64 String:", base64WithoutPrefix);
+      uploadImageToAIQuiz(base64WithoutPrefix);
     } else {
       alert("No image selected");
     }
@@ -72,7 +118,7 @@ const ScreenAIQuiz = () => {
 
   const uploadImageToAIQuiz = async (base64Image) => {
     try {
-      const response = await fetch("http://44.221.91.193:3001/AIQuiz", {
+      const response = await fetch("http://44.221.91.193:3000/AIQuiz", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,16 +127,15 @@ const ScreenAIQuiz = () => {
       });
 
       const data = await response.json();
-      console.log("Prediction:", data.prediction);
-      setPredictedLabel(data.prediction);
-      let isCorrect;
-
-      if (predictedLabel === answer) {
-        isCorrect = true;
+      console.log("Prediction:", data);
+      prediction = data["prediction"];
+      console.log(prediction + "= " + answer);
+      if (prediction === answer) {
+        setIsCorrect(true);
       } else {
-        isCorrect = false;
+        setIsCorrect(false);
       }
-      console.log("Is Correct:", isCorrect);
+      console.log(isCorrect);
     } catch (error) {
       console.log("Error uploading image to AIQuiz API:", error);
     }
@@ -99,8 +144,7 @@ const ScreenAIQuiz = () => {
   return (
     <View style={styles.container}>
       <View style={styles.questionContainer}>
-        <Text style={styles.title}>Question:</Text>
-        <Text style={styles.questionText}> {question}</Text>
+        <Text style={styles.questionText}> {randomQuestion}</Text>
       </View>
       <TouchableOpacity style={styles.uploadButton} onPress={handleFileUpload}>
         <Text style={styles.buttonText}>Upload Your Answer</Text>
@@ -115,11 +159,18 @@ const ScreenAIQuiz = () => {
             <View
               style={[
                 styles.rectangle,
-                { backgroundColor: isCorrect ? "green" : "red" },
+                {
+                  backgroundColor:
+                    isCorrect === null
+                      ? "transparent"
+                      : isCorrect
+                      ? "green"
+                      : "red",
+                },
               ]}
             >
               <Text style={styles.rectangleText}>
-                {isCorrect ? "CORRECT" : "INCORRECT"}
+                {isCorrect === null ? "" : isCorrect ? "CORRECT" : "INCORRECT"}
               </Text>
             </View>
           </View>
