@@ -14,7 +14,10 @@ const NavigatorChats = () => {
         <Stack.Screen
           name={NAVIGATION_CHAT.chats}
           component={ScreenChats}
-          screenOptions={{ headerShown: false }}
+          options={() => ({
+            headerShown: false,
+            title: ''
+          })}
         />
       ) : (
         <Stack.Screen

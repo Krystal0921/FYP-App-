@@ -32,7 +32,6 @@ const ScreenChats = () => {
             alert(responseData.msg || 'Failed to fetch chats data');
           }
         };
-
         await Promise.all([fetchChatsData()]);
       } catch (error) {
         alert('Chats Error');
@@ -54,7 +53,7 @@ const ScreenChats = () => {
         <Image source={require('../../assets/default-profile-picture.jpg')} style={styles.avatar} />
         <View style={styles.itemContent}>
           <Text style={styles.name}>{item.userName}</Text>
-          <Text style={styles.message}>{item.message}</Text>
+          {/* <Text style={styles.message}>{item.message}</Text> */}
         </View>
         <Text style={styles.time}>{formattedTime}</Text>
       </TouchableOpacity>
@@ -93,8 +92,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 50,
-    backgroundColor: '#fafafa'
+    backgroundColor: '#fafafa',
+    paddingTop: 30
   },
   item: {
     flexDirection: 'row',

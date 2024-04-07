@@ -1,22 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { authContext, useAuth } from '../../components/AuthProvider';
+import { useAuth } from '../../components/AuthProvider';
 
 const ScreenUser = () => {
-  const navigation = useNavigation();
   const [isAnimated, setIsAnimated] = useState(false);
   const { onLogout } = useAuth();
   const { user } = useAuth();
-  const [userId, setUserId] = useState('');
+  const [userId] = useState('');
   const [userInformation, setUserInformation] = useState([]);
   const [userProgressInformation, setUserProgressInformation] = useState([]);
-
-  const handleAnimate = () => {
-    setIsAnimated(true);
-  };
 
   useEffect(() => {
     const fetchUserInformation = async () => {
@@ -66,6 +59,10 @@ const ScreenUser = () => {
     };
     fetchUserInformation();
   }, [userId]);
+
+  const handleAnimate = () => {
+    setIsAnimated(true);
+  };
 
   const imageMapping = {
     'default-profile-picture.jpg': require('../../assets/default-profile-picture.jpg')
@@ -170,11 +167,6 @@ const styles = StyleSheet.create({
   vertical: {
     flexDirection: 'column',
     alignSelf: 'center'
-  },
-  hrLine: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    marginVertical: 16
   },
   logo: {
     width: 200,

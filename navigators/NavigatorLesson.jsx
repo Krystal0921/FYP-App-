@@ -9,42 +9,49 @@ import { useAuth } from '../components/AuthProvider';
 const Stack = createStackNavigator();
 
 const NavigatorLesson = () => {
-  const { user } = useAuth();
+  const { user } = useAuth(); // Access the user object from the AuthProvider
 
   return (
     <Stack.Navigator
-      intialRouteName={NAVIGATION_COURSE.lessons}
+      initialRouteName={NAVIGATION_COURSE.lessons} // Set the initial route name
     >
+      {/* ScreenLessons */}
       <Stack.Screen
-        name={NAVIGATION_COURSE.lessons}
-        component={ScreenLessons}
+        name={NAVIGATION_COURSE.lessons} // Set the name of the screen
+        component={ScreenLessons} // Set the component that will be rendered
         options={({ route }) => ({
-          title: route.params.name
+          title: route.params.name // Set the title of the screen based on the name parameter passed in route.params
         })}
       />
+
+      {/* ScreenQuiz */}
       <Stack.Screen
-        name={NAVIGATION_COURSE.quiz}
-        component={ScreenQuiz}
+        name={NAVIGATION_COURSE.quiz} // Set the name of the screen
+        component={ScreenQuiz} // Set the component that will be rendered
         options={() => ({
-          title: 'Quiz'
+          title: 'Quiz' // Set the title of the screen
         })}
-        params={user}
+        params={user} // Pass the user object as params to the screen
       />
+
+      {/* ScreenRead */}
       <Stack.Screen
-        name={NAVIGATION_COURSE.read}
-        component={ScreenRead}
+        name={NAVIGATION_COURSE.read} // Set the name of the screen
+        component={ScreenRead} // Set the component that will be rendered
         options={({ route }) => ({
-          title: route.params.name
+          title: route.params.name // Set the title of the screen based on the name parameter passed in route.params
         })}
-        params={user}
+        params={user} // Pass the user object as params to the screen
       />
+
+      {/* ScreenFeedback */}
       <Stack.Screen
-        name={NAVIGATION_COURSE.feedback}
-        component={ScreenFeedback}
+        name={NAVIGATION_COURSE.feedback} // Set the name of the screen
+        component={ScreenFeedback} // Set the component that will be rendered
         options={({ route }) => ({
-          title: route.params.name
+          title: route.params.name // Set the title of the screen based on the name parameter passed in route.params
         })}
-        params={user}
+        params={user} // Pass the user object as params to the screen
       />
     </Stack.Navigator>
   );
