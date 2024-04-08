@@ -5,15 +5,20 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
 import background from '../../assets/backgroundd.png';
 
+// Get window dimensions
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+// Define the ScreenCourses component
 const ScreenCourses = ({ navigation }) => {
+  // State to store the courses
   const [courses, setCourses] = useState([]);
 
+  // Fetch courses from the server on component mount
   useEffect(() => {
     const fetchCourses = async () => {
       try {
+        // Make a request to fetch courses
         const response = await fetch('http://44.221.91.193:3000/Lesson/', {
           method: 'POST',
           headers: {
@@ -21,7 +26,11 @@ const ScreenCourses = ({ navigation }) => {
           },
           body: JSON.stringify({})
         });
+
+        // Parse the response data
         const responseData = await response.json();
+
+        // Update the courses state if the request is successful
         if (responseData.success) {
           setCourses(responseData.data);
         } else if (responseData.code === 1) {
@@ -30,20 +39,23 @@ const ScreenCourses = ({ navigation }) => {
           alert('Wrong username or password');
         }
       } catch (error) {
-        alert('Lesson Error');
+        alert('Courses Error');
       }
     };
 
     fetchCourses();
   }, []);
 
+  // Define the CourseCard component
   const CourseCard = ({ course }) => {
+    // Mapping of image filenames to image sources
     const imageMapping = {
       'daily-communication.jpg': require('../../assets/daily-communication.jpg'),
       'travel-communication.png': require('../../assets/travel-communication.png'),
       'workplace-communication.jpg': require('../../assets/workplace-communication.jpg')
     };
 
+    // Function to get the image source based on the filename
     const getImageSource = (imageFilename) => imageMapping[imageFilename];
 
     return (
@@ -66,11 +78,15 @@ const ScreenCourses = ({ navigation }) => {
     );
   };
 
+  // Render the component
   return (
     <SafeAreaView style={styles.MainBackground}>
+      {/* Header */}
       <View style={styles.MainTitleImageView}>
         <Image style={styles.MainTitleImage} source={background} />
       </View>
+
+      {/* Search and All Lessons */}
       <View>
         <View style={styles.MainSearchView}>
           <MaterialIcons size={30} name="search" />
@@ -80,12 +96,14 @@ const ScreenCourses = ({ navigation }) => {
           <Text style={styles.MainAllLessonText}>All Lessons</Text>
         </View>
       </View>
+
+      {/* Course List */}
       <View style={styles.MainAllLessonList}>
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
           data={courses}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(index) => index.toString()}
           renderItem={({ item }) => <CourseCard course={item} />}
         />
       </View>
@@ -93,6 +111,7 @@ const ScreenCourses = ({ navigation }) => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   MainAllLessonList: {
     flex: 1

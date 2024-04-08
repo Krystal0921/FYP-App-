@@ -5,10 +5,11 @@ import { NAVIGATION_TAB, NAVIGATION_MAIN } from '../../const/navigations';
 import { authContext } from '../../components/AuthProvider'; // Import AsyncStorage
 
 const ScreenLogin = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [userId, setUserId] = useState('');
-  const { onLogin } = useContext(authContext);
+  const [username, setUsername] = useState(''); // State for username input
+  const [password, setPassword] = useState(''); // State for password input
+  const [userId, setUserId] = useState(''); // State for user ID
+  const { onLogin } = useContext(authContext); // Access the onLogin function from the authContext
+
   const Login = async () => {
     try {
       const data = {
@@ -16,6 +17,7 @@ const ScreenLogin = ({ navigation }) => {
         password,
         userId
       };
+      // Send a POST request to the login endpoint with the provided data
       fetch('http://44.221.91.193:3000/login/', {
         method: 'POST',
         headers: {
@@ -26,23 +28,23 @@ const ScreenLogin = ({ navigation }) => {
         .then((response) => response.json())
         .then(async (responseData) => {
           if (responseData.success) {
-            await setUserId(responseData.data[0].mId);
+            await setUserId(responseData.data[0].mId); // Set the user ID from the response
             data.userId = responseData.data[0].mId;
-            await onLogin(data);
-            navigation.navigate(NAVIGATION_TAB.course);
+            await onLogin(data); // Call the onLogin function with the data
+            navigation.navigate(NAVIGATION_TAB.course); // Navigate to the course screen
           } else if (responseData.code === 1) {
-            alert(responseData.msg);
+            alert(responseData.msg); // Show an alert with the error message
           } else {
-            alert('Wrong username or password');
+            alert('Wrong username or password'); // Show an alert for wrong username or password
           }
         });
     } catch (e) {
       switch (e.response.status) {
         case 401:
-          alert('Wrong username or password');
+          alert('Wrong username or password'); // Show an alert for wrong username or password
           break;
         default:
-          alert('Login failed');
+          alert('Login failed'); // Show a generic login failed alert
       }
     }
   };
@@ -82,6 +84,7 @@ const ScreenLogin = ({ navigation }) => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   LoginButton: {
     paddingTop: 10,

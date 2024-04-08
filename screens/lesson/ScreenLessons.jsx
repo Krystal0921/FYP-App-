@@ -4,12 +4,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NAVIGATION_COURSE } from '../../const/navigations';
 
+// Image mapping for lesson IDs
 const imageMapping = {
   L01: require('../../assets/daily-communication.jpg'),
   L02: require('../../assets/travel-communication.png'),
   L03: require('../../assets/workplace-communication.jpg')
 };
 
+// Get image source based on lesson ID
 const getImageSource = (lessonId) => imageMapping[lessonId];
 
 const ScreenLessons = ({ route, navigation }) => {
@@ -18,6 +20,7 @@ const ScreenLessons = ({ route, navigation }) => {
   const [section, setSection] = useState([]);
 
   useEffect(() => {
+    // Retrieve userId from AsyncStorage
     const getUserId = async () => {
       try {
         const userId = await AsyncStorage.getItem('userId');
@@ -26,17 +29,16 @@ const ScreenLessons = ({ route, navigation }) => {
         console.error('Error retrieving userId from AsyncStorage:', error);
       }
     };
-
     getUserId();
   }, []);
 
   useEffect(() => {
+    // Fetch section data for the lesson
     const fetchSectionData = async () => {
       try {
         const data = {
           lessonId
         };
-
         const response = await fetch(
           'http://44.221.91.193:3000/Lesson/Section/',
           {
@@ -70,15 +72,13 @@ const ScreenLessons = ({ route, navigation }) => {
         },
         body: JSON.stringify({ mId, sectionId })
       });
-
       const responseData = await response.json();
-
       if (responseData.success) {
         if (responseData.data === 'has taken') {
           return true;
         } if (responseData.data === 'not taken') {
           console.log(mId, sectionId, responseData.data);
-          //  console.log(mId, sectionId, responseData.data);
+          // console.log(mId, sectionId, responseData.data);
           return false;
         }
       } else {
@@ -94,13 +94,12 @@ const ScreenLessons = ({ route, navigation }) => {
 
   const LessonContentList = ({ session, index }) => {
     const [isTaken, setIsTaken] = useState(false);
-
+    // Check if the section is taken by the user
     useEffect(() => {
       const checkSectionTaken = async () => {
         const sectionTaken = await isSectionTaken(session.sectionId);
         setIsTaken(sectionTaken);
       };
-
       checkSectionTaken();
     }, [session.sectionId]);
 
@@ -146,9 +145,7 @@ const ScreenLessons = ({ route, navigation }) => {
               body: JSON.stringify({ mId, lessonId })
             });
             console.log(mId + lessonId);
-
             const responseData = await response.json();
-
             if (responseData.success) {
               if (responseData.data && responseData.data.length > 0) {
                 const { score } = responseData.data[0];
@@ -166,7 +163,6 @@ const ScreenLessons = ({ route, navigation }) => {
           alert('Failed to fetch quiz mark data');
         }
       };
-
       fetchQuizMark();
     }, [lessonId]);
 
@@ -212,6 +208,7 @@ const ScreenLessons = ({ route, navigation }) => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   AllLessonBackgroundView: {
     paddingHorizontal: 20,
