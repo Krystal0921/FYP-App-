@@ -29,7 +29,8 @@ const ScreenChats = () => {
           if (responseData.success) {
             // alert(JSON.stringify(responseData.data));
             setChatsInformation(responseData.data);
-            // alert(responseData.data[0].chatId);
+            alert(responseData.data[0].chatId);
+            setUserId(responseData.data[0].chatId);
           } else {
             alert(responseData.msg || 'Failed to fetch chats data');
           }

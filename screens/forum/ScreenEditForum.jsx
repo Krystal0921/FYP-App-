@@ -7,6 +7,7 @@ const ScreenEditForum = ({ route, navigation }) => {
   const { user } = useAuth();
 
   useEffect(() => {
+
   }, [title, content]);
 
   return (

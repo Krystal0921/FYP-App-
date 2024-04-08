@@ -1,36 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, Modal, ScrollView, TouchableOpacity, Image } from 'react-native';
 
-const detail = [
-  {
-    id: '1',
-    jobTitle: 'Full-time Library Materials Organizer',
-    companyName: 'Adecco Personnel Limited',
-    location: 'Public Libraries in Hong Kong, Kowloon and the New Territories',
-    description: 'Full-time, LCSD Outsourcing Contracts',
-    highlight: [
-      '17 days of public holidays',
-      'On-the-job training and good promotion prospects'
-    ],
-    responsibilities: [
-      'Responsible for organizing all kinds of library materials, including classification, sorting and shelving, cleaning and disinfecting books, and transportation and other manual work'
-    ],
-    requirements: [
-      'Work 6 days per week, 8 hours per day',
-      '5 days off per month',
-      'Secondary 3 or equivalent in Hong Kong'
-    ],
-    time: '2023-01-31 23:59:59',
-    companyImage: require('../../assets/adecco.png')
-  }
-];
-
 const ScreenJobsDetails = ({ route }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [jobsDetails, setJobsDetails] = useState([]);
   const [jobsDetails2, setJobsDetails2] = useState('');
-  const { jId } = route.params;
+  const { jId, eId } = route.params;
 
   const formattedTime = new Date(jobsDetails.createAt).toLocaleString();
 
@@ -53,7 +29,6 @@ const ScreenJobsDetails = ({ route }) => {
     const fetchJobsDetails = async () => {
       try {
         const fetchUserData = async () => {
-          // alert(jId);
           const data = {
             jId
           };
@@ -69,7 +44,6 @@ const ScreenJobsDetails = ({ route }) => {
           );
           const responseData = await response.json();
           if (responseData.success) {
-          // alert(responseData.data[0].jobTitle);
             setJobsDetails(responseData.data[0]);
           } else {
             alert(responseData.msg || 'Failed to fetch section data');
@@ -77,13 +51,17 @@ const ScreenJobsDetails = ({ route }) => {
         };
 
         const fetchUserData2 = async () => {
+          const data = {
+            eId
+          };
           const response = await fetch(
             'http://44.221.91.193:3000/JobList',
             {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
-              }
+              },
+              body: JSON.stringify(data)
             }
           );
           const responseData = await response.json();
@@ -96,7 +74,7 @@ const ScreenJobsDetails = ({ route }) => {
       }
     };
     fetchJobsDetails();
-  }, [jId]);
+  }, [jId, eId]);
 
   return (
     <ScrollView>

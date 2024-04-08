@@ -1,27 +1,42 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
 
-const ScreenCreateForum = ({ navigation }) => (
-  <SafeAreaView style={styles.CreateForumBackgound}>
-    <View style={styles.CreateForumView}>
-      <TextInput style={styles.CreateForumInputText} placeholder="Post Title" />
-    </View>
-    <View style={styles.CreateForumView}>
-      <TouchableOpacity style={styles.CreateForumButton}>
-        <Text style={styles.CreateForumButtonText}>Post Image (Option)</Text>
-      </TouchableOpacity>
-    </View>
-    <View>
-      <TextInput multiline numberOfLines={6} style={styles.CreateForumDetailsInputText} placeholder="Post Details" />
-    </View>
-    <Text />
-    <View style={styles.CreateForumView}>
-      <TouchableOpacity style={styles.CreateForumButton}>
-        <Text style={styles.CreateForumButtonText}>Create</Text>
-      </TouchableOpacity>
-    </View>
-  </SafeAreaView>
-);
+const ScreenCreateForum = () => {
+  const [title, setTitle] = useState('');
+  const [details, setDetails] = useState('');
+
+  return (
+    <SafeAreaView style={styles.CreateForumBackgound}>
+      <View style={styles.CreateForumView}>
+        <TextInput
+          style={styles.CreateForumInputText}
+          placeholder="Post Title"
+          onChangeText={(text) => setTitle(text)}
+        />
+      </View>
+      <View style={styles.CreateForumView}>
+        <TouchableOpacity style={styles.CreateForumButton}>
+          <Text style={styles.CreateForumButtonText}>Post Image (Option)</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+        <TextInput
+          multiline
+          numberOfLines={6}
+          style={styles.CreateForumDetailsInputText}
+          placeholder="Post Details"
+          onChangeText={(text) => setDetails(text)}
+        />
+      </View>
+      <Text />
+      <View style={styles.CreateForumView}>
+        <TouchableOpacity style={styles.CreateForumButton}>
+          <Text style={styles.CreateForumButtonText}>Create</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   CreateForumTitle: {
