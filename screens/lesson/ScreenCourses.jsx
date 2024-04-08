@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, Image, Dimensions, FlatList, TextInput, SafeAreaView, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, Image, Dimensions, FlatList, TextInput, SafeAreaView, StyleSheet }
+  from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
@@ -26,10 +27,8 @@ const ScreenCourses = ({ navigation }) => {
           },
           body: JSON.stringify({})
         });
-
         // Parse the response data
         const responseData = await response.json();
-
         // Update the courses state if the request is successful
         if (responseData.success) {
           setCourses(responseData.data);
@@ -42,7 +41,6 @@ const ScreenCourses = ({ navigation }) => {
         alert('Courses Error');
       }
     };
-
     fetchCourses();
   }, []);
 
