@@ -8,6 +8,7 @@ const ScreenChats = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
   const [userId, setUserId] = useState('');
+  const [chatsID, setChatsID] = useState('');
   const [chatsInformation, setChatsInformation] = useState([]);
 
   useEffect(() => {
@@ -28,11 +29,19 @@ const ScreenChats = () => {
           if (responseData.success) {
             // alert(JSON.stringify(responseData.data));
             setChatsInformation(responseData.data);
+            // alert(responseData.data[0].chatId);
           } else {
             alert(responseData.msg || 'Failed to fetch chats data');
           }
         };
-        await Promise.all([fetchChatsData()]);
+
+        const fetchChatData = async () => {
+          const data = {
+            chatsID
+          };
+          alert(data.chatsID);
+        };
+        await Promise.all([fetchChatsData(), fetchChatData()]);
       } catch (error) {
         alert('Chats Error');
       }
@@ -42,6 +51,7 @@ const ScreenChats = () => {
 
   const renderItem = ({ item }) => {
     const formattedTime = new Date(item.createAt).toLocaleString();
+    setChatsID(item.chatId);
     return (
       <TouchableOpacity
         style={styles.item}
