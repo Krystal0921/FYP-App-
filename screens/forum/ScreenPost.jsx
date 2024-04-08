@@ -95,16 +95,20 @@ const ScreenPost = ({ route, navigation }) => {
           renderItem={forumlist}
         />
       </ScrollView>
-      <View style={styles.MainSearchView}>
-        <TextInput
-          style={styles.MainSearchText}
-          placeholder="Type Some Comment"
-          placeholderTextColor="#888"
-        />
-        <TouchableOpacity>
-          <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
-        </TouchableOpacity>
-      </View>
+      { user ? (
+        <View style={styles.MainSearchView}>
+          <TextInput
+            style={styles.MainSearchText}
+            placeholder="Type Some Comment"
+            placeholderTextColor="#888"
+          />
+          <TouchableOpacity>
+            <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View />
+      )}
     </SafeAreaView>
   );
 };
