@@ -239,7 +239,7 @@ import { Video, ResizeMode } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProgressBar from "./ProgressBar";
 import { videoMapping } from "./VideoSource.jsx";
-import { NAVIGATION_COURSE } from "../../const/navigations";
+import { NAVIGATION_COURSE, NAVIGATION_MAIN } from "../../const/navigations";
 
 const ScreenRead = ({ route, navigation }) => {
   const videoRef = useRef(null);
@@ -319,7 +319,23 @@ const ScreenRead = ({ route, navigation }) => {
         console.log(`request body:${JSON.stringify({ mId, sectionId })}`);
         if (responseData.success) {
           if (responseData.data === "has taken") {
-            navigation.goBack();
+            // navigation.goBack();
+            if (lessonId === "L01") {
+              navigation.navigate(NAVIGATION_MAIN.lesson, {
+                screen: NAVIGATION_COURSE.lessons,
+                params: { lessonId: lessonId, name: "Daily Communication" },
+              });
+            } else if (lessonId === "L02") {
+              navigation.navigate(NAVIGATION_MAIN.lesson, {
+                screen: NAVIGATION_COURSE.lessons,
+                params: { lessonId: lessonId, name: "Travel Communication" },
+              });
+            } else if (lessonId === "L03") {
+              navigation.navigate(NAVIGATION_MAIN.lesson, {
+                screen: NAVIGATION_COURSE.lessons,
+                params: { lessonId: lessonId, name: "Workplace Communication" },
+              });
+            }
           } else {
             navigation.navigate(NAVIGATION_COURSE.feedback, {
               sectionId,

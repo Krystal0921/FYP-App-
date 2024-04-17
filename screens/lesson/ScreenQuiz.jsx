@@ -124,7 +124,7 @@
 
 // export default ScreenQuiz;
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import {
   StyleSheet,
   Alert,
@@ -135,17 +135,17 @@ import {
   SafeAreaView,
   Button,
   TouchableOpacity,
-  Dimensions
-} from 'react-native';
-import { Video, ResizeMode } from 'expo-av';
-import * as Animatable from 'react-native-animatable';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RadioButton } from 'react-native-paper';
-import { videoMapping } from './VideoSource.jsx';
-import background from '../../assets/0.png';
-import { NAVIGATION_COURSE } from '../../const/navigations';
-import ProgressBar from './ProgressBar';
-import { useAuth } from '../../components/AuthProvider';
+  Dimensions,
+} from "react-native";
+import { Video, ResizeMode } from "expo-av";
+import * as Animatable from "react-native-animatable";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RadioButton } from "react-native-paper";
+import { videoMapping } from "./VideoSource.jsx";
+import background from "../../assets/0.png";
+import { NAVIGATION_COURSE, NAVIGATION_MAIN } from "../../const/navigations";
+import ProgressBar from "./ProgressBar";
+import { useAuth } from "../../components/AuthProvider";
 
 const ScreenQuiz = ({ route, navigation }) => {
   const videoRef = useRef(null);
@@ -155,7 +155,7 @@ const ScreenQuiz = ({ route, navigation }) => {
   const [status, setStatus] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [read, setRead] = useState([]);
-  const [checked, setChecked] = useState('first');
+  const [checked, setChecked] = useState("first");
   const [marks, setMark] = useState(0);
   const { publisUserQuizMark } = useAuth();
   const lessonQuizRef = useRef(null);
@@ -165,10 +165,10 @@ const ScreenQuiz = ({ route, navigation }) => {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const userId = await AsyncStorage.getItem('userId');
+        const userId = await AsyncStorage.getItem("userId");
         setUserId(userId);
       } catch (error) {
-        console.error('Error retrieving userId from AsyncStorage:', error);
+        console.error("Error retrieving userId from AsyncStorage:", error);
       }
     };
 
@@ -178,26 +178,26 @@ const ScreenQuiz = ({ route, navigation }) => {
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
-        let url = 'http://44.221.91.193:3000/Lesson/Section/Quiz';
+        let url = "http://44.221.91.193:3000/Lesson/Section/Quiz";
         let data = {
           mId: userId,
-          lessonId
+          lessonId,
         };
 
         if (!userId) {
           // Use publicQuiz endpoint if userId is null
-          url = 'http://44.221.91.193:3000/Lesson/Section/publicQuiz';
+          url = "http://44.221.91.193:3000/Lesson/Section/publicQuiz";
           data = {
-            lessonId
+            lessonId,
           };
         }
 
         const response = await fetch(url, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         });
 
         const responseData = await response.json();
@@ -224,62 +224,62 @@ const ScreenQuiz = ({ route, navigation }) => {
 
     console.log(`${checked} = ${correctAns}`);
     if (checked === null) {
-      Alert.alert('Please choose the answer!');
+      Alert.alert("Please choose the answer!");
       return;
     }
 
     if (checked === correctAns) {
       setMark((prevMark) => {
         const newMark = prevMark + 1;
-        console.log('Mark:', newMark);
+        console.log("Mark:", newMark);
         return newMark;
       });
 
-      Alert.alert('Correct Answer', 'Great job!', [
+      Alert.alert("Correct Answer", "Great job!", [
         {
-          text: 'OK',
+          text: "OK",
           onPress: () => {
             if (nextIndex < read.length) {
               try {
                 lessonQuizRef.current.scrollToIndex({
                   animated: true,
-                  index: nextIndex
+                  index: nextIndex,
                 });
               } catch (e) {
                 console.error(e);
               }
             }
-          }
-        }
+          },
+        },
       ]);
-      console.log('Prev Mark:', marks);
+      console.log("Prev Mark:", marks);
       if (nextIndex < read.length) {
         try {
           lessonQuizRef.current.scrollToIndex({
             animated: true,
-            index: nextIndex
+            index: nextIndex,
           });
         } catch (e) {
           console.error(e);
         }
       }
     } else {
-      Alert.alert('Incorrect Answer', `The correct answer is ${correctAns}`, [
+      Alert.alert("Incorrect Answer", `The correct answer is ${correctAns}`, [
         {
-          text: 'OK',
+          text: "OK",
           onPress: () => {
             if (nextIndex < read.length) {
               try {
                 lessonQuizRef.current.scrollToIndex({
                   animated: true,
-                  index: nextIndex
+                  index: nextIndex,
                 });
               } catch (e) {
                 console.error(e);
               }
             }
-          }
-        }
+          },
+        },
       ]);
     }
 
@@ -295,17 +295,17 @@ const ScreenQuiz = ({ route, navigation }) => {
           const data = {
             mId,
             lessonId,
-            mark
+            mark,
           };
 
           const response = await fetch(
-            'http://44.221.91.193:3000/InsertQuizMark',
+            "http://44.221.91.193:3000/InsertQuizMark",
             {
-              method: 'POST',
+              method: "POST",
               headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
               },
-              body: JSON.stringify(data)
+              body: JSON.stringify(data),
             }
           );
           console.log(`${mId} ${lessonId} ${mark}`);
@@ -314,16 +314,34 @@ const ScreenQuiz = ({ route, navigation }) => {
           if (responseData.success) {
             console.log(`${mark} mark insert`);
           } else {
-            alert(responseData.msg || 'Failed to fetch insert quiz mark data');
+            alert(responseData.msg || "Failed to fetch insert quiz mark data");
           }
         }
 
         Alert.alert(`Congratulations! Your mark is ${mark} / 10`);
-        navigation.navigate(NAVIGATION_COURSE.lessons, {
-          lessonId
-        });
+
+        // navigation.navigate(NAVIGATION_COURSE.lessons, {
+        //   lessonId,
+        // });
+
+        if (lessonId === "L01") {
+          navigation.navigate(NAVIGATION_MAIN.lesson, {
+            screen: NAVIGATION_COURSE.lessons,
+            params: { lessonId: lessonId, name: "Daily Communication" },
+          });
+        } else if (lessonId === "L02") {
+          navigation.navigate(NAVIGATION_MAIN.lesson, {
+            screen: NAVIGATION_COURSE.lessons,
+            params: { lessonId: lessonId, name: "Travel Communication" },
+          });
+        } else if (lessonId === "L03") {
+          navigation.navigate(NAVIGATION_MAIN.lesson, {
+            screen: NAVIGATION_COURSE.lessons,
+            params: { lessonId: lessonId, name: "Workplace Communication" },
+          });
+        }
       } catch (error) {
-        console.error('Error fetching insert quiz mark data:', error);
+        console.error("Error fetching insert quiz mark data:", error);
       }
     }
   };
@@ -361,25 +379,25 @@ const ScreenQuiz = ({ route, navigation }) => {
                 <RadioButton.Item
                   label={`A. ${item.optionAns1}`}
                   value={item.optionAns1}
-                  status={checked === item.optionAns1 ? 'checked' : 'unchecked'}
+                  status={checked === item.optionAns1 ? "checked" : "unchecked"}
                   onPress={() => handleRadioPress(item.optionAns1)}
                 />
                 <RadioButton.Item
                   label={`B. ${item.optionAns2}`}
                   value={item.optionAns2}
-                  status={checked === item.optionAns2 ? 'checked' : 'unchecked'}
+                  status={checked === item.optionAns2 ? "checked" : "unchecked"}
                   onPress={() => handleRadioPress(item.optionAns2)}
                 />
                 <RadioButton.Item
                   label={`C. ${item.optionAns3}`}
                   value={item.optionAns3}
-                  status={checked === item.optionAns3 ? 'checked' : 'unchecked'}
+                  status={checked === item.optionAns3 ? "checked" : "unchecked"}
                   onPress={() => handleRadioPress(item.optionAns3)}
                 />
                 <RadioButton.Item
                   label={`D. ${item.optionAns4}`}
                   value={item.optionAns4}
-                  status={checked === item.optionAns4 ? 'checked' : 'unchecked'}
+                  status={checked === item.optionAns4 ? "checked" : "unchecked"}
                   onPress={() => handleRadioPress(item.optionAns4)}
                 />
               </View>
@@ -389,7 +407,7 @@ const ScreenQuiz = ({ route, navigation }) => {
               onPress={() => onClickNext(index, item.correctAns)}
             >
               <Text style={styles.SectionReadButtonText}>
-                {index + 1 !== 10 ? 'Next Question' : 'Finish'}
+                {index + 1 !== 10 ? "Next Question" : "Finish"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -403,77 +421,77 @@ const styles = StyleSheet.create({
   SectionReadSubText: {
     top: 100,
     fontSize: 15,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   SectionReadText: {
-    textAlign: 'center',
+    textAlign: "center",
     top: 30,
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingTop: 10,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   SectionReadInformation: {
-    width: Dimensions.get('screen').width * 0.85,
-    marginRight: 15
+    width: Dimensions.get("screen").width * 0.85,
+    marginRight: 15,
   },
   SectionReadBackgound: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: 'center',
-    padding: 25
+    alignItems: "center",
+    padding: 25,
   },
   SectionReadButton: {
     padding: 10,
     borderRadius: 5,
     fontSize: 17,
     width: 320,
-    backgroundColor: '#264858',
+    backgroundColor: "#264858",
     paddingHorizontal: 20,
     paddingVertical: 10,
-    alignSelf: 'center',
-    alignItems: 'center'
+    alignSelf: "center",
+    alignItems: "center",
   },
   SectionReadButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   SectionReadImage: {
     top: 40,
     height: 250,
     width: 320,
-    resizeMode: 'contain',
-    alignSelf: 'center'
+    resizeMode: "contain",
+    alignSelf: "center",
   },
   SectionReadVideo: {
-    width: Dimensions.get('window').width - 80,
-    height: Dimensions.get('window').width * 0.5625 // 16:9 aspect ratio
+    width: Dimensions.get("window").width - 80,
+    height: Dimensions.get("window").width * 0.5625, // 16:9 aspect ratio
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1'
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1",
   },
   video: {
-    alignSelf: 'center',
+    alignSelf: "center",
     width: 320,
-    height: 200
+    height: 200,
   },
   buttons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   SectionRadioButtonRow: {
     paddingTop: 10,
     marginRight: 10,
-    marginLeft: 4
+    marginLeft: 4,
   },
   SectionRadioButtonView: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 10,
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
 });
 export default ScreenQuiz;

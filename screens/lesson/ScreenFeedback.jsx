@@ -159,20 +159,20 @@
 // });
 
 // export default ScreenFeedback;
-import React, { useState, useEffect } from 'react';
-import { useRoute } from '@react-navigation/core';
+import React, { useState, useEffect } from "react";
+import { useRoute } from "@react-navigation/core";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  ScrollView
-} from 'react-native';
-import { RadioButton } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NAVIGATION_COURSE } from '../../const/navigations';
+  ScrollView,
+} from "react-native";
+import { RadioButton } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NAVIGATION_COURSE, NAVIGATION_MAIN } from "../../const/navigations";
 
 const ScreenFeedback = () => {
   const navigation = useNavigation();
@@ -181,10 +181,10 @@ const ScreenFeedback = () => {
   useEffect(() => {
     const getUserId = async () => {
       try {
-        const userId = await AsyncStorage.getItem('userId');
+        const userId = await AsyncStorage.getItem("userId");
         setUserId(userId);
       } catch (error) {
-        console.error('Error retrieving userId from AsyncStorage:', error);
+        console.error("Error retrieving userId from AsyncStorage:", error);
       }
     };
     getUserId();
@@ -199,7 +199,7 @@ const ScreenFeedback = () => {
     q3: null,
     q4: null,
     q5: null,
-    q6: ''
+    q6: "",
   });
 
   const handleRadioChange = (name, value) => {
@@ -211,12 +211,12 @@ const ScreenFeedback = () => {
   };
 
   const handleSubmit = async () => {
-    const isAllAnswered = Object.values(feedback).slice(0, 5).every(
-      (value) => value !== null
-    );
+    const isAllAnswered = Object.values(feedback)
+      .slice(0, 5)
+      .every((value) => value !== null);
 
     if (!isAllAnswered) {
-      alert('Please answer Q1 to Q5 before submitting.');
+      alert("Please answer Q1 to Q5 before submitting.");
       return;
     }
 
@@ -224,18 +224,18 @@ const ScreenFeedback = () => {
       const mId = userId;
 
       const response1 = await fetch(
-        'http://44.221.91.193:3000/UpdateLessonProgress',
+        "http://44.221.91.193:3000/UpdateLessonProgress",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ mId, lessonId, sectionId })
+          body: JSON.stringify({ mId, lessonId, sectionId }),
         }
       );
 
       if (!response1.ok) {
-        throw new Error('Failed to update member progress data');
+        throw new Error("Failed to update member progress data");
       }
 
       const data = {
@@ -246,37 +246,50 @@ const ScreenFeedback = () => {
         q3: feedback.q3,
         q4: feedback.q4,
         q5: feedback.q5,
-        q6: feedback.q6
+        q6: feedback.q6,
       };
-      const response2 = await fetch('http://44.221.91.193:3000/Feedback', {
-        method: 'POST',
+      const response2 = await fetch("http://44.221.91.193:3000/Feedback", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
 
       if (!response2.ok) {
-        throw new Error('Failed to get feedback data');
+        throw new Error("Failed to get feedback data");
       } else {
         console.log(
-          lessonId
-          + sectionId
-          + feedback.q1
-          + feedback.q2
-          + feedback.q3
-          + feedback.q4
-          + feedback.q5
-          + feedback.q6
+          lessonId +
+            sectionId +
+            feedback.q1 +
+            feedback.q2 +
+            feedback.q3 +
+            feedback.q4 +
+            feedback.q5 +
+            feedback.q6
         );
-        alert('Thank You For Your Feedback!');
+        alert("Thank You For Your Feedback!");
       }
 
-      navigation.navigate(NAVIGATION_COURSE.lessons, {
-        lessonId
-      });
+      if (lessonId === "L01") {
+        navigation.navigate(NAVIGATION_MAIN.lesson, {
+          screen: NAVIGATION_COURSE.lessons,
+          params: { lessonId: lessonId, name: "Daily Communication" },
+        });
+      } else if (lessonId === "L02") {
+        navigation.navigate(NAVIGATION_MAIN.lesson, {
+          screen: NAVIGATION_COURSE.lessons,
+          params: { lessonId: lessonId, name: "Travel Communication" },
+        });
+      } else if (lessonId === "L03") {
+        navigation.navigate(NAVIGATION_MAIN.lesson, {
+          screen: NAVIGATION_COURSE.lessons,
+          params: { lessonId: lessonId, name: "Workplace Communication" },
+        });
+      }
     } catch (error) {
-      console.error('Error submitting feedback:', error);
+      console.error("Error submitting feedback:", error);
       alert(error.message);
     }
   };
@@ -293,18 +306,18 @@ const ScreenFeedback = () => {
           </Text>
           <View style={styles.radioButtonRow}>
             {[
-              'Totally Disagree',
-              'Disagree',
-              'Neutral',
-              'Agree',
-              'Totally Agree'
+              "Totally Disagree",
+              "Disagree",
+              "Neutral",
+              "Agree",
+              "Totally Agree",
             ].map((label, index) => (
               <View key={label} style={styles.radioButtonLabelContainer}>
                 <Text style={styles.radioButtonLabel}>{label}</Text>
                 <RadioButton
                   value={index + 1}
-                  status={feedback.q1 === index + 1 ? 'checked' : 'unchecked'}
-                  onPress={() => handleRadioChange('q1', index + 1)}
+                  status={feedback.q1 === index + 1 ? "checked" : "unchecked"}
+                  onPress={() => handleRadioChange("q1", index + 1)}
                 />
               </View>
             ))}
@@ -317,18 +330,18 @@ const ScreenFeedback = () => {
           </Text>
           <View style={styles.radioButtonRow}>
             {[
-              'Totally Disagree',
-              'Disagree',
-              'Neutral',
-              'Agree',
-              'Totally Agree'
+              "Totally Disagree",
+              "Disagree",
+              "Neutral",
+              "Agree",
+              "Totally Agree",
             ].map((label, index) => (
               <View key={label} style={styles.radioButtonLabelContainer}>
                 <Text style={styles.radioButtonLabel}>{label}</Text>
                 <RadioButton
                   value={index + 1}
-                  status={feedback.q2 === index + 1 ? 'checked' : 'unchecked'}
-                  onPress={() => handleRadioChange('q2', index + 1)}
+                  status={feedback.q2 === index + 1 ? "checked" : "unchecked"}
+                  onPress={() => handleRadioChange("q2", index + 1)}
                 />
               </View>
             ))}
@@ -344,18 +357,18 @@ const ScreenFeedback = () => {
           </Text>
           <View style={styles.radioButtonRow}>
             {[
-              'Totally Disagree',
-              'Disagree',
-              'Neutral',
-              'Agree',
-              'Totally Agree'
+              "Totally Disagree",
+              "Disagree",
+              "Neutral",
+              "Agree",
+              "Totally Agree",
             ].map((label, index) => (
               <View key={label} style={styles.radioButtonLabelContainer}>
                 <Text style={styles.radioButtonLabel}>{label}</Text>
                 <RadioButton
                   value={index + 1}
-                  status={feedback.q3 === index + 1 ? 'checked' : 'unchecked'}
-                  onPress={() => handleRadioChange('q3', index + 1)}
+                  status={feedback.q3 === index + 1 ? "checked" : "unchecked"}
+                  onPress={() => handleRadioChange("q3", index + 1)}
                 />
               </View>
             ))}
@@ -368,18 +381,18 @@ const ScreenFeedback = () => {
           </Text>
           <View style={styles.radioButtonRow}>
             {[
-              'Totally Disagree',
-              'Disagree',
-              'Neutral',
-              'Agree',
-              'Totally Agree'
+              "Totally Disagree",
+              "Disagree",
+              "Neutral",
+              "Agree",
+              "Totally Agree",
             ].map((label, index) => (
               <View key={label} style={styles.radioButtonLabelContainer}>
                 <Text style={styles.radioButtonLabel}>{label}</Text>
                 <RadioButton
                   value={index + 1}
-                  status={feedback.q4 === index + 1 ? 'checked' : 'unchecked'}
-                  onPress={() => handleRadioChange('q4', index + 1)}
+                  status={feedback.q4 === index + 1 ? "checked" : "unchecked"}
+                  onPress={() => handleRadioChange("q4", index + 1)}
                 />
               </View>
             ))}
@@ -392,18 +405,18 @@ const ScreenFeedback = () => {
           </Text>
           <View style={styles.radioButtonRow}>
             {[
-              'Totally Disagree',
-              'Disagree',
-              'Neutral',
-              'Agree',
-              'Totally Agree'
+              "Totally Disagree",
+              "Disagree",
+              "Neutral",
+              "Agree",
+              "Totally Agree",
             ].map((label, index) => (
               <View key={label} style={styles.radioButtonLabelContainer}>
                 <Text style={styles.radioButtonLabel}>{label}</Text>
                 <RadioButton
                   value={index + 1} // values 1 to 5
-                  status={feedback.q5 === index + 1 ? 'checked' : 'unchecked'}
-                  onPress={() => handleRadioChange('q5', index + 1)}
+                  status={feedback.q5 === index + 1 ? "checked" : "unchecked"}
+                  onPress={() => handleRadioChange("q5", index + 1)}
                 />
               </View>
             ))}
@@ -433,60 +446,60 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   heading: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center'
+    textAlign: "center",
   },
   section: {
-    marginBottom: 8
+    marginBottom: 8,
   },
   sectionHeader: {
     fontSize: 20,
     marginBottom: 10,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   questionContainer: {
-    marginBottom: 15
+    marginBottom: 15,
   },
   questionText: {
     fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 15
+    fontWeight: "700",
+    marginBottom: 15,
   },
   radioButtonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 14
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 14,
   },
   radioButtonLabelContainer: {
-    alignItems: 'center'
+    alignItems: "center",
   },
   radioButtonLabel: {
     marginBottom: 5,
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: "center",
   },
   suggestionsInput: {
     height: 150,
     padding: 10,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
-    borderRadius: 5
+    borderRadius: 5,
   },
   submitButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     padding: 15,
-    borderRadius: 5
+    borderRadius: 5,
   },
   submitButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
 });
 
 export default ScreenFeedback;
