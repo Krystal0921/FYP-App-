@@ -87,7 +87,7 @@ const ScreenJobs = () => {
       style={styles.jobItem}
       onPress={() => navigation.navigate(NAVIGATION_MAIN.job, {
         screen: NAVIGATION_JOB.job,
-        params: { name: '', jId: item.jId, eId: item.eId }
+        params: { name: '', jId: item.jId, eId: item.eId, image: item.image, cName: item.cName }
       })}
     >
       <Image style={styles.avatar} source={{ uri: `data:image/jpeg;base64,${item.image}` }} />

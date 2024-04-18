@@ -48,6 +48,7 @@ const ScreenChat = ({ route }) => {
   ]);
 
   const renderMessage = ({ item }) => {
+    const formattedTime = new Date(item.createAt).toLocaleString();
     // alert(user.userId);
     const isUser = user.userId === item.userId;
     const messageContainerStyle = isUser ? styles.userMessageContainer : styles.senderMessageContainer;
@@ -56,7 +57,7 @@ const ScreenChat = ({ route }) => {
     return (
       <View style={messageContainerStyle}>
         <Text style={messageTextStyle}>{item.msg_content}</Text>
-        <Text style={styles.timestamp}>{item.createAt}</Text>
+        <Text style={styles.timestamp}>{formattedTime}</Text>
       </View>
     );
   };

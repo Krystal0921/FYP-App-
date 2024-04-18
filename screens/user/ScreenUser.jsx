@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import { NAVIGATION_TAB } from '../../const/navigations';
+import { NAVIGATION_TAB, NAVIGATION_MAIN, NAVIGATION_COURSE } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
 const ScreenUser = ({ navigation }) => {
@@ -12,6 +12,13 @@ const ScreenUser = ({ navigation }) => {
   const [userInformation, setUserInformation] = useState([]);
   const [userProgressInformation, setUserProgressInformation] = useState([]);
 
+  const lessonNames = {
+    L01: 'Daily Communication',
+    L02: 'Travel Communication',
+    L03: 'Workplace Communication'
+  };
+
+  console.log(user);
   useEffect(() => {
     const fetchUserInformation = async () => {
       try {
@@ -19,13 +26,16 @@ const ScreenUser = ({ navigation }) => {
           const data = {
             mId: user.userId
           };
-          const response = await fetch('http://44.221.91.193:3000/MemberDetail/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
+          const response = await fetch(
+            'http://44.221.91.193:3000/MemberDetail/',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            }
+          );
           const responseData = await response.json();
           if (responseData.success) {
             setUserInformation(responseData.data[0]);
@@ -38,13 +48,16 @@ const ScreenUser = ({ navigation }) => {
           const data = {
             mId: user.userId
           };
-          const response = await fetch('http://44.221.91.193:3000/MemberLessonProgress', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
+          const response = await fetch(
+            'http://44.221.91.193:3000/MemberLessonProgress',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            }
+          );
           const responseData = await response.json();
           if (responseData.success) {
             setUserProgressInformation(responseData.data);
@@ -61,13 +74,12 @@ const ScreenUser = ({ navigation }) => {
     fetchUserInformation();
   }, [userId]);
 
-  const handleAnimate = () => {
+  const handleAnimate = (lessonId) => {
     setIsAnimated(true);
-    navigation.navigate(NAVIGATION_TAB.course);
-    // navigation.navigate(
-    //   NAVIGATION_COURSE.lessons
-    //   { params: { lessonId: 'L01' } }
-    // );
+    navigation.navigate(NAVIGATION_MAIN.lesson, {
+      screen: NAVIGATION_COURSE.lessons,
+      params: { lessonId, name: lessonNames[lessonId] }
+    });
   };
 
   const imageMapping = {
@@ -79,7 +91,10 @@ const ScreenUser = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.vertical}>
-        <Image style={styles.logo} source={getImageSource(userInformation.mPhoto)} />
+        <Image
+          style={styles.logo}
+          source={getImageSource(userInformation.mPhoto)}
+        />
         <View style={styles.vertical}>
           <Text style={styles.text}>Name : {userInformation.mName}</Text>
           <Text style={styles.text}>E-mail : {userInformation.mEmail}</Text>
@@ -88,7 +103,7 @@ const ScreenUser = ({ navigation }) => {
       <View style={styles.hrLine} />
       <Text style={styles.progressTitle}>Progress</Text>
       <View style={styles.horizontally}>
-        <TouchableOpacity onPress={handleAnimate}>
+        <TouchableOpacity onPress={() => handleAnimate('L01')}>
           <View style={styles.progressContainer}>
             <CircularProgress
               value={userProgressInformation[0]?.totalMark}
@@ -106,7 +121,7 @@ const ScreenUser = ({ navigation }) => {
             <Text style={styles.text}>Daily</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleAnimate}>
+        <TouchableOpacity onPress={() => handleAnimate('L02')}>
           <View style={styles.progressContainer}>
             <CircularProgress
               value={userProgressInformation[1]?.totalMark}
@@ -124,7 +139,7 @@ const ScreenUser = ({ navigation }) => {
             <Text style={styles.text}>Travel</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleAnimate}>
+        <TouchableOpacity onPress={() => handleAnimate('L03')}>
           <View style={styles.progressContainer}>
             <CircularProgress
               value={userProgressInformation[2]?.totalMark}
@@ -143,7 +158,9 @@ const ScreenUser = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.logout} onPress={() => onLogout()}><Text style={styles.logoutText}>Logout</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.logout} onPress={() => onLogout()}>
+        <Text style={styles.logoutText}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };

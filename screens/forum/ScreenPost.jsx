@@ -5,8 +5,9 @@ import { NAVIGATION_FORUM } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
 const ScreenPost = ({ route, navigation }) => {
-  const { postId, title, image, content } = route.params;
+  const { mId, postId, title, image, content } = route.params;
   const { user } = useAuth();
+  const [userId] = useState('');
   const [post, setPost] = useState([]);
 
   const imageMapping = {
@@ -69,7 +70,7 @@ const ScreenPost = ({ route, navigation }) => {
     <SafeAreaView style={styles.ForumBackgound}>
       <ScrollView contentContainerStyle={styles.ForumScrollView}>
         <Text style={styles.ForumTitle}>{title}</Text>
-        { user ? (
+        { user.userId === mId ? (
           <TouchableOpacity
             style={styles.SignUpTypeButton}
             onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {

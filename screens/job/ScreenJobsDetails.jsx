@@ -5,8 +5,7 @@ const ScreenJobsDetails = ({ route }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [jobsDetails, setJobsDetails] = useState([]);
-  const [jobsDetails2, setJobsDetails2] = useState('');
-  const { jId, eId } = route.params;
+  const { jId, eId, image, cName } = route.params;
 
   const formattedTime = new Date(jobsDetails.createAt).toLocaleString();
 
@@ -49,42 +48,23 @@ const ScreenJobsDetails = ({ route }) => {
             alert(responseData.msg || 'Failed to fetch section data');
           }
         };
-
-        const fetchUserData2 = async () => {
-          const data = {
-            eId
-          };
-          const response = await fetch(
-            'http://44.221.91.193:3000/JobList',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-            }
-          );
-          const responseData = await response.json();
-          setJobsDetails2(responseData.data[0]);
-        };
-
-        await Promise.all([fetchUserData(), fetchUserData2()]);
+        await Promise.all([fetchUserData()]);
       } catch (error) {
         alert('Jobs Details Error 1');
       }
     };
     fetchJobsDetails();
-  }, [jId, eId]);
+  }, [jId, eId, image, cName]);
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <Image
           style={styles.logo}
-          source={{ uri: `data:image/jpeg;base64,${jobsDetails2.image}` }}
+          source={{ uri: `data:image/jpeg;base64,${image}` }}
         />
         <Text style={styles.title}>{jobsDetails.jobTitle}</Text>
-        <Text style={styles.subtitle}>{jobsDetails2.cName}</Text>
+        <Text style={styles.subtitle}>{cName}</Text>
         <Text style={styles.sectionTitle}>Location</Text>
         <Text style={styles.sectionText}>{jobsDetails.location}</Text>
 
