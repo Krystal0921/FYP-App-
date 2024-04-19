@@ -8,37 +8,35 @@ const ScreenChats = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
   const [userId, setUserId] = useState('');
+  const [ThischatId, setChatId] = useState('');
   const [messages, setMessages] = useState([]);
   const [chatsInformation, setChatsInformation] = useState([]);
 
   useEffect(() => {
     const fetchChatsData = async () => {
       try {
-        const fetchChatsData = async () => {
-          const data = {
-            userId: user.userId
-          };
-          const response = await fetch('http://44.221.91.193:3000/ChatList', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-          const responseData = await response.json();
-          if (responseData.success) {
-            setChatsInformation(responseData.data);
-            setUserId(responseData.data[0].chatId);
-          } else {
-            alert(responseData.msg || 'Failed to fetch chats data');
-          }
+        const data = {
+          userId: user.userId
         };
-        await Promise.all([fetchChatsData()]);
+        const response = await fetch('http://44.221.91.193:3000/ChatList', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          setChatsInformation(responseData.data);
+        } else {
+          alert(responseData.msg || 'Failed to fetch chats data');
+        }
       } catch (error) {
         alert('Chats Error');
       }
     };
-    fetchChatsData();
+
+    fetchChatsData(); // Fetch chats data when userId changes
   }, [userId]);
 
   useEffect(() => {
@@ -58,27 +56,32 @@ const ScreenChats = () => {
         if (responseData.success) {
           setMessages(responseData.data);
         } else {
-          alert(responseData.msg || 'Failed to fetch chats data');
+          alert(responseData.msg || 'Failed to fetch messages data');
         }
       } catch (error) {
-        console.log('Chat Error');
+        console.log('Chat Error:', error);
       }
     };
 
-    if (chatsInformation.length > 0) {
-      const { chatId } = chatsInformation[0];
-      fetchMessagesData(chatId);
+    // if (chatsInformation.length > 0) {
+    //   const { chatId } = chatsInformation[0];
+    //   fetchMessagesData(chatId);
+    // }
+
+    for (let i = 0; i < chatsInformation.length; i++) {
+      // setChatId(chatsInformation[i].chatId);
+      fetchMessagesData(chatsInformation[i].chatId);
+      console.log(`${i},${chatsInformation[i].chatId},${ThischatId},${JSON.stringify(messages)},${JSON.stringify(chatsInformation[i])}`);
+      // setMessages()
     }
   }, [chatsInformation]);
 
   const renderItem = ({ item }) => {
     const formattedTime = new Date(item.createAt).toLocaleString();
 
-    let lastMessageContent = '';
-    if (item.chatId === chatsInformation[0].chatId && messages.length > 0) {
-      const lastMessage = messages[messages.length - 1];
-      lastMessageContent = lastMessage.msg_content;
-    }
+    const chatMessages = messages.filter((message) => message.chatId === item.chatId);
+    const lastMessage = chatMessages.length > 0 ? chatMessages[chatMessages.length - 1] : null;
+    const lastMessageContent = lastMessage ? lastMessage.msg_content : '';
 
     return (
       <TouchableOpacity

@@ -34,7 +34,12 @@ const ScreenForum = ({ navigation }) => {
         style={styles.AllForum}
         onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
           screen: NAVIGATION_FORUM.post,
-          params: { mId: item.mId, postId: item.postId, title: item.title, image: item.image, content: item.content }
+          params: { mId: item.mId,
+            postId: item.postId,
+            title: item.title,
+            image: item.image,
+            content: item.content,
+            createAt: item.createAt }
         })}
       >
         <Text style={styles.AllForumText}>{item.title}</Text>

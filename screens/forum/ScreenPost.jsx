@@ -5,7 +5,7 @@ import { NAVIGATION_FORUM } from '../../const/navigations';
 import { useAuth } from '../../components/AuthProvider';
 
 const ScreenPost = ({ route, navigation }) => {
-  const { mId, postId, title, image, content } = route.params;
+  const { mId, postId, title, image, content, createAt } = route.params;
   const { user } = useAuth();
   const [userId] = useState('');
   const [post, setPost] = useState([]);
@@ -20,7 +20,6 @@ const ScreenPost = ({ route, navigation }) => {
     const fetchPostData = async () => {
       try {
         const fetchPostData = async () => {
-          // alert(postId);
           const data = {
             postId
           };
@@ -47,7 +46,7 @@ const ScreenPost = ({ route, navigation }) => {
       }
     };
     fetchPostData();
-  }, [postId, title, image, content]);
+  }, [postId, title, image, content, createAt]);
 
   const forumlist = ({ item }) => {
     const formattedTime = new Date(item.createAt).toLocaleString();
@@ -76,7 +75,9 @@ const ScreenPost = ({ route, navigation }) => {
             onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
               screen: NAVIGATION_FORUM.post,
               title,
-              content
+              content,
+              createAt,
+              postId
             })}
           >
             <Text style={styles.SignUpTypeButtonText}>Edit</Text>
