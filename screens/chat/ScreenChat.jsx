@@ -5,13 +5,11 @@ import { authContext, useAuth } from '../../components/AuthProvider';
 const ScreenChat = ({ route }) => {
   const [inputText, setInputText] = useState('');
   const { user } = useAuth();
-  const [userId, setUserId] = useState('');
   const { chatId } = route.params;
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      // alert(chatId);
       const data = {
         chatId
       };
@@ -25,7 +23,6 @@ const ScreenChat = ({ route }) => {
         });
         const responseData = await response.json();
         if (responseData.success) {
-          // alert(responseData.data[0].msgId);
           setChats(responseData.data);
         } else {
           alert(responseData.msg || 'Failed to fetch chats data');
@@ -34,22 +31,11 @@ const ScreenChat = ({ route }) => {
         console.log('Chat Error');
       }
     };
-
     fetchData();
   }, [chatId]);
 
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:30:22' },
-    { id: 2, sender: 'John', content: 'Hello!', timestamp: '2024-01-17 10:56:22' },
-    { id: 3, sender: 'John', content: 'How are you?', timestamp: '2024-01-17 10:56:25' },
-    { id: 4, sender: 'You', content: 'Hi Cherrie!', timestamp: '2024-01-17 10:58:22' },
-    { id: 5, sender: 'You', content: 'I"m fine!', timestamp: '2024-01-17 10:58:22' }
-    // Add more messages here
-  ]);
-
   const renderMessage = ({ item }) => {
     const formattedTime = new Date(item.createAt).toLocaleString();
-    // alert(user.userId);
     const isUser = user.userId === item.userId;
     const messageContainerStyle = isUser ? styles.userMessageContainer : styles.senderMessageContainer;
     const messageTextStyle = isUser ? styles.userMessageText : styles.senderMessageText;
@@ -62,18 +48,27 @@ const ScreenChat = ({ route }) => {
     );
   };
 
-  const handleSend = () => {
-    if (inputText.trim() !== '') {
-      const newMessage = {
-        id: messages.length + 1,
-        sender: user.userId,
-        content: inputText.trim(),
-        timestamp: new Date()
-      };
-      setMessages([...messages, newMessage]); // Append the new message at the end
-      setInputText('');
-    }
-  };
+  // const [messages, setMessages] = useState([
+  //   { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:30:22' },
+  //   { id: 2, sender: 'John', content: 'Hello!', timestamp: '2024-01-17 10:56:22' },
+  //   { id: 3, sender: 'John', content: 'How are you?', timestamp: '2024-01-17 10:56:25' },
+  //   { id: 4, sender: 'You', content: 'Hi Cherrie!', timestamp: '2024-01-17 10:58:22' },
+  //   { id: 5, sender: 'You', content: 'I"m fine!', timestamp: '2024-01-17 10:58:22' }
+  //   // Add more messages here
+  // ]);
+
+  // const handleSend = () => {
+  //   if (inputText.trim() !== '') {
+  //     const newMessage = {
+  //       id: messages.length + 1,
+  //       sender: user.userId,
+  //       content: inputText.trim(),
+  //       timestamp: new Date()
+  //     };
+  //     setMessages([...messages, newMessage]); // Append the new message at the end
+  //     setInputText('');
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -94,7 +89,7 @@ const ScreenChat = ({ route }) => {
             value={inputText}
             onChangeText={(text) => setInputText(text)}
           />
-          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+          <TouchableOpacity style={styles.sendButton}>
             <Text style={styles.sendButtonText}>Send</Text>
           </TouchableOpacity>
         </View>

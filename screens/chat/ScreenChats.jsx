@@ -8,7 +8,7 @@ const ScreenChats = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
   const [userId, setUserId] = useState('');
-  const [chatsID, setChatsID] = useState('');
+  const [messages, setMessages] = useState([]);
   const [chatsInformation, setChatsInformation] = useState([]);
 
   useEffect(() => {
@@ -27,22 +27,13 @@ const ScreenChats = () => {
           });
           const responseData = await response.json();
           if (responseData.success) {
-            // alert(JSON.stringify(responseData.data));
             setChatsInformation(responseData.data);
-            alert(responseData.data[0].chatId);
             setUserId(responseData.data[0].chatId);
           } else {
             alert(responseData.msg || 'Failed to fetch chats data');
           }
         };
-
-        const fetchChatData = async () => {
-          const data = {
-            chatsID
-          };
-          alert(data.chatsID);
-        };
-        await Promise.all([fetchChatsData(), fetchChatData()]);
+        await Promise.all([fetchChatsData()]);
       } catch (error) {
         alert('Chats Error');
       }
@@ -50,9 +41,45 @@ const ScreenChats = () => {
     fetchChatsData();
   }, [userId]);
 
+  useEffect(() => {
+    const fetchMessagesData = async (chatId) => {
+      try {
+        const data = {
+          chatId
+        };
+        const response = await fetch('http://44.221.91.193:3000/ChatMessage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          setMessages(responseData.data);
+        } else {
+          alert(responseData.msg || 'Failed to fetch chats data');
+        }
+      } catch (error) {
+        console.log('Chat Error');
+      }
+    };
+
+    if (chatsInformation.length > 0) {
+      const { chatId } = chatsInformation[0];
+      fetchMessagesData(chatId);
+    }
+  }, [chatsInformation]);
+
   const renderItem = ({ item }) => {
     const formattedTime = new Date(item.createAt).toLocaleString();
-    setChatsID(item.chatId);
+
+    let lastMessageContent = '';
+    if (item.chatId === chatsInformation[0].chatId && messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      lastMessageContent = lastMessage.msg_content;
+    }
+
     return (
       <TouchableOpacity
         style={styles.item}
@@ -64,7 +91,7 @@ const ScreenChats = () => {
         <Image source={require('../../assets/default-profile-picture.jpg')} style={styles.avatar} />
         <View style={styles.itemContent}>
           <Text style={styles.name}>{item.userName}</Text>
-          {/* <Text style={styles.message}>{item.message}</Text> */}
+          <Text style={styles.message}>{lastMessageContent}</Text>
         </View>
         <Text style={styles.time}>{formattedTime}</Text>
       </TouchableOpacity>
@@ -76,6 +103,7 @@ const ScreenChats = () => {
       <FlatList
         data={chatsInformation}
         renderItem={renderItem}
+        keyExtractor={(item) => item.chatId.toString()}
       />
     </View>
   );
