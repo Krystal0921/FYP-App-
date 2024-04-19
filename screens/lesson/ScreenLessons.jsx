@@ -266,23 +266,24 @@ const imageMapping = {
 const getImageSource = (lessonId) => imageMapping[lessonId];
 
 const ScreenLessons = ({ route, navigation }) => {
-  const [userId, setUserId] = useState(null);
   const { lessonId, image } = route.params;
   const [section, setSection] = useState([]);
+  const [userId, setUserId] = useState(null);
   const { publisUserQuizMark } = useAuth();
+  const { user } = useAuth();
 
-  useEffect(() => {
-    const getUserId = async () => {
-      try {
-        const userId = await AsyncStorage.getItem("userId");
-        setUserId(userId);
-      } catch (error) {
-        console.error("Error retrieving userId from AsyncStorage:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const getUserId = async () => {
+  //     try {
+  //       const userId = await AsyncStorage.getItem("userId");
+  //       setUserId(user.userId);
+  //     } catch (error) {
+  //       console.error("Error retrieving userId from AsyncStorage:", error);
+  //     }
+  //   };
 
-    getUserId();
-  }, []);
+  //   getUserId();
+  // }, []);
 
   useEffect(() => {
     const fetchSectionData = async () => {
@@ -319,32 +320,33 @@ const ScreenLessons = ({ route, navigation }) => {
 
   const isSectionTaken = async (sectionId) => {
     try {
-      const mId = userId;
-      const response = await fetch("http://44.221.91.193:3000/SectionTaken", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ mId, sectionId }),
-      });
-
-      const responseData = await response.json();
-
-      if (responseData.success) {
-        if (responseData.data === "has taken") {
-          return true;
-        } else if (responseData.data === "not taken") {
-          console.log(mId, sectionId, responseData.data);
-          //  console.log(mId, sectionId, responseData.data);
-          return false;
-        }
-      } else {
-        alert(responseData.msg || "Failed to fetch member progress data");
+      if (!user) {
+        console.log("public user");
         return false;
+      } else {
+        const mId = user.userId;
+        const response = await fetch("http://44.221.91.193:3000/SectionTaken", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ mId, sectionId }),
+        });
+
+        const responseData = await response.json();
+
+        if (responseData.success) {
+          if (responseData.data === "has taken") {
+            return true;
+          } else if (responseData.data === "not taken") {
+            console.log(mId, sectionId, responseData.data);
+            return false;
+          }
+        }
       }
     } catch (error) {
       console.error("Error fetching member progress data:", error);
-      alert("Failed to fetch member progress data");
+      alert("Failed to fetch member progress datas");
       return false;
     }
   };
@@ -397,8 +399,8 @@ const ScreenLessons = ({ route, navigation }) => {
     useEffect(() => {
       const fetchQuizMark = async () => {
         try {
-          if (!userId) {
-            console.log("userId:" + userId);
+          if (!user) {
+            console.log("public user:" + user);
             await publisUserQuizMark(mark, lessonId);
             const storedMarkData = await AsyncStorage.getItem("markData");
             const parsedMarkData = JSON.parse(storedMarkData);
@@ -418,7 +420,7 @@ const ScreenLessons = ({ route, navigation }) => {
             //   console.log("mark:" + mark);
             // }
           } else {
-            const mId = userId;
+            const mId = user.userId;
             const response = await fetch("http://44.221.91.193:3000/QuizMark", {
               method: "POST",
               headers: {
@@ -426,6 +428,7 @@ const ScreenLessons = ({ route, navigation }) => {
               },
               body: JSON.stringify({ mId, lessonId }),
             });
+
             console.log(mId + lessonId);
 
             const responseData = await response.json();

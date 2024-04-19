@@ -5,7 +5,8 @@ export const authContext = createContext();
 
 export const useAuth = () => useContext(authContext);
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ userId: null });
   const [loading, setLoading] = useState(true);
   const onLogin = async (user) => {
     await AsyncStorage.setItem("user", JSON.stringify(user));
