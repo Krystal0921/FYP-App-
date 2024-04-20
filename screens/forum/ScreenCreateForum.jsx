@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
-import ImagePicker, { launchImageLibrary } from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 const ScreenCreateForum = () => {
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
+  const [image, setImage] = useState(null);
 
-  const openImagePicker = () => {
-
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+      // base64: true
+    });
+    console.log(result);
+    // console.log(result.base64);
   };
 
   return (
@@ -20,7 +29,7 @@ const ScreenCreateForum = () => {
         />
       </View>
       <View style={styles.CreateForumView}>
-        <TouchableOpacity style={styles.CreateForumButton} onPress={openImagePicker}>
+        <TouchableOpacity style={styles.CreateForumButton} onPress={pickImage}>
           <Text style={styles.CreateForumButtonText}>Post Image (Option)</Text>
         </TouchableOpacity>
       </View>
