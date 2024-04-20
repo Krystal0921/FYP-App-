@@ -1,44 +1,13 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker, { launchImageLibrary } from 'react-native-image-picker';
 
 const ScreenCreateForum = () => {
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
 
   const openImagePicker = () => {
-    const options = {
-      title: '请选择图片来源',
-      cancelButtonTitle: '取消',
-      takePhotoButtonTitle: '拍照',
-      chooseFromLibraryButtonTitle: '相册图片',
-      customButtons: [
-        { name: 'hangge', title: 'hangge.com图片' }
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: 'images'
-      }
-    };
 
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
-      // if (response.didCancel) {
-      //   console.log('用户取消了选择！');
-      // } else if (response.error) {
-      //   alert(`ImagePicker发生错误：${response.error}`);
-      // } else if (response.customButton) {
-      //   alert(`自定义按钮点击：${response.customButton}`);
-      // } else {
-      //   const source = { uri: response.uri };
-      //   // You can also display the image using data:
-      //   // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-      //   this.setState({
-      //     avatarSource: source
-      //   });
-      // }
-    });
   };
 
   return (
