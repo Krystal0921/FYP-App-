@@ -54,25 +54,29 @@ const ScreenChats = () => {
         });
         const responseData = await response.json();
         if (responseData.success) {
-          setMessages(responseData.data);
-        } else {
-          alert(responseData.msg || 'Failed to fetch messages data');
+          return responseData.data;
         }
+        alert(responseData.msg || 'Failed to fetch messages data');
       } catch (error) {
         console.log('Chat Error:', error);
       }
     };
 
-    // if (chatsInformation.length > 0) {
-    //   const { chatId } = chatsInformation[0];
-    //   fetchMessagesData(chatId);
-    // }
-
-    for (let i = 0; i < chatsInformation.length; i++) {
-      // setChatId(chatsInformation[i].chatId);
-      fetchMessagesData(chatsInformation[i].chatId);
-      console.log(`${i},${chatsInformation[i].chatId},${ThischatId},${JSON.stringify(messages)},${JSON.stringify(chatsInformation[i])}`);
-      // setMessages()
+    const fetchAllMessages = async () => {
+      try {
+        const allMessages = [];
+        for (let i = 0; i < chatsInformation.length; i++) {
+          const { chatId } = chatsInformation[i];
+          const messagesData = await fetchMessagesData(chatId);
+          allMessages.push(...messagesData);
+        }
+        setMessages(allMessages);
+      } catch (error) {
+        console.log('Error fetching messages:', error);
+      }
+    };
+    if (chatsInformation.length > 0) {
+      fetchAllMessages();
     }
   }, [chatsInformation]);
 
