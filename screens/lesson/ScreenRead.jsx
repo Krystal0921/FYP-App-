@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Dimensions,
-  FlatList,
-} from "react-native";
-import { Video, ResizeMode } from "expo-av";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ProgressBar from "./ProgressBar";
-import { videoMapping } from "./VideoSource.jsx";
-import { NAVIGATION_COURSE, NAVIGATION_MAIN } from "../../const/navigations";
-import { useAuth } from "../../components/AuthProvider";
+  FlatList
+} from 'react-native';
+import { Video, ResizeMode } from 'expo-av';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProgressBar from './ProgressBar';
+import { videoMapping } from './VideoSource.jsx';
+import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
+import { useAuth } from '../../components/AuthProvider';
 
 const ScreenRead = ({ route, navigation }) => {
   const videoRef = useRef(null);
@@ -24,9 +24,9 @@ const ScreenRead = ({ route, navigation }) => {
   let lessonRead;
 
   const lessonNames = {
-    L01: "Daily Communication",
-    L02: "Travel Communication",
-    L03: "Workplace Communication",
+    L01: 'Daily Communication',
+    L02: 'Travel Communication',
+    L03: 'Workplace Communication'
   };
 
   useEffect(() => {
@@ -48,23 +48,23 @@ const ScreenRead = ({ route, navigation }) => {
       try {
         const data = {
           lessonId,
-          sectionId,
+          sectionId
         };
         const response = await fetch(
-          "http://44.221.91.193:3000/Lesson/Section/Content",
+          'http://44.221.91.193:3000/Lesson/Section/Content',
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(data)
           }
         );
         const responseData = await response.json();
         if (responseData.success) {
           setRead(responseData.data);
         } else {
-          alert(responseData.msg || "Failed to fetch section data");
+          alert(responseData.msg || 'Failed to fetch section data');
         }
       } catch (error) {
         alert(`Lesson Section Error: ${error.message}`);
@@ -88,43 +88,43 @@ const ScreenRead = ({ route, navigation }) => {
         if (!user) {
           navigation.navigate(NAVIGATION_COURSE.feedback, {
             sectionId,
-            lessonId,
+            lessonId
           });
         } else {
           const mId = user.userId;
           const response = await fetch(
-            "http://44.221.91.193:3000/SectionTaken",
+            'http://44.221.91.193:3000/SectionTaken',
             {
-              method: "POST",
+              method: 'POST',
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ mId, sectionId }),
+              body: JSON.stringify({ mId, sectionId })
             }
           );
 
           const responseData = await response.json();
           console.log(`request body:${JSON.stringify({ mId, sectionId })}`);
           if (responseData.success) {
-            if (responseData.data === "has taken") {
+            if (responseData.data === 'has taken') {
               // navigation.goBack();
               if (lessonId in lessonNames) {
                 navigation.navigate(NAVIGATION_MAIN.lesson, {
                   screen: NAVIGATION_COURSE.lessons,
-                  params: { lessonId: lessonId, name: lessonNames[lessonId] },
+                  params: { lessonId, name: lessonNames[lessonId] }
                 });
               }
             } else {
               navigation.navigate(NAVIGATION_COURSE.feedback, {
                 sectionId,
-                lessonId,
+                lessonId
               });
             }
           }
         }
       } catch (error) {
-        console.error("Error fetching member progress data:", error);
-        alert("Failed to fetch member progress data");
+        console.error('Error fetching member progress data:', error);
+        alert('Failed to fetch member progress data');
       }
     }
   };
@@ -168,7 +168,7 @@ const ScreenRead = ({ route, navigation }) => {
               onPress={() => onClickNext(index)}
             >
               <Text style={styles.SectionReadButtonText}>
-                {index + 1 !== 10 ? "Next" : "Finish"}
+                {index + 1 !== 10 ? 'Next' : 'Finish'}
               </Text>
             </TouchableOpacity>
           </View>
@@ -183,25 +183,25 @@ const styles = StyleSheet.create({
   SectionReadSubText: {
     top: 100,
     fontSize: 15,
-    paddingBottom: 10,
+    paddingBottom: 10
   },
   SectionReadText: {
     top: 80,
     fontSize: 18,
-    fontWeight: "bold",
-    paddingBottom: 10,
+    fontWeight: 'bold',
+    paddingBottom: 10
   },
   SectionReadInformation: {
-    width: Dimensions.get("screen").width * 0.85,
+    width: Dimensions.get('screen').width * 0.85,
     marginRight: 15,
-    padding: 10,
+    padding: 10
   },
   SectionReadBackgound: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     flex: 1,
     paddingTop: 10,
-    alignItems: "center",
-    padding: 20,
+    alignItems: 'center',
+    padding: 20
   },
   SectionReadButton: {
     top: 110,
@@ -211,43 +211,43 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 17,
     width: 320,
-    backgroundColor: "#264858",
+    backgroundColor: '#264858',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    alignSelf: "center",
-    alignItems: "center",
+    alignSelf: 'center',
+    alignItems: 'center'
   },
   SectionReadButtonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold'
   },
   SectionReadImage: {
     top: 80,
     height: 250,
     width: 320,
-    resizeMode: "contain",
-    alignSelf: "center",
+    resizeMode: 'contain',
+    alignSelf: 'center'
   },
   SectionReadVideo: {
-    width: Dimensions.get("window").width - 80,
-    height: Dimensions.get("window").width * 0.5625, // 16:9 aspect ratio
+    width: Dimensions.get('window').width - 80,
+    height: Dimensions.get('window').width * 0.5625 // 16:9 aspect ratio
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#ecf0f1",
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1'
   },
   video: {
-    alignSelf: "center",
+    alignSelf: 'center',
     width: 320,
-    height: 200,
+    height: 200
   },
   buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 export default ScreenRead;

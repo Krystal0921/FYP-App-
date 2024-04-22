@@ -69,7 +69,7 @@ const ScreenPost = ({ route, navigation }) => {
     <SafeAreaView style={styles.ForumBackgound}>
       <ScrollView contentContainerStyle={styles.ForumScrollView}>
         <Text style={styles.ForumTitle}>{title}</Text>
-        { user.userId === mId ? (
+        {user.userId === mId ? (
           <TouchableOpacity
             style={styles.SignUpTypeButton}
             onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
@@ -97,7 +97,7 @@ const ScreenPost = ({ route, navigation }) => {
           renderItem={forumlist}
         />
       </ScrollView>
-      { user ? (
+      {user ? (
         <View style={styles.MainSearchView}>
           <TextInput
             style={styles.MainSearchText}

@@ -34,12 +34,14 @@ const ScreenForum = ({ navigation }) => {
         style={styles.AllForum}
         onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
           screen: NAVIGATION_FORUM.post,
-          params: { mId: item.mId,
+          params: {
+            mId: item.mId,
             postId: item.postId,
             title: item.title,
             image: item.image,
             content: item.content,
-            createAt: item.createAt }
+            createAt: item.createAt
+          }
         })}
       >
         <Text style={styles.AllForumText}>{item.title}</Text>
@@ -68,7 +70,7 @@ const ScreenForum = ({ navigation }) => {
             />
           </View>
           <Text>   </Text>
-          { user ? (
+          {user ? (
             <View style={styles.AllForumButtonCircle}>
               <TouchableOpacity
                 onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {

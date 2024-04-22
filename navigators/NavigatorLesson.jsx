@@ -1,12 +1,12 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import { NAVIGATION_COURSE } from "../const/navigations";
-import ScreenLessons from "../screens/lesson/ScreenLessons";
-import ScreenQuiz from "../screens/lesson/ScreenQuiz";
-import ScreenRead from "../screens/lesson/ScreenRead";
-import ScreenFeedback from "../screens/lesson/ScreenFeedback";
-import ScreenAIQuiz from "../screens/lesson/ScreenAIQuiz";
+import { createStackNavigator } from '@react-navigation/stack';
+import { NAVIGATION_COURSE } from '../const/navigations';
+import ScreenLessons from '../screens/lesson/ScreenLessons';
+import ScreenQuiz from '../screens/lesson/ScreenQuiz';
+import ScreenRead from '../screens/lesson/ScreenRead';
+import ScreenFeedback from '../screens/lesson/ScreenFeedback';
+import ScreenAIQuiz from '../screens/lesson/ScreenAIQuiz';
 
-import { useAuth } from "../components/AuthProvider";
+import { useAuth } from '../components/AuthProvider';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ const NavigatorLesson = () => {
         name={NAVIGATION_COURSE.lessons} // Set the name of the screen
         component={ScreenLessons} // Set the component that will be rendered
         options={({ route }) => ({
-        title: route.params.name,
+          title: route.params.name
         })}
       />
 
@@ -28,7 +28,7 @@ const NavigatorLesson = () => {
         name={NAVIGATION_COURSE.quiz} // Set the name of the screen
         component={ScreenQuiz} // Set the component that will be rendered
         options={() => ({
-        title: "Quiz",
+          title: 'Quiz'
         })}
         params={user} // Pass the user object as params to the screen
       />
@@ -38,7 +38,7 @@ const NavigatorLesson = () => {
         name={NAVIGATION_COURSE.read} // Set the name of the screen
         component={ScreenRead} // Set the component that will be rendered
         options={({ route }) => ({
-          title: route.params.name,
+          title: route.params.name
         })}
         params={user} // Pass the user object as params to the screen
       />
@@ -48,7 +48,7 @@ const NavigatorLesson = () => {
         name={NAVIGATION_COURSE.feedback} // Set the name of the screen
         component={ScreenFeedback} // Set the component that will be rendered
         options={({ route }) => ({
-          title: route.params.name,
+          title: route.params.name
         })}
         params={user}
       />
@@ -56,7 +56,7 @@ const NavigatorLesson = () => {
         name={NAVIGATION_COURSE.aiQuiz}
         component={ScreenAIQuiz}
         options={({ route }) => ({
-          title: route.params.name,
+          title: route.params.name
         })}
         params={user} // Pass the user object as params to the screen
       />

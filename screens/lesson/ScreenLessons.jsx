@@ -1,4 +1,3 @@
-
 // import React, { useEffect, useState } from 'react';
 // import { View, Text, ImageBackground, FlatList, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 // import { MaterialIcons } from '@expo/vector-icons';
@@ -269,13 +268,11 @@ const imageMapping = {
 const getImageSource = (lessonId) => imageMapping[lessonId];
 
 const ScreenLessons = ({ route, navigation }) => {
-
   const { lessonId, image } = route.params;
   const [section, setSection] = useState([]);
   const [userId, setUserId] = useState(null);
   const { publisUserQuizMark } = useAuth();
   const { user } = useAuth();
-
 
   useEffect(() => {
     // Fetch section data for the lesson
@@ -382,7 +379,6 @@ const ScreenLessons = ({ route, navigation }) => {
     useEffect(() => {
       const fetchQuizMark = async () => {
         try {
-
           if (!user) {
             console.log(`public user:${user}`);
             await publisUserQuizMark(mark, lessonId);
