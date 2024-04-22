@@ -5,7 +5,8 @@ export const authContext = createContext();
 
 export const useAuth = () => useContext(authContext);
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ userId: null });
   const [loading, setLoading] = useState(true);
   const onLogin = async (user) => {
     await AsyncStorage.setItem("user", JSON.stringify(user));
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         markData[lessonId] = {
           lessonId: lessonId.toString(),
-          mark: mark.toString(),
+          mark: "0",
         };
         console.log(`Adding new mark ${mark} for lessonId ${lessonId}.`);
       }
