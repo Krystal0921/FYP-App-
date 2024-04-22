@@ -1,53 +1,112 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NAVIGATION_CHAT, NAVIGATION_MAIN } from '../../const/navigations';
-import { getData } from '../../const/AsyncStorage';
-
-const chatData = [
-  {
-    id: '1',
-    name: 'cherrie0912',
-    message: 'Hello, how are you?',
-    time: '10:30 AM',
-    avatar: require('../../assets/Cherrie.jpeg')
-  },
-  {
-    id: '2',
-    name: 'kris0111',
-    message: 'I am good, thanks!',
-    time: '11:45 AM',
-    avatar: require('../../assets/default-profile-picture.jpg')
-  }
-];
+import { authContext, useAuth } from '../../components/AuthProvider';
 
 const ScreenChats = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loggedin, setLoggedin] = useState('');
+  const { user } = useAuth();
+  const [userId, setUserId] = useState('');
+  const [ThischatId, setChatId] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [chatsInformation, setChatsInformation] = useState([]);
 
-  const handleButtonPress = () => {
-    navigation.navigate(NAVIGATION_MAIN.chat, { screen: NAVIGATION_CHAT.chat, params: { name: 'John' } });
+  useEffect(() => {
+    const fetchChatsData = async () => {
+      try {
+        const data = {
+          userId: user.userId
+        };
+        const response = await fetch('http://44.221.91.193:3000/ChatList', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          setChatsInformation(responseData.data);
+        } else {
+          alert(responseData.msg || 'Failed to fetch chats data');
+        }
+      } catch (error) {
+        alert('Chats Error');
+      }
+    };
+
+    fetchChatsData(); // Fetch chats data when userId changes
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchMessagesData = async (chatId) => {
+      try {
+        const data = {
+          chatId
+        };
+        const response = await fetch('http://44.221.91.193:3000/ChatMessage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          setMessages(responseData.data);
+        } else {
+          alert(responseData.msg || 'Failed to fetch messages data');
+        }
+      } catch (error) {
+        console.log('Chat Error:', error);
+      }
+    };
+
+    // if (chatsInformation.length > 0) {
+    //   const { chatId } = chatsInformation[0];
+    //   fetchMessagesData(chatId);
+    // }
+
+    for (let i = 0; i < chatsInformation.length; i++) {
+      // setChatId(chatsInformation[i].chatId);
+      fetchMessagesData(chatsInformation[i].chatId);
+      console.log(`${i},${chatsInformation[i].chatId},${ThischatId},${JSON.stringify(messages)},${JSON.stringify(chatsInformation[i])}`);
+      // setMessages()
+    }
+  }, [chatsInformation]);
+
+  const renderItem = ({ item }) => {
+    const formattedTime = new Date(item.createAt).toLocaleString();
+
+    const chatMessages = messages.filter((message) => message.chatId === item.chatId);
+    const lastMessage = chatMessages.length > 0 ? chatMessages[chatMessages.length - 1] : null;
+    const lastMessageContent = lastMessage ? lastMessage.msg_content : '';
+
+    return (
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => navigation.navigate(NAVIGATION_MAIN.chat, {
+          screen: NAVIGATION_CHAT.chat,
+          params: { name: item.userName, chatId: item.chatId }
+        })}
+      >
+        <Image source={require('../../assets/default-profile-picture.jpg')} style={styles.avatar} />
+        <View style={styles.itemContent}>
+          <Text style={styles.name}>{item.userName}</Text>
+          <Text style={styles.message}>{lastMessageContent}</Text>
+        </View>
+        <Text style={styles.time}>{formattedTime}</Text>
+      </TouchableOpacity>
+    );
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.item} onPress={handleButtonPress}>
-      <Image source={item.avatar} style={styles.avatar} />
-      <View style={styles.itemContent}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.message}>{item.message}</Text>
-      </View>
-      <Text style={styles.time}>{item.time}</Text>
-    </TouchableOpacity>
-  );
   return (
-
     <View style={styles.container}>
       <FlatList
-        data={chatData}
+        data={chatsInformation}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.chatId.toString()}
       />
     </View>
   );
@@ -75,8 +134,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 50,
-    backgroundColor: '#fafafa'
+    backgroundColor: '#fafafa',
+    paddingTop: 30
   },
   item: {
     flexDirection: 'row',

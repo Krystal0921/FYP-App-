@@ -1,50 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { authContext, useAuth } from '../../components/AuthProvider';
 
-const ScreenChat = () => {
+const ScreenChat = ({ route }) => {
   const [inputText, setInputText] = useState('');
+  const { user } = useAuth();
+  const { chatId } = route.params;
+  const [chats, setChats] = useState([]);
 
-  const [messages, setMessages] = useState([
-    { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:30:22' },
-    { id: 2, sender: 'John', content: 'Hello!', timestamp: '2024-01-17 10:56:22' },
-    { id: 3, sender: 'John', content: 'How are you?', timestamp: '2024-01-17 10:56:25' },
-    { id: 4, sender: 'You', content: 'Hi Cherrie!', timestamp: '2024-01-17 10:58:22' },
-    { id: 5, sender: 'You', content: 'I"m fine!', timestamp: '2024-01-17 10:58:22' }
-    // Add more messages here
-  ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = {
+        chatId
+      };
+      try {
+        const response = await fetch('http://44.221.91.193:3000/ChatMessage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          setChats(responseData.data);
+        } else {
+          alert(responseData.msg || 'Failed to fetch chats data');
+        }
+      } catch (error) {
+        console.log('Chat Error');
+      }
+    };
+    fetchData();
+  }, [chatId]);
 
   const renderMessage = ({ item }) => {
-    const isUser = item.sender === 'You';
+    const formattedTime = new Date(item.createAt).toLocaleString();
+    const isUser = user.userId === item.userId;
     const messageContainerStyle = isUser ? styles.userMessageContainer : styles.senderMessageContainer;
     const messageTextStyle = isUser ? styles.userMessageText : styles.senderMessageText;
 
     return (
       <View style={messageContainerStyle}>
-        <Text style={messageTextStyle}>{item.content}</Text>
-        <Text style={styles.timestamp}>{item.timestamp}</Text>
+        <Text style={messageTextStyle}>{item.msg_content}</Text>
+        <Text style={styles.timestamp}>{formattedTime}</Text>
       </View>
     );
   };
 
-  const handleSend = () => {
-    if (inputText.trim() !== '') {
-      const newMessage = {
-        id: messages.length + 1,
-        sender: 'You',
-        content: inputText.trim(),
-        timestamp: new Date()
-      };
-      setMessages([...messages, newMessage]); // Append the new message at the end
-      setInputText('');
-    }
-  };
+  // const [messages, setMessages] = useState([
+  //   { id: 1, sender: 'You', content: 'Hello!', timestamp: '2024-01-16 10:30:22' },
+  //   { id: 2, sender: 'John', content: 'Hello!', timestamp: '2024-01-17 10:56:22' },
+  //   { id: 3, sender: 'John', content: 'How are you?', timestamp: '2024-01-17 10:56:25' },
+  //   { id: 4, sender: 'You', content: 'Hi Cherrie!', timestamp: '2024-01-17 10:58:22' },
+  //   { id: 5, sender: 'You', content: 'I"m fine!', timestamp: '2024-01-17 10:58:22' }
+  //   // Add more messages here
+  // ]);
+
+  // const handleSend = () => {
+  //   if (inputText.trim() !== '') {
+  //     const newMessage = {
+  //       id: messages.length + 1,
+  //       sender: user.userId,
+  //       content: inputText.trim(),
+  //       timestamp: new Date()
+  //     };
+  //     setMessages([...messages, newMessage]); // Append the new message at the end
+  //     setInputText('');
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       <View style={styles.messagesContainer}>
         <FlatList
-          data={messages}
-          keyExtractor={(item) => item.id.toString()}
+          data={chats}
           renderItem={renderMessage}
         />
       </View>
@@ -59,7 +89,7 @@ const ScreenChat = () => {
             value={inputText}
             onChangeText={(text) => setInputText(text)}
           />
-          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+          <TouchableOpacity style={styles.sendButton}>
             <Text style={styles.sendButtonText}>Send</Text>
           </TouchableOpacity>
         </View>

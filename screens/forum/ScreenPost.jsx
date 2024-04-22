@@ -1,95 +1,119 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NAVIGATION_FORUM } from '../../const/navigations';
+import { useAuth } from '../../components/AuthProvider';
 
-const ScreenPost = ({ navigation }) => (
-  <SafeAreaView style={styles.ForumBackgound}>
-    <ScrollView contentContainerStyle={styles.ForumScrollView}>
-      <Text style={styles.ForumTitle}>How accurate for battery level is myPhonak app?</Text>
-      <TouchableOpacity
-        style={styles.SignUpTypeButton}
-        onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
-          screen: NAVIGATION_FORUM.post
-        })}
-      >
-        <Text style={styles.SignUpTypeButtonText}>Edit</Text>
-      </TouchableOpacity>
-      <View style={styles.ForumTitleImageView}>
-        <Image
-          style={styles.ForumTitleImage}
-          source={require('../../assets/myPhonak_app.png')}
-        />
-      </View>
-      <Text style={styles.ForumDesciptionText}>Lately I have been leaving my KS9s turned on and in my ears all night streaming nature sounds and music in order to block out the neighborhood "disk jockey" who was keeping me up all night. (I tried every type and strength of earplugs first and none were )</Text>
+const ScreenPost = ({ route, navigation }) => {
+  const { mId, postId, title, image, content, createAt } = route.params;
+  const { user } = useAuth();
+  const [userId] = useState('');
+  const [post, setPost] = useState([]);
+
+  const imageMapping = {
+    'default-profile-picture.jpg': require('../../assets/default-profile-picture.jpg')
+  };
+
+  const getImageSource = (imageFilename) => imageMapping[imageFilename];
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      try {
+        const fetchPostData = async () => {
+          const data = {
+            postId
+          };
+          const response = await fetch(
+            'http://44.221.91.193:3000/PostComment',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            }
+          );
+          const responseData = await response.json();
+          if (responseData.success) {
+            setPost(responseData.data);
+          } else {
+            alert(responseData.msg || 'Failed to fetch post data');
+          }
+        };
+        await Promise.all([fetchPostData()]);
+      } catch (error) {
+        alert('Post Error');
+      }
+    };
+    fetchPostData();
+  }, [postId, title, image, content, createAt]);
+
+  const forumlist = ({ item }) => {
+    const formattedTime = new Date(item.createAt).toLocaleString();
+    return (
       <View style={styles.ForumCommentView}>
         <Image
           style={styles.ForumCommentImage}
-          source={require('../../assets/Cherrie.jpeg')}
+          source={getImageSource(item.mPhoto)}
         />
         <View>
-          <Text style={styles.ForumCommentText}>cherrie0912</Text>
-          <Text style={styles.ForumCommentParagraph}>Good sharing.</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+          <Text style={styles.ForumCommentText}>{item.mName}</Text>
+          <Text style={styles.ForumCommentParagraph}>{item.commentContent}</Text>
+          <Text style={styles.ForumCommentTime}>{formattedTime}</Text>
         </View>
       </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.ForumBackgound}>
+      <ScrollView contentContainerStyle={styles.ForumScrollView}>
+        <Text style={styles.ForumTitle}>{title}</Text>
+        { user.userId === mId ? (
+          <TouchableOpacity
+            style={styles.SignUpTypeButton}
+            onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
+              screen: NAVIGATION_FORUM.post,
+              title,
+              content,
+              createAt,
+              postId
+            })}
+          >
+            <Text style={styles.SignUpTypeButtonText}>Edit</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity />
+        )}
+        <View style={styles.ForumTitleImageView}>
+          <Image
+            style={styles.ForumTitleImage}
+            source={{ uri: `data:image/jpeg;base64,${image}` }}
+          />
+        </View>
+        <Text style={styles.ForumDesciptionText}>{content}</Text>
+        <FlatList
+          data={post}
+          renderItem={forumlist}
         />
-        <View>
-          <Text style={styles.ForumCommentText}>kris0111</Text>
-          <Text style={styles.ForumCommentParagraph}>Excellent!</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
+      </ScrollView>
+      { user ? (
+        <View style={styles.MainSearchView}>
+          <TextInput
+            style={styles.MainSearchText}
+            placeholder="Type Some Comment"
+            placeholderTextColor="#888"
+          />
+          <TouchableOpacity>
+            <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
+          </TouchableOpacity>
         </View>
-      </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>jackyIsZero001</Text>
-          <Text style={styles.ForumCommentParagraph}>Wow</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-        </View>
-      </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>ivy023yyy</Text>
-          <Text style={styles.ForumCommentParagraph}>Looks great!</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-        </View>
-      </View>
-      <View style={styles.ForumCommentView}>
-        <Image
-          style={styles.ForumCommentImage}
-          source={require('../../assets/default-profile-picture.jpg')}
-        />
-        <View>
-          <Text style={styles.ForumCommentText}>wandy090</Text>
-          <Text style={styles.ForumCommentParagraph}>Oops</Text>
-          <Text style={styles.ForumCommentTime}>21:01:2024 19:57</Text>
-        </View>
-      </View>
-    </ScrollView>
-    <View style={styles.MainSearchView}>
-      <TextInput
-        style={styles.MainSearchText}
-        placeholder="Type Some Comment"
-        placeholderTextColor="#888"
-      />
-      <TouchableOpacity>
-        <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
-      </TouchableOpacity>
-    </View>
-  </SafeAreaView>
-);
+      ) : (
+        <View />
+      )}
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   SignUpTypeButton: {
@@ -113,7 +137,7 @@ const styles = StyleSheet.create({
   ForumCommentTime: {
     color: '#8F95B2',
     fontWeight: '600',
-    paddingLeft: 120
+    paddingLeft: 90
   },
   MainSearchText: {
     flex: 1,

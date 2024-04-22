@@ -30,13 +30,26 @@ const ScreenRead = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    // Fetch the user ID from AsyncStorage
+    const getUserId = async () => {
+      try {
+        const userId = await AsyncStorage.getItem('userId');
+        setUserId(userId);
+      } catch (error) {
+        console.error('Error retrieving userId from AsyncStorage:', error);
+      }
+    };
+    getUserId();
+  }, []);
+
+  useEffect(() => {
+    // Fetch section data from the server
     const fetchSectionData = async () => {
       try {
         const data = {
           lessonId,
           sectionId,
         };
-
         const response = await fetch(
           "http://44.221.91.193:3000/Lesson/Section/Content",
           {
@@ -47,9 +60,7 @@ const ScreenRead = ({ route, navigation }) => {
             body: JSON.stringify(data),
           }
         );
-
         const responseData = await response.json();
-
         if (responseData.success) {
           setRead(responseData.data);
         } else {
@@ -67,6 +78,7 @@ const ScreenRead = ({ route, navigation }) => {
     const nextIndex = index + 1;
     if (nextIndex < read.length) {
       try {
+        // Scroll to the next item in the FlatList
         lessonRead.scrollToIndex({ animated: true, index: nextIndex });
       } catch (e) {
         console.error(e);
@@ -130,8 +142,9 @@ const ScreenRead = ({ route, navigation }) => {
         }}
         renderItem={({ item, index }) => (
           <View style={styles.SectionReadInformation}>
+            {/* Progress bar */}
             <ProgressBar contentLength={5} contentIndex={index} />
-
+            {/* Video player */}
             <Video
               ref={videoRef}
               style={styles.SectionReadImage}
@@ -142,11 +155,14 @@ const ScreenRead = ({ route, navigation }) => {
               isMuted
               volume={1.0}
             />
+            {/* Description */}
             <Text style={styles.SectionReadText}>
               English Name: {item.description}
             </Text>
+            {/* Reference */}
             <Text style={styles.SectionReadSubText}>Reference:</Text>
             <Text style={styles.SectionReadSubText}>{item.reference}</Text>
+            {/* Next button */}
             <TouchableOpacity
               style={styles.SectionReadButton}
               onPress={() => onClickNext(index)}
@@ -162,6 +178,7 @@ const ScreenRead = ({ route, navigation }) => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   SectionReadSubText: {
     top: 100,

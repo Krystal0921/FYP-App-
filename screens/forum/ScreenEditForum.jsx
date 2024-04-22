@@ -1,26 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { NAVIGATION_TAB } from '../../const/navigations';
+import { useAuth } from '../../components/AuthProvider';
 
-const ScreenEditForum = ({ navigation }) => (
-  <SafeAreaView style={styles.EditForumBackgound}>
-    <View style={styles.EditForumView}>
-      <Text style={styles.EditForumInputText}>How accurate for battery level is myPhonak app?</Text>
-    </View>
-    <View style={styles.EditForumView}>
-      <TouchableOpacity style={styles.EditForumButton}>
-        <Text style={styles.EditForumButtonText}>Post Image (Option)</Text>
-      </TouchableOpacity>
-    </View>
-    <View>
-      <TextInput multiline numberOfLines={10} style={styles.EditForumDetailsInputText} placeholder="Post Details" />
-    </View>
-    <View style={styles.EditForumView}>
-      <TouchableOpacity style={styles.EditForumButton}>
-        <Text style={styles.EditForumButtonText}>Edit</Text>
-      </TouchableOpacity>
-    </View>
-  </SafeAreaView>
-);
+const ScreenEditForum = ({ route, navigation }) => {
+  const { title, content, createAt, postId } = route.params;
+  const { user } = useAuth();
+  const [contents, setContents] = useState(content);
+  const [userId] = useState('');
+  // alert(user.userId);
+  // alert(postId);
+  // alert(content);
+  // alert(createAt);
+
+  const Edit = async () => {
+    try {
+      const data = {
+        postId,
+        mId: user.userId,
+        content: contents,
+        createAt
+      };
+      fetch('http://44.221.91.193:3000/EditPost', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then((response) => response.json())
+        .then(async (responseData) => {
+          if (responseData.success) {
+            navigation.navigate(NAVIGATION_TAB.course);
+            navigation.navigate(NAVIGATION_TAB.forum);
+          } else if (responseData.code === 1) {
+            alert(responseData.msg);
+          } else {
+            alert('Wrong username or password');
+          }
+        });
+    } catch (e) {
+      switch (e.response.status) {
+        case 401:
+          alert('Wrong username or password');
+          break;
+        default:
+          alert('Login failed');
+      }
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.EditForumBackgound}>
+      <View style={styles.EditForumView}>
+        <Text style={styles.EditForumInputText}>{title}</Text>
+      </View>
+      <View style={styles.EditForumView}>
+        <TouchableOpacity style={styles.EditForumButton}>
+          <Text style={styles.EditForumButtonText}>Post Image (Option)</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
+        <TextInput
+          multiline
+          numberOfLines={10}
+          style={styles.EditForumDetailsInputText}
+          placeholder="Post Details"
+          value={contents}
+          onChangeText={setContents}
+        />
+      </View>
+      <View style={styles.EditForumView}>
+        <TouchableOpacity style={styles.EditForumButton} onPress={Edit}>
+          <Text style={styles.EditForumButtonText}>Edit</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   EditForumTitle: {
