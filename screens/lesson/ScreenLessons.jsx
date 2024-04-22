@@ -241,7 +241,7 @@
 
 // export default ScreenLessons;
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -250,17 +250,17 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
-  Image,
-} from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NAVIGATION_COURSE } from "../../const/navigations";
-import { useAuth } from "../../components/AuthProvider";
+  Image
+} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NAVIGATION_COURSE } from '../../const/navigations';
+import { useAuth } from '../../components/AuthProvider';
 
 const imageMapping = {
-  L01: require("../../assets/daily-communication.jpg"),
-  L02: require("../../assets/travel-communication.png"),
-  L03: require("../../assets/workplace-communication.jpg"),
+  L01: require('../../assets/daily-communication.jpg'),
+  L02: require('../../assets/travel-communication.png'),
+  L03: require('../../assets/workplace-communication.jpg')
 };
 
 const getImageSource = (lessonId) => imageMapping[lessonId];
@@ -289,17 +289,17 @@ const ScreenLessons = ({ route, navigation }) => {
     const fetchSectionData = async () => {
       try {
         const data = {
-          lessonId,
+          lessonId
         };
 
         const response = await fetch(
-          "http://44.221.91.193:3000/Lesson/Section/",
+          'http://44.221.91.193:3000/Lesson/Section/',
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(data)
           }
         );
 
@@ -308,7 +308,7 @@ const ScreenLessons = ({ route, navigation }) => {
         if (responseData.success) {
           setSection(responseData.data);
         } else {
-          alert(responseData.msg || "Failed to fetch section data");
+          alert(responseData.msg || 'Failed to fetch section data');
         }
       } catch (error) {
         alert(`Lesson Section Error: ${error.message}`);
@@ -321,32 +321,31 @@ const ScreenLessons = ({ route, navigation }) => {
   const isSectionTaken = async (sectionId) => {
     try {
       if (!user) {
-        console.log("public user");
+        console.log('public user');
         return false;
-      } else {
-        const mId = user.userId;
-        const response = await fetch("http://44.221.91.193:3000/SectionTaken", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ mId, sectionId }),
-        });
+      }
+      const mId = user.userId;
+      const response = await fetch('http://44.221.91.193:3000/SectionTaken', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ mId, sectionId })
+      });
 
-        const responseData = await response.json();
+      const responseData = await response.json();
 
-        if (responseData.success) {
-          if (responseData.data === "has taken") {
-            return true;
-          } else if (responseData.data === "not taken") {
-            console.log(mId, sectionId, responseData.data);
-            return false;
-          }
+      if (responseData.success) {
+        if (responseData.data === 'has taken') {
+          return true;
+        } if (responseData.data === 'not taken') {
+          console.log(mId, sectionId, responseData.data);
+          return false;
         }
       }
     } catch (error) {
-      console.error("Error fetching member progress data:", error);
-      alert("Failed to fetch member progress datas");
+      console.error('Error fetching member progress data:', error);
+      alert('Failed to fetch member progress datas');
       return false;
     }
   };
@@ -372,18 +371,16 @@ const ScreenLessons = ({ route, navigation }) => {
 
         <TouchableOpacity
           style={styles.LessonButtonCircle}
-          onPress={() =>
-            navigation.navigate(NAVIGATION_COURSE.read, {
-              name: session.sectionTitle,
-              lessonId: session.lessonId,
-              sectionId: session.sectionId,
-            })
-          }
+          onPress={() => navigation.navigate(NAVIGATION_COURSE.read, {
+            name: session.sectionTitle,
+            lessonId: session.lessonId,
+            sectionId: session.sectionId
+          })}
         >
           {isTaken ? (
             <Image
               style={styles.logo}
-              source={require("../../assets/tick-mark.png")}
+              source={require('../../assets/tick-mark.png')}
             />
           ) : (
             <MaterialIcons size={40} name="play-arrow" />
@@ -400,12 +397,12 @@ const ScreenLessons = ({ route, navigation }) => {
       const fetchQuizMark = async () => {
         try {
           if (!user) {
-            console.log("public user:" + user);
+            console.log(`public user:${user}`);
             await publisUserQuizMark(mark, lessonId);
-            const storedMarkData = await AsyncStorage.getItem("markData");
+            const storedMarkData = await AsyncStorage.getItem('markData');
             const parsedMarkData = JSON.parse(storedMarkData);
             const mark = parsedMarkData[lessonId]?.mark;
-            console.log("storedMarkData:" + storedMarkData);
+            console.log(`storedMarkData:${storedMarkData}`);
             setQuizMark(mark);
 
             // if (storedMarkData) {
@@ -421,12 +418,12 @@ const ScreenLessons = ({ route, navigation }) => {
             // }
           } else {
             const mId = user.userId;
-            const response = await fetch("http://44.221.91.193:3000/QuizMark", {
-              method: "POST",
+            const response = await fetch('http://44.221.91.193:3000/QuizMark', {
+              method: 'POST',
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ mId, lessonId }),
+              body: JSON.stringify({ mId, lessonId })
             });
 
             console.log(mId + lessonId);
@@ -435,18 +432,18 @@ const ScreenLessons = ({ route, navigation }) => {
 
             if (responseData.success) {
               if (responseData.data && responseData.data.length > 0) {
-                const score = responseData.data[0].score;
+                const { score } = responseData.data[0];
                 console.log(score);
                 setQuizMark(score);
               } else {
                 setQuizMark(0);
               }
             } else {
-              alert(responseData.msg || "Failed to fetch quiz mark data");
+              alert(responseData.msg || 'Failed to fetch quiz mark data');
             }
           }
         } catch (error) {
-          console.error("Error fetching quiz mark data:", error);
+          console.error('Error fetching quiz mark data:', error);
           // alert("Failed to fetch quiz mark data");
         }
       };
@@ -454,37 +451,33 @@ const ScreenLessons = ({ route, navigation }) => {
       fetchQuizMark();
     }, [lessonId]);
 
-    console.log("marks:" + mark);
+    console.log(`marks:${mark}`);
     return (
       <View style={styles.QuizSectionContainer}>
         <TouchableOpacity
           style={styles.QuizButton}
-          onPress={() =>
-            navigation.navigate(NAVIGATION_COURSE.quiz, {
-              screen: NAVIGATION_COURSE.quiz,
-              data: lessonId,
-            })
-          }
+          onPress={() => navigation.navigate(NAVIGATION_COURSE.quiz, {
+            screen: NAVIGATION_COURSE.quiz,
+            data: lessonId
+          })}
         >
           <Text style={styles.QuizButtonText}>Take Quiz {mark} / 10</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.QuizButton}
-          onPress={() =>
-            navigation.navigate(NAVIGATION_COURSE.aiQuiz, {
-              screen: NAVIGATION_COURSE.aiQuiz,
-              data: lessonId,
-            })
-          }
+          style={styles.AIquizButton}
+          onPress={() => navigation.navigate(NAVIGATION_COURSE.aiQuiz, {
+            screen: NAVIGATION_COURSE.aiQuiz,
+            data: lessonId
+          })}
         >
-          <Text style={styles.QuizButtonText}>AI Quiz </Text>
+          <Text style={styles.AIquizButtonText}>AI Quiz </Text>
         </TouchableOpacity>
       </View>
     );
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
       <ImageBackground
         source={getImageSource(lessonId)}
         style={styles.LessonImageBackground}
@@ -514,93 +507,115 @@ const styles = StyleSheet.create({
   AllLessonBackgroundView: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    flexDirection: "row",
+    flexDirection: 'row'
   },
   AllLessonNumber: {
     fontSize: 40,
-    fontWeight: "bold",
-    color: "#E4E7F4",
+    fontWeight: 'bold',
+    color: '#E4E7F4'
   },
   AllLessonTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold'
   },
   LessonImageBackground: {
     height: 300,
     paddingTop: 40,
     paddingRight: 20,
     paddingLeft: 20,
-    alignItems: "center",
+    alignItems: 'center'
   },
   LessonButtonCircle: {
     width: 40,
     height: 40,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: '#E0E0E0',
     borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10
   },
   LessonLinkView: {
-    justifyContent: "center",
-    flexDirection: "row",
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   LessonLinkText: {
     paddingTop: 15,
     paddingBottom: 10,
-    color: "blue",
+    color: 'blue'
   },
   LessonContentView: {
     flex: 1,
     marginTop: -35,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
-    height: "100%",
+    height: '100%'
   },
   LessonContentText: {
     marginBottom: 20,
     marginHorizontal: 20,
     fontSize: 21,
-    fontWeight: "bold",
+    fontWeight: 'bold'
   },
   QuizSectionContainer: {
     paddingHorizontal: 20,
     paddingVertical: 15,
 
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 10
   },
   QuizButton: {
     marginBottom: 10,
-    backgroundColor: "#8B0960",
+    backgroundColor: '#8B0960',
     borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 5
   },
   QuizButtonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
+  },
+  AIquizButton: {
+    marginBottom: 10,
+    backgroundColor: '#194680',
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
+  AIquizButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingVertical: 12,
+    paddingHorizontal: 20
   },
   greenTick: {
     marginLeft: 10,
-    color: "green",
+    color: 'green'
   },
   logo: {
     width: 60,
-    height: 54,
-  },
+    height: 54
+  }
 });
 
 export default ScreenLessons;
