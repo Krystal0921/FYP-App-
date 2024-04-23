@@ -532,7 +532,6 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   QuizButton: {
-
     marginBottom: 10,
     backgroundColor: '#8B0960',
     borderRadius: 15,
