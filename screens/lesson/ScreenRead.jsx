@@ -182,11 +182,13 @@ const ScreenRead = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   SectionReadSubText: {
     top: 100,
+    left: 20,
     fontSize: 15,
     paddingBottom: 10
   },
   SectionReadText: {
     top: 80,
+    left: 20,
     fontSize: 18,
     fontWeight: 'bold',
     paddingBottom: 10

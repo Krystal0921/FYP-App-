@@ -23,6 +23,7 @@ export const NAVIGATION_COURSE = {
   read: "Read",
   feedback: "Feedback",
   aiQuiz: "AI Quiz",
+  courseLogin: "Login",
 };
 
 export const NAVIGATION_USER = {

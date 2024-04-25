@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   SectionReadInformation: {
-    width: Dimensions.get('screen').width * 0.85,
+    width: Dimensions.get('screen').width * 0.9,
     marginRight: 15
   },
   SectionReadBackgound: {
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
   SectionRadioButtonRow: {
     paddingTop: 10,
     marginRight: 10,
-    marginLeft: 4
+    marginLeft: 6
   },
   SectionRadioButtonView: {
     flexDirection: 'row',

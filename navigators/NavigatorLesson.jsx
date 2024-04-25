@@ -60,6 +60,7 @@ const NavigatorLesson = () => {
         })}
         params={user} // Pass the user object as params to the screen
       />
+
     </Stack.Navigator>
   );
 };
