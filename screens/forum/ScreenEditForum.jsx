@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { NAVIGATION_TAB } from '../../const/navigations';
-import { useAuth } from '../../components/AuthProvider';
+import React, { useEffect, useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import { NAVIGATION_TAB } from "../../const/navigations";
+import { useAuth } from "../../components/AuthProvider";
 
 const ScreenEditForum = ({ route, navigation }) => {
   const { title, content, createAt, postId } = route.params;
   const { user } = useAuth();
   const [contents, setContents] = useState(content);
-  const [userId] = useState('');
+  const [userId] = useState("");
   // alert(user.userId);
   // alert(postId);
   // alert(content);
@@ -19,14 +26,14 @@ const ScreenEditForum = ({ route, navigation }) => {
         postId,
         mId: user.userId,
         content: contents,
-        createAt
+        createAt,
       };
-      fetch('http://44.221.91.193:3000/EditPost', {
-        method: 'POST',
+      fetch("http://3.212.61.233:3000/EditPost", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       })
         .then((response) => response.json())
         .then(async (responseData) => {
@@ -36,16 +43,16 @@ const ScreenEditForum = ({ route, navigation }) => {
           } else if (responseData.code === 1) {
             alert(responseData.msg);
           } else {
-            alert('Wrong username or password');
+            alert("Wrong username or password");
           }
         });
     } catch (e) {
       switch (e.response.status) {
         case 401:
-          alert('Wrong username or password');
+          alert("Wrong username or password");
           break;
         default:
-          alert('Login failed');
+          alert("Login failed");
       }
     }
   };
@@ -82,10 +89,10 @@ const ScreenEditForum = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   EditForumTitle: {
     fontSize: 25,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   EditForumInputText: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: "#F5F5F7",
     padding: 15,
     borderRadius: 5,
     fontSize: 20,
@@ -94,46 +101,46 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     marginBottom: 10,
     paddingBottom: 10,
-    paddingTop: 10
+    paddingTop: 10,
   },
   EditForumView: {
     paddingTop: 20,
     paddingBottom: 20,
-    flex: 1
+    flex: 1,
   },
   EditForumDetailsView: {
-    flex: 1
+    flex: 1,
   },
   EditForumButton: {
     borderRadius: 5,
     fontSize: 16,
     width: 300,
-    backgroundColor: '#264858',
+    backgroundColor: "#264858",
     paddingVertical: 10,
     borderRadius: 5,
-    alignItems: 'center'
+    alignItems: "center",
   },
   EditForumButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   EditForumDetailsInputText: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: "#F5F5F7",
     padding: 15,
     borderRadius: 5,
     fontSize: 16,
     height: 300,
     width: 300,
     marginVertical: 3,
-    textAlignVertical: 'top'
+    textAlignVertical: "top",
   },
   EditForumBackgound: {
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: 'center'
-  }
+    alignItems: "center",
+  },
 });
 
 export default ScreenEditForum;

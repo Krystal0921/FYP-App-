@@ -1,29 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import moment from 'moment';
-import { useAuth } from '../../components/AuthProvider';
-import { NAVIGATION_TAB } from '../../const/navigations';
+import React, { useState, useEffect } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import moment from "moment";
+import { useAuth } from "../../components/AuthProvider";
+import { NAVIGATION_TAB } from "../../const/navigations";
 
 const ScreenCreateForum = ({ navigation }) => {
   const { user } = useAuth();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [image, setImage] = useState('');
-  const [createAt, setCreateAt] = useState('');
-  const [postImage, setPostImage] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState("");
+  const [createAt, setCreateAt] = useState("");
+  const [postImage, setPostImage] = useState("");
 
   useEffect(() => {
     const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
+    const formattedDate = currentDate.toLocaleString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
     });
-    const currentDateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const currentDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
     console.log(currentDateTime);
     setCreateAt(currentDateTime);
   }, []);
@@ -34,9 +41,12 @@ const ScreenCreateForum = ({ navigation }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-      base64: true
+      base64: true,
     });
-    const filename = result.uri.substring(result.uri.lastIndexOf('/') + 1, result.uri.length);
+    const filename = result.uri.substring(
+      result.uri.lastIndexOf("/") + 1,
+      result.uri.length
+    );
     setPostImage(filename);
     setImage(result.base64);
   };
@@ -49,15 +59,15 @@ const ScreenCreateForum = ({ navigation }) => {
         content,
         postImage,
         createAt,
-        image
+        image,
       };
       console.log(createAt);
-      fetch('http://44.221.91.193:3000/CreatePost', {
-        method: 'POST',
+      fetch("http://3.212.61.233:3000/CreatePost", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       })
         .then((response) => response.json())
         .then(async (responseData) => {
@@ -65,11 +75,11 @@ const ScreenCreateForum = ({ navigation }) => {
             navigation.navigate(NAVIGATION_TAB.course);
             navigation.navigate(NAVIGATION_TAB.forum);
           } else {
-            alert('Create Forum Fall');
+            alert("Create Forum Fall");
           }
         });
     } catch (e) {
-      alert('Create Forum Error');
+      alert("Create Forum Error");
     }
   };
 
@@ -99,7 +109,9 @@ const ScreenCreateForum = ({ navigation }) => {
       <Text />
       <View style={styles.CreateForumView}>
         <TouchableOpacity style={styles.CreateForumButton}>
-          <Text style={styles.CreateForumButtonText} onPress={createForum}>Create</Text>
+          <Text style={styles.CreateForumButtonText} onPress={createForum}>
+            Create
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -109,56 +121,56 @@ const ScreenCreateForum = ({ navigation }) => {
 const styles = StyleSheet.create({
   CreateForumTitle: {
     fontSize: 25,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   CreateForumInputText: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: "#F5F5F7",
     padding: 15,
     borderRadius: 5,
     fontSize: 16,
     height: 60,
     width: 300,
     marginVertical: 3,
-    marginBottom: 10
+    marginBottom: 10,
   },
   CreateForumView: {
-    flex: 1
+    flex: 1,
   },
   CreateForumDetailsView: {
-    flex: 1
+    flex: 1,
   },
   CreateForumButton: {
     borderRadius: 5,
     fontSize: 16,
     width: 300,
-    backgroundColor: '#264858',
+    backgroundColor: "#264858",
     paddingVertical: 10,
     borderRadius: 5,
-    alignItems: 'center'
+    alignItems: "center",
   },
   CreateForumButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   CreateForumDetailsInputText: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: "#F5F5F7",
     padding: 15,
     borderRadius: 5,
     fontSize: 16,
     height: 200,
     width: 300,
     marginVertical: 3,
-    textAlignVertical: 'top'
+    textAlignVertical: "top",
   },
   CreateForumBackgound: {
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     paddingBottom: 50,
-    paddingTop: 50
-  }
+    paddingTop: 50,
+  },
 });
 
 export default ScreenCreateForum;

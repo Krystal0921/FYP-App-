@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, Image, Dimensions, FlatList, TextInput, SafeAreaView, StyleSheet }
-  from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { MaterialIcons } from '@expo/vector-icons';
-import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
-import background from '../../assets/backgroundd.png';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  Dimensions,
+  FlatList,
+  TextInput,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialIcons } from "@expo/vector-icons";
+import { NAVIGATION_COURSE, NAVIGATION_MAIN } from "../../const/navigations";
+import background from "../../assets/backgroundd.png";
 
 // Get window dimensions
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 // Define the ScreenCourses component
 const ScreenCourses = ({ navigation }) => {
@@ -20,12 +29,12 @@ const ScreenCourses = ({ navigation }) => {
     const fetchCourses = async () => {
       try {
         // Make a request to fetch courses
-        const response = await fetch('http://44.221.91.193:3000/Lesson/', {
-          method: 'POST',
+        const response = await fetch("http://3.212.61.233:3000/Lesson/", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({})
+          body: JSON.stringify({}),
         });
         // Parse the response data
         const responseData = await response.json();
@@ -35,10 +44,10 @@ const ScreenCourses = ({ navigation }) => {
         } else if (responseData.code === 1) {
           alert(responseData.msg);
         } else {
-          alert('Wrong username or password');
+          alert("Wrong username or password");
         }
       } catch (error) {
-        alert('Courses Error');
+        alert("Courses Error");
       }
     };
     fetchCourses();
@@ -48,9 +57,9 @@ const ScreenCourses = ({ navigation }) => {
   const CourseCard = ({ course }) => {
     // Mapping of image filenames to image sources
     const imageMapping = {
-      'daily-communication.jpg': require('../../assets/daily-communication.jpg'),
-      'travel-communication.png': require('../../assets/travel-communication.png'),
-      'workplace-communication.jpg': require('../../assets/workplace-communication.jpg')
+      "daily-communication.jpg": require("../../assets/daily-communication.jpg"),
+      "travel-communication.png": require("../../assets/travel-communication.png"),
+      "workplace-communication.jpg": require("../../assets/workplace-communication.jpg"),
     };
 
     // Function to get the image source based on the filename
@@ -59,10 +68,12 @@ const ScreenCourses = ({ navigation }) => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate(NAVIGATION_MAIN.lesson, {
-          screen: NAVIGATION_COURSE.lessons,
-          params: { lessonId: course.lessonId, name: course.lessonName }
-        })}
+        onPress={() =>
+          navigation.navigate(NAVIGATION_MAIN.lesson, {
+            screen: NAVIGATION_COURSE.lessons,
+            params: { lessonId: course.lessonId, name: course.lessonName },
+          })
+        }
       >
         <ImageBackground
           source={getImageSource(course.lessonPhoto)}
@@ -88,7 +99,10 @@ const ScreenCourses = ({ navigation }) => {
       <View>
         <View style={styles.MainSearchView}>
           <MaterialIcons size={30} name="search" />
-          <TextInput style={styles.MainSearchText} placeholder="Search for anything" />
+          <TextInput
+            style={styles.MainSearchText}
+            placeholder="Search for anything"
+          />
         </View>
         <View style={styles.MainAllLessonTextView}>
           <Text style={styles.MainAllLessonText}>All Lessons</Text>
@@ -112,18 +126,18 @@ const ScreenCourses = ({ navigation }) => {
 // Styles
 const styles = StyleSheet.create({
   MainAllLessonList: {
-    flex: 1
+    flex: 1,
   },
   MainAllLessonTextView: {
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   MainAllLessonText: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   MainSearchText: {
     fontSize: 18,
-    marginLeft: 5
+    marginLeft: 5,
   },
   MainSearchView: {
     height: 60,
@@ -131,37 +145,37 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 15,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: "#F5F5F7",
     borderRadius: 30,
-    alignItems: 'center',
-    flexDirection: 'row'
+    alignItems: "center",
+    flexDirection: "row",
   },
   MainTitleImageView: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   MainTitleImage: {
     height: 150,
     width: 300,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   MainBackground: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 50
+    paddingTop: 50,
   },
   MainAllLessonNumber: {
-    color: '#8F95B2',
-    fontWeight: '600'
+    color: "#8F95B2",
+    fontWeight: "600",
   },
   MainAllLessonTitle: {
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingBottom: 5,
-    backgroundColor: '#202020',
-    color: '#fff',
-    paddingLeft: 10
+    backgroundColor: "#202020",
+    color: "#fff",
+    paddingLeft: 10,
   },
   MainAllLessonBackground: {
     marginVertical: 10,
@@ -171,8 +185,8 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 20,
     borderRadius: 15,
-    overflow: 'hidden'
-  }
+    overflow: "hidden",
+  },
 });
 
 export default ScreenCourses;

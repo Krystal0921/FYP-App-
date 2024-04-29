@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, ScrollView, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { NAVIGATION_FORUM } from '../../const/navigations';
-import { useAuth } from '../../components/AuthProvider';
+import React, { useEffect, useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { NAVIGATION_FORUM } from "../../const/navigations";
+import { useAuth } from "../../components/AuthProvider";
 
 const ScreenPost = ({ route, navigation }) => {
   const { mId, postId, title, image, content, createAt } = route.params;
   const { user } = useAuth();
-  const [userId] = useState('');
+  const [userId] = useState("");
   const [post, setPost] = useState([]);
 
   const imageMapping = {
-    'default-profile-picture.jpg': require('../../assets/default-profile-picture.jpg')
+    "default-profile-picture.jpg": require("../../assets/default-profile-picture.jpg"),
   };
 
   const getImageSource = (imageFilename) => imageMapping[imageFilename];
@@ -21,28 +31,25 @@ const ScreenPost = ({ route, navigation }) => {
       try {
         const fetchPostData = async () => {
           const data = {
-            postId
+            postId,
           };
-          const response = await fetch(
-            'http://44.221.91.193:3000/PostComment',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-            }
-          );
+          const response = await fetch("http://3.212.61.233:3000/PostComment", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
           const responseData = await response.json();
           if (responseData.success) {
             setPost(responseData.data);
           } else {
-            alert(responseData.msg || 'Failed to fetch post data');
+            alert(responseData.msg || "Failed to fetch post data");
           }
         };
         await Promise.all([fetchPostData()]);
       } catch (error) {
-        alert('Post Error');
+        alert("Post Error");
       }
     };
     fetchPostData();
@@ -58,7 +65,9 @@ const ScreenPost = ({ route, navigation }) => {
         />
         <View>
           <Text style={styles.ForumCommentText}>{item.mName}</Text>
-          <Text style={styles.ForumCommentParagraph}>{item.commentContent}</Text>
+          <Text style={styles.ForumCommentParagraph}>
+            {item.commentContent}
+          </Text>
           <Text style={styles.ForumCommentTime}>{formattedTime}</Text>
         </View>
       </View>
@@ -72,13 +81,15 @@ const ScreenPost = ({ route, navigation }) => {
         {user.userId === mId ? (
           <TouchableOpacity
             style={styles.SignUpTypeButton}
-            onPress={() => navigation.navigate(NAVIGATION_FORUM.editForum, {
-              screen: NAVIGATION_FORUM.post,
-              title,
-              content,
-              createAt,
-              postId
-            })}
+            onPress={() =>
+              navigation.navigate(NAVIGATION_FORUM.editForum, {
+                screen: NAVIGATION_FORUM.post,
+                title,
+                content,
+                createAt,
+                postId,
+              })
+            }
           >
             <Text style={styles.SignUpTypeButtonText}>Edit</Text>
           </TouchableOpacity>
@@ -92,10 +103,7 @@ const ScreenPost = ({ route, navigation }) => {
           />
         </View>
         <Text style={styles.ForumDesciptionText}>{content}</Text>
-        <FlatList
-          data={post}
-          renderItem={forumlist}
-        />
+        <FlatList data={post} renderItem={forumlist} />
       </ScrollView>
       {user ? (
         <View style={styles.MainSearchView}>
@@ -105,7 +113,11 @@ const ScreenPost = ({ route, navigation }) => {
             placeholderTextColor="#888"
           />
           <TouchableOpacity>
-            <MaterialIcons style={{ marginLeft: 100 }} size={50} name="arrow-right" />
+            <MaterialIcons
+              style={{ marginLeft: 100 }}
+              size={50}
+              name="arrow-right"
+            />
           </TouchableOpacity>
         </View>
       ) : (
@@ -122,47 +134,47 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
     width: 300,
-    backgroundColor: '#264858',
+    backgroundColor: "#264858",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   SignUpTypeButtonText: {
-    alignSelf: 'center',
-    color: '#fff',
+    alignSelf: "center",
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   ForumCommentTime: {
-    color: '#8F95B2',
-    fontWeight: '600',
-    paddingLeft: 90
+    color: "#8F95B2",
+    fontWeight: "600",
+    paddingLeft: 90,
   },
   MainSearchText: {
     flex: 1,
-    height: '100%',
-    color: '#333',
+    height: "100%",
+    color: "#333",
     fontSize: 16,
-    marginLeft: 8
+    marginLeft: 8,
   },
   MainSearchView: {
-    backgroundColor: '#f1f3f4',
+    backgroundColor: "#f1f3f4",
     height: 48,
     paddingHorizontal: 16,
     borderRadius: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#ddd'
+    borderColor: "#ddd",
   },
   ForumCommentParagraph: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   ForumCommentText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 5
+    fontWeight: "bold",
+    marginLeft: 5,
   },
   ForumCommentImage: {
     height: 50,
@@ -171,16 +183,16 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 20,
     marginBottom: 10,
-    borderRadius: 25
+    borderRadius: 25,
   },
   ForumCommentView: {
     marginTop: 10,
     paddingBottom: 10,
     borderRadius: 10,
     width: 330,
-    alignSelf: 'center',
-    backgroundColor: '#D8BFD8',
-    flexDirection: 'row'
+    alignSelf: "center",
+    backgroundColor: "#D8BFD8",
+    flexDirection: "row",
   },
   ForumDesciptionText: {
     paddingLeft: 20,
@@ -188,34 +200,34 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     fontSize: 15,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   ForumScrollView: {
     flexGrow: 1,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   ForumTitleImage: {
     padding: 10,
     height: 150,
     width: 300,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   ForumTitleImageView: {
     paddingTop: 20,
-    ustifyContent: 'center',
-    alignItems: 'center'
+    ustifyContent: "center",
+    alignItems: "center",
   },
   ForumBackgound: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: 'center'
+    alignItems: "center",
   },
   ForumTitle: {
     padding: 10,
     fontSize: 25,
-    fontWeight: 'bold',
-    alignSelf: 'center'
-  }
+    fontWeight: "bold",
+    alignSelf: "center",
+  },
 });
 
 export default ScreenPost;

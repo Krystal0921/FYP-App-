@@ -1,27 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, TextInput, View, Text, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { NAVIGATION_FORUM, NAVIGATION_MAIN } from '../../const/navigations';
-import { useAuth } from '../../components/AuthProvider';
+import React, { useState, useEffect } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { NAVIGATION_FORUM, NAVIGATION_MAIN } from "../../const/navigations";
+import { useAuth } from "../../components/AuthProvider";
 
 const ScreenForum = ({ navigation }) => {
   const { user } = useAuth();
-  const [forumList, setForumList] = useState('');
+  const [forumList, setForumList] = useState("");
 
   useEffect(() => {
     const fetchForumList = async () => {
       try {
-        const response = await fetch('http://44.221.91.193:3000/Forum', {
-          method: 'POST',
+        const response = await fetch("http://3.212.61.233:3000/Forum", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         });
         const responseData = await response.json();
         setForumList(responseData.data);
         // alert(jobs[0].jId);
       } catch (error) {
-        alert('Forum Error');
+        alert("Forum Error");
       }
     };
     fetchForumList();
@@ -32,17 +42,19 @@ const ScreenForum = ({ navigation }) => {
     return (
       <TouchableOpacity
         style={styles.AllForum}
-        onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
-          screen: NAVIGATION_FORUM.post,
-          params: {
-            mId: item.mId,
-            postId: item.postId,
-            title: item.title,
-            image: item.image,
-            content: item.content,
-            createAt: item.createAt
-          }
-        })}
+        onPress={() =>
+          navigation.navigate(NAVIGATION_MAIN.post, {
+            screen: NAVIGATION_FORUM.post,
+            params: {
+              mId: item.mId,
+              postId: item.postId,
+              title: item.title,
+              image: item.image,
+              content: item.content,
+              createAt: item.createAt,
+            },
+          })
+        }
       >
         <Text style={styles.AllForumText}>{item.title}</Text>
         <Image
@@ -69,13 +81,15 @@ const ScreenForum = ({ navigation }) => {
               placeholderTextColor="#888"
             />
           </View>
-          <Text>   </Text>
+          <Text> </Text>
           {user ? (
             <View style={styles.AllForumButtonCircle}>
               <TouchableOpacity
-                onPress={() => navigation.navigate(NAVIGATION_MAIN.post, {
-                  screen: NAVIGATION_FORUM.createForum
-                })}
+                onPress={() =>
+                  navigation.navigate(NAVIGATION_MAIN.post, {
+                    screen: NAVIGATION_FORUM.createForum,
+                  })
+                }
               >
                 <MaterialIcons size={30} name="add" color="white" />
               </TouchableOpacity>
@@ -84,10 +98,7 @@ const ScreenForum = ({ navigation }) => {
             <View />
           )}
         </View>
-        <FlatList
-          data={forumList}
-          renderItem={forumlist}
-        />
+        <FlatList data={forumList} renderItem={forumlist} />
       </SafeAreaView>
     </ScrollView>
   );
@@ -95,52 +106,52 @@ const ScreenForum = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   AllForumSearchInput: {
-    color: '#333',
+    color: "#333",
     fontSize: 16,
     marginLeft: 8,
-    width: 200
+    width: 200,
   },
   AllForumButtonCircle: {
     width: 40,
     height: 40,
-    backgroundColor: '#55098B',
+    backgroundColor: "#55098B",
     borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   AllForumScrollView: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   AllForumSearchText: {
     fontSize: 18,
     marginLeft: 5,
     flex: 1,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   AllForumBackgound: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: 'center'
+    alignItems: "center",
   },
   AllForumSearch: {
     marginTop: 50,
     paddingVertical: 10,
-    alignItems: 'center',
-    flexDirection: 'row'
+    alignItems: "center",
+    flexDirection: "row",
   },
   AllForumScreenView: {
-    backgroundColor: '#f1f3f4',
+    backgroundColor: "#f1f3f4",
     height: 48,
     paddingHorizontal: 16,
     borderRadius: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#ddd'
+    borderColor: "#ddd",
   },
   AllForumTitle: {
     fontSize: 25,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   AllForum: {
     padding: 10,
@@ -149,8 +160,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 10,
     width: 330,
-    backgroundColor: '#D8BFD8',
-    flexDirection: 'column'
+    backgroundColor: "#D8BFD8",
+    flexDirection: "column",
   },
   AllForumImage: {
     height: 100,
@@ -159,21 +170,21 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 20,
     marginBottom: 10,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   AllForumText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 5
+    fontWeight: "bold",
+    marginLeft: 5,
   },
   AllForumParagraph: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   AllForumTime: {
-    fontWeight: '600',
+    fontWeight: "600",
     paddingTop: 100,
-    paddingLeft: 150
-  }
+    paddingLeft: 150,
+  },
 });
 
 export default ScreenForum;

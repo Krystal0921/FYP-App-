@@ -1,68 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { debounce } from 'lodash';
-import { useNavigation } from '@react-navigation/native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { NAVIGATION_JOB, NAVIGATION_MAIN } from '../../const/navigations';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from "react-native";
+import { debounce } from "lodash";
+import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { NAVIGATION_JOB, NAVIGATION_MAIN } from "../../const/navigations";
 
 const initialJobData = [
   {
-    id: '1',
-    jobTitle: 'Full-time Library Materials Organizer',
-    companyName: 'Adecco Personnel Limited',
-    avatar: require('../../assets/adecco.png')
+    id: "1",
+    jobTitle: "Full-time Library Materials Organizer",
+    companyName: "Adecco Personnel Limited",
+    avatar: require("../../assets/adecco.png"),
   },
   {
-    id: '2',
-    jobTitle: 'Part-time Library Materials Organizer',
-    companyName: 'Adecco Personnel Limited',
-    avatar: require('../../assets/adecco.png')
+    id: "2",
+    jobTitle: "Part-time Library Materials Organizer",
+    companyName: "Adecco Personnel Limited",
+    avatar: require("../../assets/adecco.png"),
   },
   {
-    id: '3',
-    jobTitle: 'Barista',
-    companyName: 'Séan Café & Lounge',
-    avatar: require('../../assets/sean_cafe.jpg')
+    id: "3",
+    jobTitle: "Barista",
+    companyName: "Séan Café & Lounge",
+    avatar: require("../../assets/sean_cafe.jpg"),
   },
   {
-    id: '4',
-    jobTitle: 'Waiters',
-    companyName: 'Séan Café & Lounge',
-    avatar: require('../../assets/sean_cafe.jpg')
+    id: "4",
+    jobTitle: "Waiters",
+    companyName: "Séan Café & Lounge",
+    avatar: require("../../assets/sean_cafe.jpg"),
   },
   {
-    id: '5',
-    jobTitle: 'Mechanic Assistant (Tire)',
-    companyName: 'The Kowloon Motor Bus Co. (1933) Ltd',
-    avatar: require('../../assets/kmb.png')
+    id: "5",
+    jobTitle: "Mechanic Assistant (Tire)",
+    companyName: "The Kowloon Motor Bus Co. (1933) Ltd",
+    avatar: require("../../assets/kmb.png"),
   },
   {
-    id: '6',
-    jobTitle: 'Assistant Officer, Customer Service',
-    companyName: 'The Kowloon Motor Bus Co. (1933) Ltd',
-    avatar: require('../../assets/kmb.png')
-  }
+    id: "6",
+    jobTitle: "Assistant Officer, Customer Service",
+    companyName: "The Kowloon Motor Bus Co. (1933) Ltd",
+    avatar: require("../../assets/kmb.png"),
+  },
 ];
 
 const ScreenJobs = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredJobs, setFilteredJobs] = useState(initialJobData);
-  const [jobs, setJobs] = useState('');
+  const [jobs, setJobs] = useState("");
 
   useEffect(() => {
     const fetchJobData = async () => {
       try {
-        const response = await fetch('http://44.221.91.193:3000/JobList', {
-          method: 'POST',
+        const response = await fetch("http://3.212.61.233:3000/JobList", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         });
         const responseData = await response.json();
         setJobs(responseData.data);
         // alert(jobs[0].jId);
       } catch (error) {
-        alert('Jobs Error');
+        alert("Jobs Error");
       }
     };
     fetchJobData();
@@ -76,7 +84,11 @@ const ScreenJobs = () => {
   }, [searchQuery]);
 
   const handleSearch = () => {
-    const filtered = initialJobData.filter((job) => job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) || job.companyName.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filtered = initialJobData.filter(
+      (job) =>
+        job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.companyName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     setFilteredJobs(filtered);
   };
 
@@ -85,12 +97,23 @@ const ScreenJobs = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.jobItem}
-      onPress={() => navigation.navigate(NAVIGATION_MAIN.job, {
-        screen: NAVIGATION_JOB.job,
-        params: { name: '', jId: item.jId, eId: item.eId, image: item.image, cName: item.cName }
-      })}
+      onPress={() =>
+        navigation.navigate(NAVIGATION_MAIN.job, {
+          screen: NAVIGATION_JOB.job,
+          params: {
+            name: "",
+            jId: item.jId,
+            eId: item.eId,
+            image: item.image,
+            cName: item.cName,
+          },
+        })
+      }
     >
-      <Image style={styles.avatar} source={{ uri: `data:image/jpeg;base64,${item.image}` }} />
+      <Image
+        style={styles.avatar}
+        source={{ uri: `data:image/jpeg;base64,${item.image}` }}
+      />
       <View style={styles.jobDetails}>
         <Text style={styles.jobTitle}>{item.jobTitle}</Text>
         <Text style={styles.jobSubtitle}>{item.cName}</Text>
@@ -127,72 +150,72 @@ const ScreenJobs = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f7f7'
+    backgroundColor: "#f7f7f7",
   },
   header: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingVertical: 16,
     paddingHorizontal: 24,
-    paddingTop: 50
+    paddingTop: 50,
   },
   MainFooter: {
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 80,
     paddingTop: 10,
-    backgroundColor: '#55098b',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    backgroundColor: "#55098b",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   searchContainer: {
-    backgroundColor: '#f1f3f4',
+    backgroundColor: "#f1f3f4",
     height: 48,
     paddingHorizontal: 16,
     borderRadius: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#ddd'
+    borderColor: "#ddd",
   },
   searchInput: {
     flex: 1,
-    height: '100%',
-    color: '#333',
+    height: "100%",
+    color: "#333",
     fontSize: 16,
-    marginLeft: 8
+    marginLeft: 8,
   },
   jobList: {
     paddingVertical: 16,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   avatar: {
     width: 40,
     height: 40,
     borderRadius: 25,
-    marginRight: 20
+    marginRight: 20,
   },
   jobItem: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     height: 100,
     borderRadius: 10,
     padding: 16,
     marginBottom: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   jobDetails: {
     flex: 1,
-    marginRight: 16
+    marginRight: 16,
   },
   jobTitle: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   jobSubtitle: {
     fontSize: 18,
-    color: '#777',
-    marginTop: 10
-  }
+    color: "#777",
+    marginTop: 10,
+  },
 });
 
 export default ScreenJobs;

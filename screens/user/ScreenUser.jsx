@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import CircularProgress from 'react-native-circular-progress-indicator';
-import { NAVIGATION_TAB, NAVIGATION_MAIN, NAVIGATION_COURSE } from '../../const/navigations';
-import { useAuth } from '../../components/AuthProvider';
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import CircularProgress from "react-native-circular-progress-indicator";
+import {
+  NAVIGATION_TAB,
+  NAVIGATION_MAIN,
+  NAVIGATION_COURSE,
+} from "../../const/navigations";
+import { useAuth } from "../../components/AuthProvider";
 
 const ScreenUser = ({ navigation }) => {
   const [isAnimated, setIsAnimated] = useState(false);
@@ -27,7 +31,7 @@ const ScreenUser = ({ navigation }) => {
             mId: user.userId,
           };
           const response = await fetch(
-            "http://44.221.91.193:3000/MemberDetail/",
+            "http://3.212.61.233:3000/MemberDetail/",
             {
               method: "POST",
               headers: {
@@ -49,7 +53,7 @@ const ScreenUser = ({ navigation }) => {
             mId: user.userId,
           };
           const response = await fetch(
-            "http://44.221.91.193:3000/MemberLessonProgress",
+            "http://3.212.61.233:3000/MemberLessonProgress",
             {
               method: "POST",
               headers: {
@@ -78,12 +82,12 @@ const ScreenUser = ({ navigation }) => {
     setIsAnimated(true);
     navigation.navigate(NAVIGATION_MAIN.lesson, {
       screen: NAVIGATION_COURSE.lessons,
-      params: { lessonId, name: lessonNames[lessonId] }
+      params: { lessonId, name: lessonNames[lessonId] },
     });
   };
 
   const imageMapping = {
-    'default-profile-picture.jpg': require('../../assets/default-profile-picture.jpg')
+    "default-profile-picture.jpg": require("../../assets/default-profile-picture.jpg"),
   };
 
   const getImageSource = (imageFilename) => imageMapping[imageFilename];

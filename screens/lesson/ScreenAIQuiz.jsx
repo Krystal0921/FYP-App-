@@ -120,7 +120,7 @@ const ScreenAIQuiz = () => {
 
   const uploadImageToAIQuiz = async (base64Image) => {
     try {
-      const response = await fetch("http://44.221.91.193:3000/AIQuiz", {
+      const response = await fetch("http://3.212.61.233:3000/AIQuiz", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

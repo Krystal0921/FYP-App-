@@ -1,35 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   View,
   Text,
   Image,
-  TouchableOpacity
-} from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import { NAVIGATION_COURSE, NAVIGATION_MAIN } from '../../const/navigations';
-import { authContext } from '../../components/AuthProvider'; // Import AsyncStorage
+  TouchableOpacity,
+} from "react-native";
+import { TextInput } from "react-native-gesture-handler";
+import { NAVIGATION_COURSE, NAVIGATION_MAIN } from "../../const/navigations";
+import { authContext } from "../../components/AuthProvider"; // Import AsyncStorage
 
 const ScreenLogin = ({ navigation }) => {
-  const [username, setUsername] = useState(''); // State for username input
-  const [password, setPassword] = useState(''); // State for password input
-  const [userId, setUserId] = useState(''); // State for user ID
+  const [username, setUsername] = useState(""); // State for username input
+  const [password, setPassword] = useState(""); // State for password input
+  const [userId, setUserId] = useState(""); // State for user ID
   const { onLogin } = useContext(authContext); // Access the onLogin function from the authContext
 
   const Login = async () => {
     try {
       const data = {
         username,
-        password
+        password,
       };
       // Send a POST request to the login endpoint with the provided data
-      fetch('http://44.221.91.193:3000/login/', {
-        method: 'POST',
+      fetch("http://3.212.61.233:3000/login/", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       })
         .then((response) => response.json())
         .then(async (responseData) => {
@@ -37,22 +37,22 @@ const ScreenLogin = ({ navigation }) => {
             await setUserId(responseData.data[0].mId); // Set the user ID from the response
             data.userId = responseData.data[0].mId;
             await onLogin(data); // Call the onLogin function with the data
-            await AsyncStorage.setItem('userId', responseData.data[0].mId);
-            await AsyncStorage.setItem('username', responseData.data[0].mName);
+            await AsyncStorage.setItem("userId", responseData.data[0].mId);
+            await AsyncStorage.setItem("username", responseData.data[0].mName);
             navigation.navigate(NAVIGATION_COURSE.lessons); // Navigate to the course screen
           } else if (responseData.code === 1) {
             alert(responseData.msg); // Show an alert with the error message
           } else {
-            alert('Wrong username or password'); // Show an alert for wrong username or password
+            alert("Wrong username or password"); // Show an alert for wrong username or password
           }
         });
     } catch (e) {
       switch (e.response.status) {
         case 401:
-          alert('Wrong username or password'); // Show an alert for wrong username or password
+          alert("Wrong username or password"); // Show an alert for wrong username or password
           break;
         default:
-          alert('Login failed'); // Show a generic login failed alert
+          alert("Login failed"); // Show a generic login failed alert
       }
     }
   };
@@ -61,7 +61,7 @@ const ScreenLogin = ({ navigation }) => {
     <SafeAreaView style={styles.LoginBackgound}>
       <Image
         style={styles.LoginImage}
-        source={require('../../assets/backgroundd.png')}
+        source={require("../../assets/backgroundd.png")}
       />
       <View className="flex items-center">
         <Text style={styles.LoginTitle}>Login</Text>
@@ -104,35 +104,35 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     fontSize: 16,
     width: 300,
-    backgroundColor: '#264858',
+    backgroundColor: "#264858",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    alignItems: 'center'
+    alignItems: "center",
   },
   LoginButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   LoginBackgound: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
     paddingTop: 50,
-    alignItems: 'center'
+    alignItems: "center",
   },
   LoginTitle: {
     fontSize: 25,
-    fontWeight: 'bold',
-    paddingBottom: 10
+    fontWeight: "bold",
+    paddingBottom: 10,
   },
   LoginImage: {
     height: 250,
     width: 250,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   LoginInputText: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: "#F5F5F7",
     padding: 15,
     borderRadius: 5,
     fontSize: 16,
@@ -141,25 +141,25 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     marginBottom: 10,
     paddingBottom: 10,
-    paddingTop: 10
+    paddingTop: 10,
   },
   LoginText: {
     paddingRight: 230,
     fontSize: 13,
-    textAlign: 'left'
+    textAlign: "left",
   },
   LoginSignUpView: {
     paddingTop: 10,
     borderRadius: 5,
     fontSize: 16,
-    justifyContent: 'center',
+    justifyContent: "center",
     width: 300,
-    flexDirection: 'row'
+    flexDirection: "row",
   },
   LoginSignUpText: {
-    color: 'blue',
-    fontWeight: 'bold'
-  }
+    color: "blue",
+    fontWeight: "bold",
+  },
 });
 
 export default ScreenLogin;

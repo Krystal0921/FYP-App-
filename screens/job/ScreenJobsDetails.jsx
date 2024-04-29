@@ -1,5 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, Modal, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Modal,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
 const ScreenJobsDetails = ({ route }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -9,14 +18,13 @@ const ScreenJobsDetails = ({ route }) => {
 
   const formattedTime = new Date(jobsDetails.createAt).toLocaleString();
 
-  const handleUploadFile = () => {
-  };
+  const handleUploadFile = () => {};
 
   const handleSendEmail = () => {
     if (uploadedFile) {
       // Implement logic to send the email with the uploaded file
       // You can use a library like react-native-mail to send emails
-      console.log('Sending email with file:', uploadedFile);
+      console.log("Sending email with file:", uploadedFile);
     }
   };
 
@@ -29,28 +37,25 @@ const ScreenJobsDetails = ({ route }) => {
       try {
         const fetchUserData = async () => {
           const data = {
-            jId
+            jId,
           };
-          const response = await fetch(
-            'http://44.221.91.193:3000/JobDetail',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-            }
-          );
+          const response = await fetch("http://3.212.61.233:3000/JobDetail", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
           const responseData = await response.json();
           if (responseData.success) {
             setJobsDetails(responseData.data[0]);
           } else {
-            alert(responseData.msg || 'Failed to fetch section data');
+            alert(responseData.msg || "Failed to fetch section data");
           }
         };
         await Promise.all([fetchUserData()]);
       } catch (error) {
-        alert('Jobs Details Error 1');
+        alert("Jobs Details Error 1");
       }
     };
     fetchJobsDetails();
@@ -69,12 +74,13 @@ const ScreenJobsDetails = ({ route }) => {
         <Text style={styles.sectionText}>{jobsDetails.location}</Text>
 
         <Text style={styles.sectionTitle}>Job Highlight : </Text>
-        {jobsDetails.highlights && jobsDetails.highlights.split(', ').map((item, index) => (
-          <View style={styles.text} key={index}>
-            <Text style={styles.bulletPoint}>•</Text>
-            <Text style={styles.text}>{item}</Text>
-          </View>
-        ))}
+        {jobsDetails.highlights &&
+          jobsDetails.highlights.split(", ").map((item, index) => (
+            <View style={styles.text} key={index}>
+              <Text style={styles.bulletPoint}>•</Text>
+              <Text style={styles.text}>{item}</Text>
+            </View>
+          ))}
 
         <View style={styles.hrLine} />
         <Text style={styles.sectionTitle}>Description : </Text>
@@ -82,21 +88,23 @@ const ScreenJobsDetails = ({ route }) => {
 
         <View style={styles.hrLine} />
         <Text style={styles.sectionTitle}>Responsibilities : </Text>
-        {jobsDetails.responsibilities && jobsDetails.responsibilities.split(', ').map((item, index) => (
-          <View style={styles.text} key={index}>
-            <Text style={styles.bulletPoint}>•</Text>
-            <Text style={styles.text}>{item}</Text>
-          </View>
-        ))}
+        {jobsDetails.responsibilities &&
+          jobsDetails.responsibilities.split(", ").map((item, index) => (
+            <View style={styles.text} key={index}>
+              <Text style={styles.bulletPoint}>•</Text>
+              <Text style={styles.text}>{item}</Text>
+            </View>
+          ))}
 
         <View style={styles.hrLine} />
         <Text style={styles.sectionTitle}>Requirements : </Text>
-        {jobsDetails.requirements && jobsDetails.requirements.split(', ').map((item, index) => (
-          <View style={styles.text} key={index}>
-            <Text style={styles.bulletPoint}>•</Text>
-            <Text style={styles.text}>{item}</Text>
-          </View>
-        ))}
+        {jobsDetails.requirements &&
+          jobsDetails.requirements.split(", ").map((item, index) => (
+            <View style={styles.text} key={index}>
+              <Text style={styles.bulletPoint}>•</Text>
+              <Text style={styles.text}>{item}</Text>
+            </View>
+          ))}
 
         <View style={styles.hrLine} />
         <Text style={styles.sectionText}>Post Date: {formattedTime}</Text>
@@ -111,7 +119,11 @@ const ScreenJobsDetails = ({ route }) => {
               <Text style={styles.modalTitle}>Upload CV</Text>
               <Button title="Choose File" onPress={handleUploadFile} />
               {uploadedFile && <Text>File Uploaded: {uploadedFile}</Text>}
-              <Button title="Send " onPress={handleSendEmail} disabled={!uploadedFile} />
+              <Button
+                title="Send "
+                onPress={handleSendEmail}
+                disabled={!uploadedFile}
+              />
               <Button title="Cancel" onPress={toggleModal} />
             </View>
           </View>
@@ -123,86 +135,85 @@ const ScreenJobsDetails = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
     padding: 20,
-    paddingTop: 30
+    paddingTop: 30,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8
+    fontWeight: "bold",
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 18,
-    color: '#777'
+    color: "#777",
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 16,
-    marginBottom: 8
+    marginBottom: 8,
   },
   sectionText: {
     fontSize: 16,
-    marginBottom: 4
+    marginBottom: 4,
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 16,
     borderRadius: 10,
-    width: '80%'
+    width: "80%",
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 16
+    fontWeight: "bold",
+    marginBottom: 16,
   },
   applyButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: 'black',
-    alignSelf: 'center'
+    backgroundColor: "black",
+    alignSelf: "center",
   },
   applyButtonText: {
     fontSize: 16,
     lineHeight: 21,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     letterSpacing: 0.25,
-    color: 'white'
-
+    color: "white",
   },
   hrLine: {
-    borderBottomColor: 'black',
+    borderBottomColor: "black",
     borderBottomWidth: 1,
-    marginVertical: 16
+    marginVertical: 16,
   },
   text: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginBottom: 5,
-    fontSize: 16
+    fontSize: 16,
   },
   bulletPoint: {
-    marginRight: 5
+    marginRight: 5,
   },
   logo: {
     width: 100,
     height: 100,
     borderRadius: 20,
     marginRight: 20,
-    padding: 70
-  }
+    padding: 70,
+  },
 });
 
 export default ScreenJobsDetails;

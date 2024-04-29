@@ -1,33 +1,43 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { RadioButton } from 'react-native-paper';
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { RadioButton } from "react-native-paper";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { NAVIGATION_USER } from '../../const/navigations';
+import { NAVIGATION_USER } from "../../const/navigations";
 
 const ScreenMemberSignUp = ({ navigation }) => {
-  const [checked, setChecked] = useState('first');
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
-  const [contact, setContact] = useState('');
-  const [email, setEmail] = useState('');
+  const [checked, setChecked] = useState("first");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
   const [mType, setMType] = useState(null);
 
   const handleRadioPress = (value) => {
     setChecked(value);
     let updatedMType = null;
-    if (value == 'Deaf or hardly of hearing') {
+    if (value == "Deaf or hardly of hearing") {
       updatedMType = "1";
-    } else if (value == 'Mute or hardly of speaking') {
+    } else if (value == "Mute or hardly of speaking") {
       updatedMType = "2";
-    } else if (value == 'None of the above') {
+    } else if (value == "None of the above") {
       updatedMType = "3";
     }
     setMType(updatedMType);
   };
 
-    const handleCheckBoxToggle = () => {
+  const handleCheckBoxToggle = () => {
     setChecked(!checked);
   };
 
@@ -40,36 +50,37 @@ const ScreenMemberSignUp = ({ navigation }) => {
       mContact: contact,
       mEmail: email,
       mType: mType,
-      mPhoto: 'user-icon.png',
+      mPhoto: "user-icon.png",
     };
 
     if (password !== confirmPassword) {
       alert("Passwords do not match. Please re-enter your password correctly.");
-      return; 
+      return;
     }
 
-    fetch('http://44.221.91.193:3000/MemberRegister', {
-      method: 'POST',
+    fetch("http://3.212.61.233:3000/MemberRegister", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
       .then((responseData) => {
         if (responseData.success) {
-          alert('Welcome aboard! You have successfully signed up. Start exploring our platform now!.');
+          alert(
+            "Welcome aboard! You have successfully signed up. Start exploring our platform now!."
+          );
           navigation.navigate(NAVIGATION_USER.login);
         } else {
-          alert(responseData.msg)
-          alert('Signup unsuccessful. Please try again later.');
+          alert(responseData.msg);
+          alert("Signup unsuccessful. Please try again later.");
         }
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
 
   return (
     <ScrollView contentContainerStyle={styles.MemberSignUpScrollView}>
@@ -120,26 +131,32 @@ const ScreenMemberSignUp = ({ navigation }) => {
         <TextInput style={styles.MemberSignUpInputText} placeholder="Name" />
         <TextInput style={styles.MemberSignUpInputText} placeholder="Contact" />
         <TextInput style={styles.MemberSignUpInputText} placeholder="Email" /> */}
-        <Text style={{ paddingTop: 10 }}>(Optional) Please select the option that best </Text>
+        <Text style={{ paddingTop: 10 }}>
+          (Optional) Please select the option that best{" "}
+        </Text>
         <Text>decribes your hearing and speech abilities:</Text>
         <View style={styles.MemberSignaUpRadioButtonView}>
           <RadioButton.Item
             label="Deaf or hardly of hearing"
             value="1"
-            status={checked === 'Deaf or hardly of hearing' ? 'checked' : 'unchecked'}
-            onPress={() => handleRadioPress('Deaf or hardly of hearing')}
+            status={
+              checked === "Deaf or hardly of hearing" ? "checked" : "unchecked"
+            }
+            onPress={() => handleRadioPress("Deaf or hardly of hearing")}
           />
           <RadioButton.Item
             label="Mute or hardly of speaking"
             value="2"
-            status={checked === 'Mute or hardly of speaking' ? 'checked' : 'unchecked'}
-            onPress={() => handleRadioPress('Mute or hardly of speaking')}
+            status={
+              checked === "Mute or hardly of speaking" ? "checked" : "unchecked"
+            }
+            onPress={() => handleRadioPress("Mute or hardly of speaking")}
           />
           <RadioButton.Item
             label="None of the above"
             value="3"
-            status={checked === 'None of the above' ? 'checked' : 'unchecked'}
-            onPress={() => handleRadioPress('None of the above')}
+            status={checked === "None of the above" ? "checked" : "unchecked"}
+            onPress={() => handleRadioPress("None of the above")}
           />
         </View>
 
@@ -154,7 +171,10 @@ const ScreenMemberSignUp = ({ navigation }) => {
         />
 
         <View style={{ paddingTop: 10, paddingBottom: 10 }}>
-       <TouchableOpacity style={styles.MemberSignUpButton} onPress={handleSignUp}>
+          <TouchableOpacity
+            style={styles.MemberSignUpButton}
+            onPress={handleSignUp}
+          >
             <Text style={styles.MemberSignUpButtonText}>Register</Text>
           </TouchableOpacity>
         </View>
@@ -170,46 +190,46 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
     width: 300,
-    backgroundColor: '#264858',
+    backgroundColor: "#264858",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    alignItems: 'center'
+    alignItems: "center",
   },
   MemberSignUpButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   MemberSignUpScrollView: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   MemberSignaUpCheckBoxView: {
-    flexDirection: 'row'
+    flexDirection: "row",
   },
   MemberSignaUpRadioButtonView: {
-    flexDirection: 'column'
+    flexDirection: "column",
   },
   MemberSignUpBackgound: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
-    alignItems: 'center'
+    alignItems: "center",
   },
   MemberSignUpTitle: {
     fontSize: 25,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   MemberSignUpCreateText: {
     paddingTop: 10,
-    fontSize: 18
+    fontSize: 18,
   },
   MemberSignUpText: {
     paddingRight: 230,
     fontSize: 13,
-    paddingTop: 10
+    paddingTop: 10,
   },
   MemberSignUpInputText: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: "#F5F5F7",
     padding: 15,
     borderRadius: 5,
     fontSize: 16,
@@ -218,8 +238,8 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     marginBottom: 10,
     paddingBottom: 10,
-    paddingTop: 10
-  }
+    paddingTop: 10,
+  },
 });
 
 export default ScreenMemberSignUp;
